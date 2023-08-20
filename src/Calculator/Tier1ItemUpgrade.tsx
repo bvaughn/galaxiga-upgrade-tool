@@ -3,17 +3,23 @@ import { Card } from "../components/Card";
 import { Coin } from "../components/Coin";
 import { Gem } from "../components/Gem";
 import { Icon } from "../components/Icon";
-import { ShipImage } from "../components/ShipImage";
 import { NumberInput } from "../components/NumberInput";
+import { ItemImage } from "../components/ItemImage";
 import { MAX_LEVEL, MAX_UPGRADE } from "../data/upgrade-costs";
-import { Tier1Ship } from "../types";
+import { Tier1Item } from "../types";
 import { formatNumber } from "../utils/number";
-import styles from "./Tier1CurrentStats.module.css";
-import { Cost, calculateCost } from "./calculateCost";
-import { useTier1ShipStats } from "./useTier1ShipStats";
+import styles from "./Tier1ItemUpgrade.module.css";
+import { calculateCost } from "./calculateCost";
+import { useTier1ItemStats } from "./useTier1ItemStats";
 
-export function Tier1CurrentStats({ tier1Ship }: { tier1Ship: Tier1Ship }) {
-  const [stats, setStats] = useTier1ShipStats(tier1Ship.id);
+export function Tier1ItemUpgrade({
+  category,
+  tier1Item,
+}: {
+  category: "drone" | "ship";
+  tier1Item: Tier1Item;
+}) {
+  const [stats, setStats] = useTier1ItemStats(tier1Item.id);
 
   const decreaseLevel = () => {
     setStats({
@@ -40,17 +46,21 @@ export function Tier1CurrentStats({ tier1Ship }: { tier1Ship: Tier1Ship }) {
     });
   };
 
-  const cost = useMemo(() => calculateCost(stats), [stats]);
+  const cost = useMemo(() => calculateCost(stats, category), [category, stats]);
 
   return (
     <div className={styles.Container}>
-      {tier1Ship.imageName ? (
-        <ShipImage className={styles.Image} ship={tier1Ship} />
+      {tier1Item.imageName ? (
+        <ItemImage
+          category={category}
+          className={styles.Image}
+          item={tier1Item}
+        />
       ) : (
         <div className={styles.ImagePlaceholder} />
       )}
       <div className={styles.Description}>
-        <div className={styles.Name}>{tier1Ship.name}</div>
+        <div className={styles.Name}>{tier1Item.name}</div>
         <div className={styles.Markers}>
           <div className={styles.LevelMarkers}>
             {"●".repeat(stats.level)}
@@ -92,7 +102,7 @@ export function Tier1CurrentStats({ tier1Ship }: { tier1Ship: Tier1Ship }) {
         </div>
       </div>
       <label className={styles.CardInputLabel}>
-        <Card category="specific" type="ship" />
+        <Card type="specific" category={category} />
         <NumberInput
           className={styles.CardInput}
           maxValue={9999}
@@ -109,7 +119,7 @@ export function Tier1CurrentStats({ tier1Ship }: { tier1Ship: Tier1Ship }) {
       {cost.goldNeeded > 0 && (
         <div className={styles.Costs}>
           <div className={styles.Cost}>
-            <Card category="generic" type="ship" />{" "}
+            <Card type="generic" category={category} />{" "}
             {formatNumber(cost.cardsNeeded)}
           </div>
           <div className={styles.Cost}>

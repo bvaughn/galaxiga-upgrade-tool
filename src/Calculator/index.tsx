@@ -1,12 +1,13 @@
 import { Card } from "../components/Card";
 import { NumberInput } from "../components/NumberInput";
 import { TIER_2_SHIPS } from "../data/ships";
-import { Tier2Upgrade } from "./Tier2Upgrade";
+import { Tier2ItemUpgrade } from "./Tier2ItemUpgrade";
 
 import { Coin } from "../components/Coin";
 import { Gem } from "../components/Gem";
 import useLocalStorage from "../hooks/useLocalStorage";
 import styles from "./index.module.css";
+import { TIER_2_DRONES } from "../data/drones";
 
 export function Calculator() {
   const [numCoins, setNumCoins] = useLocalStorage<number>("num-coins", 0);
@@ -39,7 +40,7 @@ export function Calculator() {
         </div>
         <div className={styles.OptionsColumn}>
           <label className={styles.InputLabel}>
-            <Card category="generic" type="ship" />
+            <Card type="generic" category="ship" />
             <NumberInput
               className={styles.Input}
               data-type="cards"
@@ -50,7 +51,7 @@ export function Calculator() {
             />
           </label>
           <label className={styles.InputLabel}>
-            <Card category="generic" type="drone" />
+            <Card type="generic" category="drone" />
             <NumberInput
               className={styles.Input}
               data-type="cards"
@@ -85,9 +86,22 @@ export function Calculator() {
         </div>
       </div>
 
-      {TIER_2_SHIPS.map((ship) => (
-        <Tier2Upgrade key={ship.id} tier2Ship={ship} />
-      ))}
+      <div className={styles.ItemsRow}>
+        <div className={styles.ItemsColumn}>
+          {TIER_2_SHIPS.map((ship) => (
+            <Tier2ItemUpgrade category="ship" key={ship.id} tier2Item={ship} />
+          ))}
+        </div>
+        <div className={styles.ItemsColumn}>
+          {TIER_2_DRONES.map((drone) => (
+            <Tier2ItemUpgrade
+              category="drone"
+              key={drone.id}
+              tier2Item={drone}
+            />
+          ))}
+        </div>
+      </div>
     </div>
   );
 }

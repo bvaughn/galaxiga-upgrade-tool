@@ -4,15 +4,15 @@ export function Card({
   category,
   type,
 }: {
-  category: "generic" | "specific";
-  type: "drone" | "ship";
+  category: "drone" | "ship";
+  type: "generic" | "specific";
 }) {
   let source = "";
   let title = "";
 
-  switch (type) {
+  switch (category) {
     case "drone": {
-      switch (category) {
+      switch (type) {
         case "generic": {
           source = "/images/generic-drone-card.jpeg";
           title = "Generic drone card";
@@ -27,7 +27,7 @@ export function Card({
       break;
     }
     case "ship": {
-      switch (category) {
+      switch (type) {
         case "generic": {
           source = "/images/ships/generic-card.jpeg";
           title = "Generic ship card";

@@ -1,4 +1,4 @@
-export type Ship = {
+export type Item = {
   description?: string;
   id: string;
   imageName?: string;
@@ -6,20 +6,20 @@ export type Ship = {
   previousName?: string;
 };
 
-export type Tier1Ship = Ship & {
+export type Tier1Item = Item & {
   unlockedBy?: string;
 };
 
-export type Tier2Ship = Ship & {
+export type Tier2Item = Item & {
   createdByMerging: string[];
 };
 
-export function isTier1Ship(ship: Ship): ship is Tier1Ship {
-  return !isTier2Ship(ship);
+export function isTier1Item(item: Item): item is Tier1Item {
+  return !isTier2Item(item);
 }
 
-export function isTier2Ship(ship: Ship): ship is Tier2Ship {
-  return ship.hasOwnProperty("createdByMerging");
+export function isTier2Item(item: Item): item is Tier2Item {
+  return item.hasOwnProperty("createdByMerging");
 }
 
 // Each evolution level costs a fixed number of cards and gems.

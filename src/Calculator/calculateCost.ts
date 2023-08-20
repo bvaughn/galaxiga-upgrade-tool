@@ -3,7 +3,7 @@ import {
   MAX_UPGRADE,
   TIER_1_SHIP_AND_STONE,
 } from "../data/upgrade-costs";
-import { Tier1ItemStats } from "./types";
+import { Tier1ItemStats } from "./useTier1ItemStats";
 
 export type Cost = {
   boxesNeeded: number;
@@ -15,7 +15,10 @@ export type Cost = {
   goldNeeded: number;
 };
 
-export function calculateCost(stats: Tier1ItemStats): Cost {
+export function calculateCost(
+  stats: Tier1ItemStats,
+  category: "drone" | "ship"
+): Cost {
   let cardsNeeded = 0;
   let gemsNeededForLevels = 0;
   let goldNeeded = 0;
@@ -45,18 +48,10 @@ export function calculateCost(stats: Tier1ItemStats): Cost {
   // Assumes 50 cards per box; this varies based on the type of box
   let boxesNeeded = Math.ceil(cardsNeeded / 50);
 
-  // Assumes ship box type
-  let gemsNeededForCards = boxesNeeded * 280;
+  // Assumes item-specific box type
+  let boxCost = category === "drone" ? 140 : 280;
+  let gemsNeededForCards = boxesNeeded * boxCost;
 
-  console.log("calculateCost()\nstats:", stats, "\ncost:", {
-    boxesNeeded,
-    cardsNeeded,
-    gemsNeeded: {
-      forCards: gemsNeededForCards,
-      forLevels: gemsNeededForLevels,
-    },
-    goldNeeded,
-  });
   return {
     boxesNeeded,
     cardsNeeded,

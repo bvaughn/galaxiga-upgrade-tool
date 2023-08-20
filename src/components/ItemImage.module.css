@@ -12,5 +12,10 @@
 
 .Image {
   max-width: 100%;
+}
+.Image[data-category="drone"] {
+  transform: rotate(-45deg) scale(1.05);
+}
+.Image[data-category="ship"] {
   transform: rotate(-45deg) scale(1.25);
 }

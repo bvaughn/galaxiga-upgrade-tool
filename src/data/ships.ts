@@ -1,4 +1,4 @@
-import { Tier1Ship, Tier2Ship } from "../types";
+import { Tier1Item, Tier2Item } from "../types";
 
 // T1 and T2 names and descriptions
 // https://galaxiga.fandom.com/wiki/Starships
@@ -6,7 +6,7 @@ import { Tier1Ship, Tier2Ship } from "../types";
 // T2 to T3
 // https://youtu.be/1SVg6GJFqqQ
 
-export const TIER_1_SHIPS: Tier1Ship[] = [
+export const TIER_1_SHIPS: Tier1Item[] = [
   {
     id: "captain_g",
     imageName: "tier_1_captain_g.jpeg",
@@ -138,7 +138,7 @@ export const TIER_1_SHIPS: Tier1Ship[] = [
   },
 ];
 
-export const TIER_2_SHIPS: Tier2Ship[] = [
+export const TIER_2_SHIPS: Tier2Item[] = [
   {
     id: "breath_of_glacian",
     imageName: "tier_2_breath_of_glacian.jpeg",

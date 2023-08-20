@@ -6,6 +6,20 @@
   background-color: #111;
 }
 
+.ItemsRow {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  gap: 0.5rem;
+}
+.ItemsColumn {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0.5rem;
+}
+
 .OptionsRow,
 .OptionsColumn {
   flex: 1 1 auto;
