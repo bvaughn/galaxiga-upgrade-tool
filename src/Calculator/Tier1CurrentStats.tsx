@@ -1,11 +1,14 @@
 import { MAX_LEVEL, MAX_UPGRADE } from "../data/upgrade-costs";
 import { Tier1Ship } from "../types";
 import { formatNumber } from "../utils/number";
+import { Coin } from "./Coin";
+import { Gem } from "./Gem";
 import { Image } from "./Image";
 import { Cost, calculateCost } from "./calculateCost";
 import { useTier1ShipStats } from "./useTier1ShipStats";
-
+import { NumberInput } from "./NumberInput";
 import { useMemo } from "react";
+import { Card } from "./Card";
 import styles from "./Tier1CurrentStats.module.css";
 
 export function Tier1CurrentStats({ tier1Ship }: { tier1Ship: Tier1Ship }) {
@@ -66,7 +69,7 @@ export function Tier1CurrentStats({ tier1Ship }: { tier1Ship: Tier1Ship }) {
         </label>
       </div>
       <label className={styles.CardInputLabel}>
-        🃏
+        <Card type="specific" />
         <NumberInput
           className={styles.CardInput}
           maxValue={9999}
@@ -82,43 +85,17 @@ export function Tier1CurrentStats({ tier1Ship }: { tier1Ship: Tier1Ship }) {
       </label>
       {cost.goldNeeded > 0 && (
         <div className={styles.Costs}>
-          <div>🃏 {formatNumber(cost.cardsNeeded)}</div>
-          <div>💎 {formatNumber(cost.gemsNeeded.forLevels)}</div>
-          <div>🪙 {formatNumber(cost.goldNeeded)}</div>
+          <div className={styles.Cost}>
+            <Card type="specific" /> {formatNumber(cost.cardsNeeded)}
+          </div>
+          <div className={styles.Cost}>
+            <Gem /> {formatNumber(cost.gemsNeeded.forLevels)}
+          </div>
+          <div className={styles.Cost}>
+            <Coin /> {formatNumber(cost.goldNeeded)}
+          </div>
         </div>
       )}
     </div>
-  );
-}
-
-function NumberInput({
-  className = "",
-  maxValue,
-  minValue,
-  onChange,
-  value,
-}: {
-  className?: string;
-  maxValue: number;
-  minValue: number;
-  onChange: (value: number) => void;
-  value: number;
-}) {
-  return (
-    <input
-      className={`${styles.NumberInput} ${className}`}
-      min={minValue}
-      max={maxValue}
-      onChange={({ target }) => {
-        onChange(
-          Math.max(
-            minValue,
-            Math.min(maxValue, parseInt(target.value || "0", 10))
-          )
-        );
-      }}
-      type="number"
-      value={value}
-    />
   );
 }

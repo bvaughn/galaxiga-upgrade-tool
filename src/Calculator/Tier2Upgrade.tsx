@@ -1,28 +1,34 @@
 import { useMemo, useState } from "react";
 import { TIER_1_SHIPS } from "../data/ships";
-import { MAX_LEVEL, MAX_UPGRADE } from "../data/upgrade-costs";
 import { Tier2Ship } from "../types";
+import { Card } from "./Card";
+import { Coin } from "./Coin";
+import { Gem } from "./Gem";
 import { Image } from "./Image";
 import { Tier1CurrentStats } from "./Tier1CurrentStats";
 
+import { formatNumber } from "../utils/number";
 import styles from "./Tier2Upgrade.module.css";
 import { Cost, calculateCost } from "./calculateCost";
 import { useTier1ShipStats } from "./useTier1ShipStats";
-import { formatNumber } from "../utils/number";
+import useLocalStorage from "../hooks/useLocalStorage";
 
 export function Tier2Upgrade({ tier2Ship }: { tier2Ship: Tier2Ship }) {
   const [buyCards, setBuyCards] = useState(false);
 
   const [ship1Stats] = useTier1ShipStats(tier2Ship.createdByMerging[0]);
   const [ship2Stats] = useTier1ShipStats(tier2Ship.createdByMerging[1]);
+  const [numGenericCards] = useLocalStorage<number>("num-generic-cards", 0);
 
   const cost1 = useMemo<Cost>(() => calculateCost(ship1Stats), [ship1Stats]);
   const cost2 = useMemo<Cost>(() => calculateCost(ship2Stats), [ship2Stats]);
 
   const isComplete = cost1.goldNeeded === 0 && cost2.goldNeeded === 0;
 
-  const cardsNeeded = cost1.cardsNeeded + cost2.cardsNeeded;
+  // Only count the generic cards once
+  const cardsNeeded = cost1.cardsNeeded + cost2.cardsNeeded + numGenericCards;
   const goldNeeded = cost1.goldNeeded + cost2.goldNeeded;
+
   let gemsNeeded = cost1.gemsNeeded.forLevels + cost2.gemsNeeded.forLevels;
   if (buyCards) {
     gemsNeeded += cost1.gemsNeeded.forCards + cost2.gemsNeeded.forCards;
@@ -39,9 +45,17 @@ export function Tier2Upgrade({ tier2Ship }: { tier2Ship: Tier2Ship }) {
           {isComplete || (
             <>
               <div className={styles.Costs}>
-                {buyCards || <div>🃏 {formatNumber(cardsNeeded)}</div>}
-                <div>💎 {formatNumber(gemsNeeded)}</div>
-                <div>🪙 {formatNumber(goldNeeded)}</div>
+                {buyCards || (
+                  <div className={styles.Cost}>
+                    <Card type="generic" /> {formatNumber(cardsNeeded)}
+                  </div>
+                )}
+                <div className={styles.Cost}>
+                  <Gem /> {formatNumber(gemsNeeded)}
+                </div>
+                <div className={styles.Cost}>
+                  <Coin /> {formatNumber(goldNeeded)}
+                </div>
               </div>
               <div>
                 <label className={styles.BuyCardsToggle}>

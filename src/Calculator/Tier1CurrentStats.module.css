@@ -57,18 +57,6 @@
   width: 1ch;
 }
 
-.NumberInput {
-  width: 5ch;
-  background-color: rgba(0, 0, 0, 0.35);
-  color: white;
-  border: none;
-  border-radius: 0.25rem;
-}
-.NumberInput:focus {
-  outline: none;
-  background-color: #000;
-}
-
 .LevelMarkers {
   color: #74d0fe;
   font-size: 0.8rem;
@@ -91,6 +79,7 @@
   display: flex;
   flex-direction: row;
   align-items: center;
+  gap: 0.25rem;
 }
 .CardInput {
   font-size: 1rem;
@@ -100,6 +89,13 @@
 .Costs {
   font-size: 0.8rem;
   display: grid;
-  grid-template-columns: 6ch 6ch 8ch;
-  gap: 0.5rem;
+  grid-template-columns: repeat(3, auto);
+  gap: 2ch;
+}
+
+.Cost {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 1ch;
 }
