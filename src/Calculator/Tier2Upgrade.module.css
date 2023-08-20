@@ -15,7 +15,7 @@
 }
 
 .Description {
-  width: 18rem;
+  width: 20rem;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -44,13 +44,12 @@
   gap: 0.25rem;
 }
 
-.Costs,
-.BuyCardsToggle {
+.Costs {
   font-size: 0.8rem;
   display: flex;
   flex-direction: row;
   align-items: center;
-  gap: 1ch;
+  gap: 2ch;
 }
 
 .Checkbox {
@@ -63,4 +62,7 @@
   flex-direction: row;
   align-items: center;
   gap: 1ch;
+}
+.Cost[data-disabled] {
+  filter: grayscale(1);
 }

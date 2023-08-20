@@ -14,11 +14,10 @@ import { useTier1ShipStats } from "./useTier1ShipStats";
 import useLocalStorage from "../hooks/useLocalStorage";
 
 export function Tier2Upgrade({ tier2Ship }: { tier2Ship: Tier2Ship }) {
-  const [buyCards, setBuyCards] = useState(false);
-
   const [ship1Stats] = useTier1ShipStats(tier2Ship.createdByMerging[0]);
   const [ship2Stats] = useTier1ShipStats(tier2Ship.createdByMerging[1]);
   const [numGenericCards] = useLocalStorage<number>("num-generic-cards", 0);
+  const [buyCards] = useLocalStorage<boolean>("buy-cards-with-gems", false);
 
   const cost1 = useMemo<Cost>(() => calculateCost(ship1Stats), [ship1Stats]);
   const cost2 = useMemo<Cost>(() => calculateCost(ship2Stats), [ship2Stats]);
@@ -45,28 +44,19 @@ export function Tier2Upgrade({ tier2Ship }: { tier2Ship: Tier2Ship }) {
           {isComplete || (
             <>
               <div className={styles.Costs}>
-                {buyCards || (
-                  <div className={styles.Cost}>
-                    <Card type="generic" /> {formatNumber(cardsNeeded)}
-                  </div>
-                )}
+                <div
+                  className={styles.Cost}
+                  data-disabled={buyCards || undefined}
+                >
+                  <Card type="generic" />
+                  {buyCards ? "N/A" : formatNumber(cardsNeeded)}
+                </div>
                 <div className={styles.Cost}>
                   <Gem /> {formatNumber(gemsNeeded)}
                 </div>
                 <div className={styles.Cost}>
                   <Coin /> {formatNumber(goldNeeded)}
                 </div>
-              </div>
-              <div>
-                <label className={styles.BuyCardsToggle}>
-                  <input
-                    checked={buyCards}
-                    className={styles.Checkbox}
-                    onChange={({ target }) => setBuyCards(target.checked)}
-                    type="checkbox"
-                  />
-                  Use ship boxes
-                </label>
               </div>
             </>
           )}

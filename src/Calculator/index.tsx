@@ -12,18 +12,34 @@ export function Calculator() {
     0
   );
 
+  const [buyCardsWithGems, setByCardsWithGems] = useLocalStorage<boolean>(
+    "buy-cards-with-gems",
+    false
+  );
+
   return (
     <div className={styles.Page}>
-      <label className={styles.CardInputLabel}>
-        <Card type="generic" />
-        <NumberInput
-          className={styles.CardInput}
-          maxValue={9999}
-          minValue={0}
-          onChange={setNumGenericCards}
-          value={numGenericCards}
-        />
-      </label>
+      <div className={styles.OptionsRow}>
+        <label className={styles.CardInputLabel}>
+          <Card type="generic" />
+          <NumberInput
+            className={styles.CardInput}
+            maxValue={9999}
+            minValue={0}
+            onChange={setNumGenericCards}
+            value={numGenericCards}
+          />
+        </label>
+        <label className={styles.BuyCardsToggle}>
+          <input
+            checked={buyCardsWithGems}
+            className={styles.Checkbox}
+            onChange={({ target }) => setByCardsWithGems(target.checked)}
+            type="checkbox"
+          />
+          Buy cards from Ship boxes
+        </label>
+      </div>
 
       {TIER_2_SHIPS.map((ship) => (
         <Tier2Upgrade key={ship.id} tier2Ship={ship} />

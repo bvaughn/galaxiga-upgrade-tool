@@ -6,15 +6,30 @@
   background-color: #111;
 }
 
+.OptionsRow {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
 .CardInputLabel {
   font-size: 1.5rem;
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: center;
   gap: 0.25rem;
 }
 .CardInput {
   font-size: 1rem;
   width: 6ch;
+}
+
+.BuyCardsToggle {
+  font-size: 0.8rem;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 1ch;
+  color: #fff;
 }
