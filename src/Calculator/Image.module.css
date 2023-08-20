@@ -1,0 +1,16 @@
+.Crop {
+  overflow: hidden;
+  padding: 0.25rem;
+  box-sizing: border-box;
+}
+
+.Rotator {
+  border-radius: 1rem;
+  transform: rotate(45deg);
+  overflow: hidden;
+}
+
+.Image {
+  max-width: 100%;
+  transform: rotate(-45deg) scale(1.25);
+}

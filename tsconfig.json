@@ -1,0 +1,14 @@
+{
+    "baseUrl": ".",
+    "compilerOptions": {
+        "jsx": "react-jsx",
+        "lib": ["ES2015", "DOM"],
+        "module": "es2020",
+        "moduleResolution": "bundler",
+        "noImplicitAny": true,
+        "strict": true,
+        "typeRoots": ["node_modules/@types"]
+    },
+    "exclude": ["node_modules"],
+    "include": ["src/**/*.ts", "definitions/css.d.ts"]
+}

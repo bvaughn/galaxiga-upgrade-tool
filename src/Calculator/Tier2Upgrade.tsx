@@ -1,0 +1,71 @@
+import { useMemo, useState } from "react";
+import { TIER_1_SHIPS } from "../data/ships";
+import { MAX_LEVEL, MAX_UPGRADE } from "../data/upgrade-costs";
+import { Tier2Ship } from "../types";
+import { Image } from "./Image";
+import { Tier1CurrentStats } from "./Tier1CurrentStats";
+
+import styles from "./Tier2Upgrade.module.css";
+import { Cost, calculateCost } from "./calculateCost";
+import { useTier1ShipStats } from "./useTier1ShipStats";
+import { formatNumber } from "../utils/number";
+
+export function Tier2Upgrade({ tier2Ship }: { tier2Ship: Tier2Ship }) {
+  const [buyCards, setBuyCards] = useState(false);
+
+  const [ship1Stats] = useTier1ShipStats(tier2Ship.createdByMerging[0]);
+  const [ship2Stats] = useTier1ShipStats(tier2Ship.createdByMerging[1]);
+
+  const cost1 = useMemo<Cost>(() => calculateCost(ship1Stats), [ship1Stats]);
+  const cost2 = useMemo<Cost>(() => calculateCost(ship2Stats), [ship2Stats]);
+
+  const isComplete = cost1.goldNeeded === 0 && cost2.goldNeeded === 0;
+
+  const cardsNeeded = cost1.cardsNeeded + cost2.cardsNeeded;
+  const goldNeeded = cost1.goldNeeded + cost2.goldNeeded;
+  let gemsNeeded = cost1.gemsNeeded.forLevels + cost2.gemsNeeded.forLevels;
+  if (buyCards) {
+    gemsNeeded += cost1.gemsNeeded.forCards + cost2.gemsNeeded.forCards;
+  }
+
+  return (
+    <div className={styles.Container} data-complete={isComplete || undefined}>
+      <div className={styles.Description}>
+        {tier2Ship.imageName && (
+          <Image className={styles.Image} imageName={tier2Ship.imageName} />
+        )}
+        <div className={styles.Column}>
+          <div className={styles.Name}>{tier2Ship.name}</div>
+          {isComplete || (
+            <>
+              <div className={styles.Costs}>
+                {buyCards || <div>🃏 {formatNumber(cardsNeeded)}</div>}
+                <div>💎 {formatNumber(gemsNeeded)}</div>
+                <div>🪙 {formatNumber(goldNeeded)}</div>
+              </div>
+              <div>
+                <label className={styles.BuyCardsToggle}>
+                  <input
+                    checked={buyCards}
+                    className={styles.Checkbox}
+                    onChange={({ target }) => setBuyCards(target.checked)}
+                    type="checkbox"
+                  />
+                  Use ship boxes
+                </label>
+              </div>
+            </>
+          )}
+        </div>
+      </div>
+      <div className={styles.ShipContainer}>
+        {tier2Ship.createdByMerging.map((id) => (
+          <Tier1CurrentStats
+            key={id}
+            tier1Ship={TIER_1_SHIPS.find((ship) => ship.id === id)!}
+          />
+        ))}
+      </div>
+    </div>
+  );
+}

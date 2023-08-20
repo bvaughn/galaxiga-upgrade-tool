@@ -1,0 +1,44 @@
+.Calculator {
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.Row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 1rem;
+}
+
+.Tier2ShipName {
+  font-weight: bold;
+}
+.Tier2ShipName[data-complete] {
+  color: lightslategray;
+}
+
+.Grid {
+  display: inline-grid;
+  grid-template-columns: 15ch 10ch 13ch 10ch 6ch 8ch;
+  grid-template-rows: auto;
+  grid-column-gap: 1ch;
+  grid-row-gap: 0.25rem;
+
+  border: 1px solid lightslategray;
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+}
+
+.GridColumn {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 1ch;
+  font-size: small;
+}
+.GridColumn[data-needed="0"] {
+  color: lightslategray;
+}
