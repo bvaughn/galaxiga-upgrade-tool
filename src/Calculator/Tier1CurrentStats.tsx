@@ -1,16 +1,16 @@
+import { useMemo } from "react";
+import { Card } from "../components/Card";
+import { Coin } from "../components/Coin";
+import { Gem } from "../components/Gem";
+import { Icon } from "../components/Icon";
+import { ShipImage } from "../components/ShipImage";
+import { NumberInput } from "../components/NumberInput";
 import { MAX_LEVEL, MAX_UPGRADE } from "../data/upgrade-costs";
 import { Tier1Ship } from "../types";
 import { formatNumber } from "../utils/number";
-import { Coin } from "./Coin";
-import { Gem } from "./Gem";
-import { Icon } from "./Icon";
-import { Image } from "./Image";
+import styles from "./Tier1CurrentStats.module.css";
 import { Cost, calculateCost } from "./calculateCost";
 import { useTier1ShipStats } from "./useTier1ShipStats";
-import { NumberInput } from "./NumberInput";
-import { useMemo } from "react";
-import { Card } from "./Card";
-import styles from "./Tier1CurrentStats.module.css";
 
 export function Tier1CurrentStats({ tier1Ship }: { tier1Ship: Tier1Ship }) {
   const [stats, setStats] = useTier1ShipStats(tier1Ship.id);
@@ -40,12 +40,12 @@ export function Tier1CurrentStats({ tier1Ship }: { tier1Ship: Tier1Ship }) {
     });
   };
 
-  const cost = useMemo(() => calculateCost<Cost>(stats), [stats]);
+  const cost = useMemo(() => calculateCost(stats), [stats]);
 
   return (
     <div className={styles.Container}>
       {tier1Ship.imageName ? (
-        <Image className={styles.Image} imageName={tier1Ship.imageName} />
+        <ShipImage className={styles.Image} ship={tier1Ship} />
       ) : (
         <div className={styles.ImagePlaceholder} />
       )}
@@ -92,24 +92,25 @@ export function Tier1CurrentStats({ tier1Ship }: { tier1Ship: Tier1Ship }) {
         </div>
       </div>
       <label className={styles.CardInputLabel}>
-        <Card type="specific" />
+        <Card category="specific" type="ship" />
         <NumberInput
           className={styles.CardInput}
           maxValue={9999}
           minValue={0}
-          onChange={(cards: number) =>
+          onChange={(cards: number) => {
             setStats({
               ...stats,
               cards,
-            })
-          }
+            });
+          }}
           value={stats?.cards}
         />
       </label>
       {cost.goldNeeded > 0 && (
         <div className={styles.Costs}>
           <div className={styles.Cost}>
-            <Card type="specific" /> {formatNumber(cost.cardsNeeded)}
+            <Card category="generic" type="ship" />{" "}
+            {formatNumber(cost.cardsNeeded)}
           </div>
           <div className={styles.Cost}>
             <Gem /> {formatNumber(cost.gemsNeeded.forLevels)}

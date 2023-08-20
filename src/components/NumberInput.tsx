@@ -1,3 +1,4 @@
+import { HTMLAttributes } from "react";
 import styles from "./NumberInput.module.css";
 
 export function NumberInput({
@@ -6,15 +7,17 @@ export function NumberInput({
   minValue,
   onChange,
   value,
+  ...rest
 }: {
   className?: string;
   maxValue: number;
   minValue: number;
   onChange: (value: number) => void;
   value: number;
-}) {
+} & Omit<HTMLAttributes<HTMLInputElement>, "onChange">) {
   return (
     <input
+      {...rest}
       className={`${styles.NumberInput} ${className}`}
       min={minValue}
       max={maxValue}

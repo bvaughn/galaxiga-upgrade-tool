@@ -3,7 +3,7 @@ import {
   MAX_UPGRADE,
   TIER_1_SHIP_AND_STONE,
 } from "../data/upgrade-costs";
-import { Tier1ShipStats } from "./types";
+import { Tier1ItemStats } from "./types";
 
 export type Cost = {
   boxesNeeded: number;
@@ -15,7 +15,7 @@ export type Cost = {
   goldNeeded: number;
 };
 
-export function calculateCost(stats: Tier1ShipStats): Cost {
+export function calculateCost(stats: Tier1ItemStats): Cost {
   let cardsNeeded = 0;
   let gemsNeededForLevels = 0;
   let goldNeeded = 0;
