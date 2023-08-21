@@ -23,21 +23,20 @@ export function calculateCost(
   let gemsNeededForLevels = 0;
   let goldNeeded = 0;
 
-  const firstLevelIndex = stats.level;
-  const firstUpgradeIndex = stats.upgrade;
-
-  for (let levelIndex = firstLevelIndex; levelIndex < MAX_LEVEL; levelIndex++) {
+  // let todo = `level: ${stats.level}, upgrade: ${stats.upgrade}`;
+  for (let levelIndex = stats.level; levelIndex < MAX_LEVEL; levelIndex++) {
+    // todo += `\n  level: ${levelIndex + 1}`;
     const levelCosts = TIER_1_SHIP_AND_STONE[levelIndex];
 
     cardsNeeded += levelCosts.cardCost;
     gemsNeededForLevels += levelCosts.gemCost;
 
     for (
-      let goldCostIndex =
-        levelIndex === firstLevelIndex ? firstUpgradeIndex : 0;
+      let goldCostIndex = levelIndex === stats.level ? stats.upgrade : 0;
       goldCostIndex < MAX_UPGRADE;
       goldCostIndex++
     ) {
+      // todo += `\n    upgrade: ${goldCostIndex + 1}`;
       goldNeeded += levelCosts.goldCosts[goldCostIndex];
     }
   }
@@ -52,6 +51,7 @@ export function calculateCost(
   let boxCost = category === "drone" ? 140 : 280;
   let gemsNeededForCards = boxesNeeded * boxCost;
 
+  // console.log(todo);
   return {
     boxesNeeded,
     cardsNeeded,

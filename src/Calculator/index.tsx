@@ -35,7 +35,7 @@ export function Calculator() {
               onChange={({ target }) => setByCardsWithGems(target.checked)}
               type="checkbox"
             />
-            Buy cards from Ship boxes
+            Buy cards from treasure boxes
           </label>
         </div>
         <div className={styles.OptionsColumn}>

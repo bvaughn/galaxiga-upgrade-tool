@@ -41,7 +41,8 @@ export function Tier2ItemUpgrade({
   const isComplete =
     costForItem1.goldNeeded === 0 && costForItem2.goldNeeded === 0;
 
-  // Only count the generic cards once
+  // The generic cards will have already been factored into both item costs
+  // but they can only be spent once, so add the on top again here
   const cardsNeeded =
     costForItem1.cardsNeeded + costForItem2.cardsNeeded + numGenericCards;
   const goldNeeded = costForItem1.goldNeeded + costForItem2.goldNeeded;
