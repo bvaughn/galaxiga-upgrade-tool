@@ -50,15 +50,11 @@ export function Tier1ItemUpgrade({
 
   return (
     <div className={styles.Container}>
-      {tier1Item.imageName ? (
-        <ItemImage
-          category={category}
-          className={styles.Image}
-          item={tier1Item}
-        />
-      ) : (
-        <div className={styles.ImagePlaceholder} />
-      )}
+      <ItemImage
+        category={category}
+        className={styles.Image}
+        item={tier1Item}
+      />
       <div className={styles.Description}>
         <div className={styles.Name}>{tier1Item.name}</div>
         <div className={styles.Markers}>

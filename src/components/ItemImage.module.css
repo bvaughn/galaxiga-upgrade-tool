@@ -1,21 +1,6 @@
-.Crop {
-  overflow: hidden;
-  padding: 0.25rem;
-  box-sizing: border-box;
-}
-
-.Rotator {
-  border-radius: 1rem;
-  transform: rotate(45deg);
-  overflow: hidden;
-}
-
 .Image {
-  max-width: 100%;
+  clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%);
 }
-.Image[data-category="drone"] {
-  transform: rotate(-45deg) scale(1.05);
-}
-.Image[data-category="ship"] {
-  transform: rotate(-45deg) scale(1.25);
+.Image[data-not-found] {
+  transform: scale(0.75);
 }

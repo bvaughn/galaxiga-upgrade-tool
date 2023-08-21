@@ -56,13 +56,11 @@ export function Tier2ItemUpgrade({
   return (
     <div className={styles.Container} data-complete={isComplete || undefined}>
       <div className={styles.Description}>
-        {tier2Item.imageName && (
-          <ItemImage
-            category={category}
-            className={styles.Image}
-            item={tier2Item}
-          />
-        )}
+        <ItemImage
+          category={category}
+          className={styles.Image}
+          item={tier2Item}
+        />
         <div className={styles.Column}>
           <div className={styles.Name}>{tier2Item.name}</div>
           {isComplete || (

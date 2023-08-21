@@ -1,7 +1,6 @@
 export type Item = {
   description?: string;
   id: string;
-  imageName?: string;
   name: string;
   previousName?: string;
 };
