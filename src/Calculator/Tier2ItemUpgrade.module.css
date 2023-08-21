@@ -1,7 +1,7 @@
 .Container {
   display: flex;
   flex-direction: row;
-  gap: 2ch;
+  gap: 1ch;
   border-radius: 0.5rem;
   padding: 0.5rem;
 
@@ -15,11 +15,11 @@
 }
 
 .Description {
-  width: 20rem;
+  width: 18rem;
   display: flex;
   flex-direction: row;
   align-items: center;
-  gap: 2ch;
+  gap: 1ch;
 }
 
 .Column {
@@ -49,7 +49,7 @@
   display: flex;
   flex-direction: row;
   align-items: center;
-  gap: 2ch;
+  gap: 1ch;
 }
 
 .Checkbox {
@@ -61,7 +61,7 @@
   display: flex;
   flex-direction: row;
   align-items: center;
-  gap: 1ch;
+  gap: 0.25em;
 }
 .Cost[data-disabled] {
   filter: grayscale(1);
