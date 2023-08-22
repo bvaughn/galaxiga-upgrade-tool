@@ -84,7 +84,7 @@
   font-size: 1rem;
 }
 .Input[data-type="cards"] {
-  width: 7ch;
+  width: 8ch;
 }
 .Input[data-type="coins"] {
   width: 12ch;

@@ -80,7 +80,7 @@ export function Calculator() {
               <NumberInput
                 className={styles.Input}
                 data-type="cards"
-                maxValue={9999}
+                maxValue={99_999}
                 minValue={0}
                 onChange={setNumGenericShipCards}
                 value={numGenericShipCards}

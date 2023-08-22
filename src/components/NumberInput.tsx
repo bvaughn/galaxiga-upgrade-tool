@@ -22,12 +22,21 @@ export function NumberInput({
       min={minValue}
       max={maxValue}
       onChange={({ target }) => {
-        onChange(
-          Math.max(
-            minValue,
-            Math.min(maxValue, parseInt(target.value || "0", 10))
-          )
-        );
+        let value = target.value;
+        switch (value.length) {
+          case 0:
+            value = "0";
+            break;
+          case 1:
+            break;
+          default:
+            if (value.startsWith("0")) {
+              target.value = value = value.substring(1);
+            }
+            break;
+        }
+
+        onChange(Math.max(minValue, Math.min(maxValue, parseInt(value, 10))));
       }}
       type="number"
       value={value}
