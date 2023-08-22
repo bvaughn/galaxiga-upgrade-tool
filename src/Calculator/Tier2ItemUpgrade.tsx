@@ -49,8 +49,11 @@ export function Tier2ItemUpgrade({
   );
   const goldNeeded = costForItem1.goldNeeded + costForItem2.goldNeeded;
 
+  const gemsNeededToMerge = category === "drone" ? 250 : 500;
   let gemsNeeded =
-    costForItem1.gemsNeeded.forLevels + costForItem2.gemsNeeded.forLevels;
+    costForItem1.gemsNeeded.forLevels +
+    costForItem2.gemsNeeded.forLevels +
+    gemsNeededToMerge;
   if (buyCards) {
     const costPerBox = category === "drone" ? 140 : 280;
     gemsNeeded += Math.ceil(cardsNeeded / 50) * costPerBox;
