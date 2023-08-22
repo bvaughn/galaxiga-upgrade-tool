@@ -22,10 +22,24 @@
   gap: 1ch;
 }
 
+@media (max-width: 850px) {
+  .Container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .Description {
+    justify-content: center;
+  }
+}
+
 .Column {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+}
+.Column[data-is-complete] {
+  opacity: 0.5;
 }
 
 .Name {

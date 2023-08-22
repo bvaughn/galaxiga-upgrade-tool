@@ -1,12 +1,25 @@
-.Container {
+.Container,
+.LeftColumn,
+.RightColumn {
   display: flex;
   flex-direction: row;
   align-items: center;
   gap: 1ch;
 }
 
+@media (max-width: 600px) {
+  .Container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .RightColumn {
+    padding-bottom: 1rem;
+  }
+}
+
 .Description {
-  width: 10rem;
+  width: 9.5rem;
   display: flex;
   flex-direction: column;
 }

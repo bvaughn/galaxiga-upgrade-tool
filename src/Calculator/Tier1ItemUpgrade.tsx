@@ -24,25 +24,25 @@ export function Tier1ItemUpgrade({
   const decreaseLevel = () => {
     setStats({
       ...stats,
-      level: stats.level - 1,
+      level: Math.max(0, stats.level - 1),
     });
   };
   const increaseLevel = () => {
     setStats({
       ...stats,
-      level: stats.level + 1,
+      level: Math.min(MAX_LEVEL, stats.level + 1),
     });
   };
   const decreaseUpgrade = () => {
     setStats({
       ...stats,
-      upgrade: stats.upgrade - 1,
+      upgrade: Math.max(0, stats.upgrade - 1),
     });
   };
   const increaseUpgrade = () => {
     setStats({
       ...stats,
-      upgrade: stats.upgrade + 1,
+      upgrade: Math.min(MAX_UPGRADE, stats.upgrade + 1),
     });
   };
 
@@ -50,79 +50,85 @@ export function Tier1ItemUpgrade({
 
   return (
     <div className={styles.Container}>
-      <ItemImage
-        category={category}
-        className={styles.Image}
-        item={tier1Item}
-      />
-      <div className={styles.Description}>
-        <div className={styles.Name}>{tier1Item.name}</div>
-        <div className={styles.Markers}>
-          <div className={styles.LevelMarkers}>
-            {"●".repeat(stats.level)}
-            {"○".repeat(MAX_LEVEL - stats.level)}
-          </div>
-          <Icon
-            data-disabled={stats.level === 0 || undefined}
-            className={styles.AddOrSubtractIcon}
-            onClick={decreaseLevel}
-            type="subtract"
-          />
-          <Icon
-            data-disabled={stats.level === MAX_LEVEL || undefined}
-            className={styles.AddOrSubtractIcon}
-            onClick={stats.level < MAX_LEVEL ? increaseLevel : undefined}
-            type="add"
-          />
-        </div>
-        <div className={styles.Markers}>
-          <div className={styles.UpgradeMarkers}>
-            {"▰".repeat(stats.upgrade)}
-            <span className={styles.UpgradeMarkersInactive}>
-              {"▰".repeat(MAX_UPGRADE - stats.upgrade)}
-            </span>
-          </div>
-
-          <Icon
-            data-disabled={stats.upgrade === 0 || undefined}
-            className={styles.AddOrSubtractIcon}
-            onClick={decreaseUpgrade}
-            type="subtract"
-          />
-          <Icon
-            data-disabled={stats.upgrade === MAX_UPGRADE || undefined}
-            className={styles.AddOrSubtractIcon}
-            onClick={stats.upgrade < MAX_UPGRADE ? increaseUpgrade : undefined}
-            type="add"
-          />
-        </div>
-      </div>
-      <label className={styles.CardInputLabel}>
-        <Card type="specific" category={category} />
-        <NumberInput
-          className={styles.CardInput}
-          maxValue={9999}
-          minValue={0}
-          onChange={(cards: number) => {
-            setStats({
-              ...stats,
-              cards,
-            });
-          }}
-          value={stats?.cards}
+      <div className={styles.LeftColumn}>
+        <ItemImage
+          category={category}
+          className={styles.Image}
+          item={tier1Item}
         />
-      </label>
+        <div className={styles.Description}>
+          <div className={styles.Name}>{tier1Item.name}</div>
+          <div className={styles.Markers}>
+            <div className={styles.LevelMarkers}>
+              {"●".repeat(stats.level)}
+              {"○".repeat(MAX_LEVEL - stats.level)}
+            </div>
+            <Icon
+              data-disabled={stats.level === 0 || undefined}
+              className={styles.AddOrSubtractIcon}
+              onClick={decreaseLevel}
+              type="subtract"
+            />
+            <Icon
+              data-disabled={stats.level === MAX_LEVEL || undefined}
+              className={styles.AddOrSubtractIcon}
+              onClick={stats.level < MAX_LEVEL ? increaseLevel : undefined}
+              type="add"
+            />
+          </div>
+          <div className={styles.Markers}>
+            <div className={styles.UpgradeMarkers}>
+              {"▰".repeat(stats.upgrade)}
+              <span className={styles.UpgradeMarkersInactive}>
+                {"▰".repeat(MAX_UPGRADE - stats.upgrade)}
+              </span>
+            </div>
+
+            <Icon
+              data-disabled={stats.upgrade === 0 || undefined}
+              className={styles.AddOrSubtractIcon}
+              onClick={decreaseUpgrade}
+              type="subtract"
+            />
+            <Icon
+              data-disabled={stats.upgrade === MAX_UPGRADE || undefined}
+              className={styles.AddOrSubtractIcon}
+              onClick={
+                stats.upgrade < MAX_UPGRADE ? increaseUpgrade : undefined
+              }
+              type="add"
+            />
+          </div>
+        </div>
+        <label className={styles.CardInputLabel}>
+          <Card type="specific" category={category} />
+          <NumberInput
+            className={styles.CardInput}
+            maxValue={9999}
+            minValue={0}
+            onChange={(cards: number) => {
+              setStats({
+                ...stats,
+                cards,
+              });
+            }}
+            value={stats?.cards}
+          />
+        </label>
+      </div>
       {cost.goldNeeded > 0 && (
-        <div className={styles.Costs}>
-          <div className={styles.Cost}>
-            <Card type="generic" category={category} />{" "}
-            {formatNumber(cost.cardsNeeded)}
-          </div>
-          <div className={styles.Cost}>
-            <Gem /> {formatNumber(cost.gemsNeeded.forLevels)}
-          </div>
-          <div className={styles.Cost}>
-            <Coin /> {formatNumber(cost.goldNeeded)}
+        <div className={styles.RightColumn}>
+          <div className={styles.Costs}>
+            <div className={styles.Cost}>
+              <Card type="generic" category={category} />{" "}
+              {formatNumber(cost.cardsNeeded)}
+            </div>
+            <div className={styles.Cost}>
+              <Gem /> {formatNumber(cost.gemsNeeded.forLevels)}
+            </div>
+            <div className={styles.Cost}>
+              <Coin /> {formatNumber(cost.goldNeeded)}
+            </div>
           </div>
         </div>
       )}

@@ -14,12 +14,12 @@ export function Card({
     case "drone": {
       switch (type) {
         case "generic": {
-          source = "/images/generic-drone-card.jpeg";
+          source = "/images/drones/generic-card.jpeg";
           title = "Generic drone card";
           break;
         }
         case "specific": {
-          source = "/images/specific-drone-card.jpeg";
+          source = "/images/drones/specific-card.jpeg";
           title = "Drone card";
           break;
         }

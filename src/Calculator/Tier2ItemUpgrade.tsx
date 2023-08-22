@@ -43,8 +43,10 @@ export function Tier2ItemUpgrade({
 
   // The generic cards will have already been factored into both item costs
   // but they can only be spent once, so add the on top again here
-  const cardsNeeded =
-    costForItem1.cardsNeeded + costForItem2.cardsNeeded + numGenericCards;
+  const cardsNeeded = Math.max(
+    0,
+    costForItem1.cardsNeeded + costForItem2.cardsNeeded - numGenericCards
+  );
   const goldNeeded = costForItem1.goldNeeded + costForItem2.goldNeeded;
 
   let gemsNeeded =
@@ -62,27 +64,23 @@ export function Tier2ItemUpgrade({
           className={styles.Image}
           item={tier2Item}
         />
-        <div className={styles.Column}>
+        <div
+          className={styles.Column}
+          data-is-complete={isComplete || undefined}
+        >
           <div className={styles.Name}>{tier2Item.name}</div>
-          {isComplete || (
-            <>
-              <div className={styles.Costs}>
-                <div
-                  className={styles.Cost}
-                  data-disabled={buyCards || undefined}
-                >
-                  <Card type="generic" category={category} />
-                  {buyCards ? "N/A" : formatNumber(cardsNeeded)}
-                </div>
-                <div className={styles.Cost}>
-                  <Gem /> {formatNumber(gemsNeeded)}
-                </div>
-                <div className={styles.Cost}>
-                  <Coin /> {formatNumber(goldNeeded)}
-                </div>
-              </div>
-            </>
-          )}
+          <div className={styles.Costs}>
+            <div className={styles.Cost} data-disabled={buyCards || undefined}>
+              <Card type="generic" category={category} />
+              {buyCards ? "N/A" : formatNumber(cardsNeeded)}
+            </div>
+            <div className={styles.Cost}>
+              <Gem /> {formatNumber(gemsNeeded)}
+            </div>
+            <div className={styles.Cost}>
+              <Coin /> {formatNumber(goldNeeded)}
+            </div>
+          </div>
         </div>
       </div>
       <div className={styles.ItemContainer}>

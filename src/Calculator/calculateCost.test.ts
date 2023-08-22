@@ -4,15 +4,15 @@ import { calculateCost } from "./calculateCost";
 describe("calculateCost", () => {
   it("should properly calculate the cost of a full ship upgrade", () => {
     expect(
-  calculateCost(
-    {
-      cards: 0,
-      level: 0,
-      upgrade: 0
-    },
-    "ship"
-  )
-).toMatchInlineSnapshot(`
+      calculateCost(
+        {
+          cards: 0,
+          level: 0,
+          upgrade: 0,
+        },
+        "ship"
+      )
+    ).toMatchInlineSnapshot(`
 Object {
   "boxesNeeded": 38,
   "cardsNeeded": 1900,
@@ -44,6 +44,29 @@ Object {
     "forLevels": 300,
   },
   "goldNeeded": 669945,
+}
+`);
+  });
+
+  it("should properly calculate the gold cost of a ship that is at the last level but not fully upgraded", () => {
+    expect(
+      calculateCost(
+        {
+          cards: 0,
+          level: MAX_LEVEL,
+          upgrade: 5,
+        },
+        "ship"
+      )
+    ).toMatchInlineSnapshot(`
+Object {
+  "boxesNeeded": 0,
+  "cardsNeeded": 0,
+  "gemsNeeded": Object {
+    "forCards": 0,
+    "forLevels": 0,
+  },
+  "goldNeeded": 232255,
 }
 `);
   });
