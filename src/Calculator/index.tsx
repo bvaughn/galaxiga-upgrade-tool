@@ -5,10 +5,10 @@ import { Tier2ItemUpgrade } from "./Tier2ItemUpgrade";
 
 import { Coin } from "../components/Coin";
 import { Gem } from "../components/Gem";
+import { TIER_2_DRONES } from "../data/drones";
 import useLocalStorage from "../hooks/useLocalStorage";
 import styles from "./index.module.css";
-import { TIER_2_DRONES } from "../data/drones";
-import { useState } from "react";
+import { useDeferredValue } from "react";
 
 export function Calculator() {
   const [numCoins, setNumCoins] = useLocalStorage<number>("num-coins", 0);
@@ -26,9 +26,23 @@ export function Calculator() {
     false
   );
 
-  const [category, setCategory] = useState<"drone" | "ship">("ship");
+  const [category, setCategory] = useLocalStorage<"drone" | "ship">(
+    "calculator-category",
+    "ship"
+  );
 
-  const tier2Items = category === "ship" ? TIER_2_SHIPS : TIER_2_DRONES;
+  const [filterByText, setFilterByText] = useLocalStorage<string>(
+    "calculator-filter-by-text",
+    ""
+  );
+  const deferredFilterByText = useDeferredValue(filterByText.toLowerCase());
+
+  const items = category === "ship" ? TIER_2_SHIPS : TIER_2_DRONES;
+  const filteredItems = deferredFilterByText
+    ? items.filter((item) =>
+        item.name.toLowerCase().includes(deferredFilterByText)
+      )
+    : items;
 
   return (
     <div className={styles.Page}>
@@ -72,6 +86,15 @@ export function Calculator() {
             />
             Buy cards from treasure boxes
           </label>
+        </div>
+        <div className={styles.OptionsMiddleColumn}>
+          <input
+            className={styles.FilterInput}
+            onChange={({ target }) => setFilterByText(target.value)}
+            placeholder="Filter by name..."
+            type="text"
+            value={filterByText}
+          />
         </div>
         <div className={styles.OptionsRightColumn}>
           {category === "ship" && (
@@ -127,11 +150,11 @@ export function Calculator() {
 
       <div className={styles.ItemsRow}>
         <div className={styles.ItemsColumn}>
-          {tier2Items.map((tier2Item) => (
+          {filteredItems.map((item) => (
             <Tier2ItemUpgrade
               category={category}
-              key={tier2Item.id}
-              tier2Item={tier2Item}
+              key={item.id}
+              tier2Item={item}
             />
           ))}
         </div>

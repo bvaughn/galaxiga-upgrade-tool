@@ -47,6 +47,7 @@
 
 .OptionsRow,
 .OptionsLeftColumn,
+.OptionsMiddleColumn,
 .OptionsRightColumn {
   flex: 1 1 auto;
   display: flex;
@@ -57,6 +58,9 @@
 }
 .OptionsLeftColumn {
   justify-content: flex-start;
+}
+.OptionsMiddleColumn {
+  justify-content: center;
 }
 .OptionsRightColumn {
   justify-content: flex-end;
@@ -71,6 +75,16 @@
   .OptionsLeftColumn {
     order: 2;
   }
+}
+
+.FilterInput {
+  width: 100%;
+  background: black;
+  color: #fff;
+  outline: none;
+  border: none;
+  padding: 0.25rem 1ch;
+  border-radius: 0.5rem;
 }
 
 .InputLabel {
