@@ -118,7 +118,7 @@ export function Tier1ItemUpgrade({
                 cards,
               });
             }}
-            value={stats?.cards}
+            value={stats.cards}
           />
         </label>
       </div>

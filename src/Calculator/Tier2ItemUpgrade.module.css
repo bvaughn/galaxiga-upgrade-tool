@@ -15,7 +15,7 @@
 }
 
 .Description {
-  width: 18rem;
+  width: 19rem;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -65,6 +65,9 @@
   align-items: center;
   gap: 1ch;
 }
+.Costs[data-is-unsafe-estimate] {
+  color: lightcoral;
+}
 
 .Checkbox {
   margin: 0;
@@ -77,6 +80,17 @@
   align-items: center;
   gap: 0.25em;
 }
-.Cost[data-disabled] {
-  filter: grayscale(1);
+
+.CannotSafelyEstimate {
+  width: 1rem;
+  height: 1rem;
+  border-radius: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #ffcc00;
+  color: black;
+  border: 1px solid black;
+  font-weight: bold;
+  user-select: none;
 }

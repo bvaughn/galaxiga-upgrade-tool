@@ -38,6 +38,9 @@ export function Tier2ItemUpgrade({
     [category, item2Stats]
   );
 
+  const cannotSafelyEstimate =
+    !costForItem1.isEstimateComplete || !costForItem2.isEstimateComplete;
+
   const isComplete =
     costForItem1.coinsNeeded === 0 && costForItem2.coinsNeeded === 0;
 
@@ -73,6 +76,14 @@ export function Tier2ItemUpgrade({
         >
           <div className={styles.Name}>{tier2Item.name}</div>
           <div className={styles.Costs}>
+            {cannotSafelyEstimate && (
+              <div
+                className={styles.CannotSafelyEstimate}
+                title="Estimate might not include cost of acquiring all tier 1 items"
+              >
+                !
+              </div>
+            )}
             <div className={styles.Cost} data-disabled={buyCards || undefined}>
               <Card type="generic" category={category} />
               {buyCards ? "N/A" : formatNumber(cardsNeeded)}

@@ -20,30 +20,20 @@ export type Cost = {
     forMerge: number;
   };
   coinsNeeded: number;
+  isEstimateComplete: boolean;
 };
 
 export function calculateCost(
   stats: Tier1ItemStats,
   category: "drone" | "ship"
 ): Cost {
-  if (stats.level === 0) {
-    // This item has not yet been acquired
-    // We can't calculate the cost because we don't know how much it takes to acquire it
-    return {
-      boxesNeeded: 0,
-      cardsNeeded: 0,
-      coinsNeeded: 0,
-      gemsNeeded: {
-        forCards: 0,
-        forLevels: 0,
-        forMerge: 0,
-      },
-    };
-  }
-
   let cardsNeeded = 0;
   let gemsNeededForLevels = 0;
   let coinsNeeded = 0;
+
+  // If an item has not yet been acquired,
+  // We can't calculate the cost because we don't know how much it takes to acquire it
+  const isEstimateComplete = stats.level > 0;
 
   // TODO Handle different tiers (via param)
   const cardsPerLevel = CARDS_PER_LEVEL[0];
@@ -51,7 +41,7 @@ export function calculateCost(
   const gemsPerLevel = GEMS_PER_LEVEL[category][0];
   const gemsNeededForMerge = GEMS_TO_MERGE[category][0];
 
-  const firstLevelndex = stats.level - 1;
+  const firstLevelndex = Math.max(0, stats.level - 1);
 
   for (
     let levelIndex = firstLevelndex;
@@ -95,5 +85,6 @@ export function calculateCost(
       forLevels: gemsNeededForLevels,
       forMerge: gemsNeededForMerge,
     },
+    isEstimateComplete,
   };
 }
