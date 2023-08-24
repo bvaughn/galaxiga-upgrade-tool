@@ -1,14 +1,38 @@
-import { MAX_LEVEL, MAX_UPGRADE } from "../data/upgrade-costs";
+import { MAX_LEVEL_NUMBER, MAX_SUB_LEVEL_NUMBER } from "../data/upgrade-costs";
 import { calculateCost } from "./calculateCost";
 
 describe("calculateCost", () => {
-  it("should properly calculate the cost of a full ship upgrade", () => {
+  it("should properly identify a ship that is not yet owned", () => {
     expect(
       calculateCost(
         {
           cards: 0,
           level: 0,
-          upgrade: 0,
+          subLevel: 0,
+        },
+        "ship"
+      )
+    ).toMatchInlineSnapshot(`
+Object {
+  "boxesNeeded": 0,
+  "cardsNeeded": 0,
+  "coinsNeeded": 0,
+  "gemsNeeded": Object {
+    "forCards": 0,
+    "forLevels": 0,
+    "forMerge": 0,
+  },
+}
+`);
+  });
+
+  it("should properly calculate the cost of a full ship upgrade", () => {
+    expect(
+      calculateCost(
+        {
+          cards: 0,
+          level: 1,
+          subLevel: 0,
         },
         "ship"
       )
@@ -16,11 +40,12 @@ describe("calculateCost", () => {
 Object {
   "boxesNeeded": 38,
   "cardsNeeded": 1900,
+  "coinsNeeded": 1321800,
   "gemsNeeded": Object {
     "forCards": 10640,
     "forLevels": 720,
+    "forMerge": 500,
   },
-  "goldNeeded": 1315750,
 }
 `);
   });
@@ -31,7 +56,7 @@ Object {
         {
           cards: 0,
           level: 7,
-          upgrade: 3,
+          subLevel: 3,
         },
         "ship"
       )
@@ -39,22 +64,23 @@ Object {
 Object {
   "boxesNeeded": 20,
   "cardsNeeded": 1000,
+  "coinsNeeded": 925275,
   "gemsNeeded": Object {
     "forCards": 5600,
     "forLevels": 300,
+    "forMerge": 500,
   },
-  "goldNeeded": 669945,
 }
 `);
   });
 
-  it("should properly calculate the gold cost of a ship that is at the last level but not fully upgraded", () => {
+  it("should properly calculate the coins cost of a ship that is at the last level but not fully upgraded", () => {
     expect(
       calculateCost(
         {
           cards: 0,
-          level: MAX_LEVEL,
-          upgrade: 5,
+          level: MAX_LEVEL_NUMBER,
+          subLevel: 5,
         },
         "ship"
       )
@@ -62,11 +88,12 @@ Object {
 Object {
   "boxesNeeded": 0,
   "cardsNeeded": 0,
+  "coinsNeeded": 232305,
   "gemsNeeded": Object {
     "forCards": 0,
     "forLevels": 0,
+    "forMerge": 500,
   },
-  "goldNeeded": 232255,
 }
 `);
   });
@@ -76,8 +103,8 @@ Object {
       calculateCost(
         {
           cards: 0,
-          level: MAX_LEVEL,
-          upgrade: MAX_UPGRADE,
+          level: MAX_LEVEL_NUMBER,
+          subLevel: MAX_SUB_LEVEL_NUMBER,
         },
         "ship"
       )
@@ -85,11 +112,12 @@ Object {
 Object {
   "boxesNeeded": 0,
   "cardsNeeded": 0,
+  "coinsNeeded": 0,
   "gemsNeeded": Object {
     "forCards": 0,
     "forLevels": 0,
+    "forMerge": 500,
   },
-  "goldNeeded": 0,
 }
 `);
   });

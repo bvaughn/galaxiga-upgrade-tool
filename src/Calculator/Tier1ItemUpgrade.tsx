@@ -5,7 +5,7 @@ import { Gem } from "../components/Gem";
 import { Icon } from "../components/Icon";
 import { NumberInput } from "../components/NumberInput";
 import { ItemImage } from "../components/ItemImage";
-import { MAX_LEVEL, MAX_UPGRADE } from "../data/upgrade-costs";
+import { MAX_LEVEL_NUMBER, MAX_SUB_LEVEL_NUMBER } from "../data/upgrade-costs";
 import { Tier1Item } from "../types";
 import { formatNumber } from "../utils/number";
 import styles from "./Tier1ItemUpgrade.module.css";
@@ -30,19 +30,19 @@ export function Tier1ItemUpgrade({
   const increaseLevel = () => {
     setStats({
       ...stats,
-      level: Math.min(MAX_LEVEL, stats.level + 1),
+      level: Math.min(MAX_LEVEL_NUMBER, stats.level + 1),
     });
   };
   const decreaseUpgrade = () => {
     setStats({
       ...stats,
-      upgrade: Math.max(0, stats.upgrade - 1),
+      subLevel: Math.max(0, stats.subLevel - 1),
     });
   };
   const increaseUpgrade = () => {
     setStats({
       ...stats,
-      upgrade: Math.min(MAX_UPGRADE, stats.upgrade + 1),
+      subLevel: Math.min(MAX_SUB_LEVEL_NUMBER, stats.subLevel + 1),
     });
   };
 
@@ -61,7 +61,7 @@ export function Tier1ItemUpgrade({
           <div className={styles.Markers}>
             <div className={styles.LevelMarkers}>
               {"●".repeat(stats.level)}
-              {"○".repeat(MAX_LEVEL - stats.level)}
+              {"○".repeat(MAX_LEVEL_NUMBER - stats.level)}
             </div>
             <Icon
               data-disabled={stats.level === 0 || undefined}
@@ -70,31 +70,37 @@ export function Tier1ItemUpgrade({
               type="subtract"
             />
             <Icon
-              data-disabled={stats.level === MAX_LEVEL || undefined}
+              data-disabled={stats.level === MAX_LEVEL_NUMBER || undefined}
               className={styles.AddOrSubtractIcon}
-              onClick={stats.level < MAX_LEVEL ? increaseLevel : undefined}
+              onClick={
+                stats.level < MAX_LEVEL_NUMBER ? increaseLevel : undefined
+              }
               type="add"
             />
           </div>
           <div className={styles.Markers}>
             <div className={styles.UpgradeMarkers}>
-              {"▰".repeat(stats.upgrade)}
+              {"▰".repeat(stats.subLevel)}
               <span className={styles.UpgradeMarkersInactive}>
-                {"▰".repeat(MAX_UPGRADE - stats.upgrade)}
+                {"▰".repeat(MAX_SUB_LEVEL_NUMBER - stats.subLevel)}
               </span>
             </div>
 
             <Icon
-              data-disabled={stats.upgrade === 0 || undefined}
+              data-disabled={stats.subLevel === 0 || undefined}
               className={styles.AddOrSubtractIcon}
               onClick={decreaseUpgrade}
               type="subtract"
             />
             <Icon
-              data-disabled={stats.upgrade === MAX_UPGRADE || undefined}
+              data-disabled={
+                stats.subLevel === MAX_SUB_LEVEL_NUMBER || undefined
+              }
               className={styles.AddOrSubtractIcon}
               onClick={
-                stats.upgrade < MAX_UPGRADE ? increaseUpgrade : undefined
+                stats.subLevel < MAX_SUB_LEVEL_NUMBER
+                  ? increaseUpgrade
+                  : undefined
               }
               type="add"
             />
@@ -116,7 +122,7 @@ export function Tier1ItemUpgrade({
           />
         </label>
       </div>
-      {cost.goldNeeded > 0 && (
+      {cost.coinsNeeded > 0 && (
         <div className={styles.RightColumn}>
           <div className={styles.Costs}>
             <div className={styles.Cost}>
@@ -127,7 +133,7 @@ export function Tier1ItemUpgrade({
               <Gem /> {formatNumber(cost.gemsNeeded.forLevels)}
             </div>
             <div className={styles.Cost}>
-              <Coin /> {formatNumber(cost.goldNeeded)}
+              <Coin /> {formatNumber(cost.coinsNeeded)}
             </div>
           </div>
         </div>

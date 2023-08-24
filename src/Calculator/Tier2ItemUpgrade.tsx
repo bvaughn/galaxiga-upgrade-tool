@@ -31,15 +31,15 @@ export function Tier2ItemUpgrade({
 
   const costForItem1 = useMemo<Cost>(
     () => calculateCost(item1Stats, category),
-    [item1Stats]
+    [category, item1Stats]
   );
   const costForItem2 = useMemo<Cost>(
     () => calculateCost(item2Stats, category),
-    [item2Stats]
+    [category, item2Stats]
   );
 
   const isComplete =
-    costForItem1.goldNeeded === 0 && costForItem2.goldNeeded === 0;
+    costForItem1.coinsNeeded === 0 && costForItem2.coinsNeeded === 0;
 
   // The generic cards will have already been factored into both item costs
   // but they can only be spent once, so add the on top again here
@@ -47,7 +47,7 @@ export function Tier2ItemUpgrade({
     0,
     costForItem1.cardsNeeded + costForItem2.cardsNeeded - numGenericCards
   );
-  const goldNeeded = costForItem1.goldNeeded + costForItem2.goldNeeded;
+  const coinsNeeded = costForItem1.coinsNeeded + costForItem2.coinsNeeded;
 
   const gemsNeededToMerge = category === "drone" ? 250 : 500;
   let gemsNeeded =
@@ -81,7 +81,7 @@ export function Tier2ItemUpgrade({
               <Gem /> {formatNumber(gemsNeeded)}
             </div>
             <div className={styles.Cost}>
-              <Coin /> {formatNumber(goldNeeded)}
+              <Coin /> {formatNumber(coinsNeeded)}
             </div>
           </div>
         </div>

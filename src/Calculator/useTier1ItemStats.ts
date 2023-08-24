@@ -3,7 +3,7 @@ import useLocalStorage from "../hooks/useLocalStorage";
 export type Tier1ItemStats = {
   cards: number;
   level: number;
-  upgrade: number;
+  subLevel: number;
 };
 
 export function useTier1ItemStats(
@@ -12,6 +12,6 @@ export function useTier1ItemStats(
   return useLocalStorage<Tier1ItemStats>(`tier-1-stats:${itemId}`, {
     cards: 0,
     level: 0,
-    upgrade: 0,
+    subLevel: 0,
   });
 }
