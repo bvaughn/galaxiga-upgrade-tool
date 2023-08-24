@@ -13,6 +13,7 @@ import { formatNumber } from "../utils/number";
 import styles from "./Tier2ItemUpgrade.module.css";
 import { Cost, calculateCost } from "./calculateCost";
 import { useTier1ItemStats } from "./useTier1ItemStats";
+import { Icon } from "../components/Icon";
 
 export function Tier2ItemUpgrade({
   category,
@@ -77,11 +78,8 @@ export function Tier2ItemUpgrade({
           <div className={styles.Name}>{tier2Item.name}</div>
           <div className={styles.Costs}>
             {cannotSafelyEstimate && (
-              <div
-                className={styles.CannotSafelyEstimate}
-                title="Estimate might not include cost of acquiring all tier 1 items"
-              >
-                !
+              <div title="Estimate might not include cost of acquiring all tier 1 items">
+                <Icon className={styles.CannotSafelyEstimate} type="warn" />
               </div>
             )}
             <div className={styles.Cost} data-disabled={buyCards || undefined}>
