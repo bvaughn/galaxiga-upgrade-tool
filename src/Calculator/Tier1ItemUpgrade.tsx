@@ -125,14 +125,23 @@ export function Tier1ItemUpgrade({
       {cost.coinsNeeded > 0 && (
         <div className={styles.RightColumn}>
           <div className={styles.Costs}>
-            <div className={styles.Cost}>
+            <div
+              className={styles.Cost}
+              title={`${formatNumber(cost.cardsNeeded, "long")} cards`}
+            >
               <Card type="generic" category={category} />{" "}
               {formatNumber(cost.cardsNeeded)}
             </div>
-            <div className={styles.Cost}>
+            <div
+              className={styles.Cost}
+              title={`${formatNumber(cost.gemsNeeded.forLevels, "long")} gems`}
+            >
               <Gem /> {formatNumber(cost.gemsNeeded.forLevels)}
             </div>
-            <div className={styles.Cost}>
+            <div
+              className={styles.Cost}
+              title={`${formatNumber(cost.coinsNeeded, "long")} coins`}
+            >
               <Coin /> {formatNumber(cost.coinsNeeded)}
             </div>
           </div>

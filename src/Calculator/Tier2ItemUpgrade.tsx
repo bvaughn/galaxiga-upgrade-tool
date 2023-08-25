@@ -82,14 +82,28 @@ export function Tier2ItemUpgrade({
                 <Icon className={styles.CannotSafelyEstimate} type="warn" />
               </div>
             )}
-            <div className={styles.Cost} data-disabled={buyCards || undefined}>
+            <div
+              className={styles.Cost}
+              data-disabled={buyCards || undefined}
+              title={
+                buyCards
+                  ? undefined
+                  : `${formatNumber(cardsNeeded, "long")} cards`
+              }
+            >
               <Card type="generic" category={category} />
               {buyCards ? "N/A" : formatNumber(cardsNeeded)}
             </div>
-            <div className={styles.Cost}>
+            <div
+              className={styles.Cost}
+              title={`${formatNumber(gemsNeeded, "long")} gems`}
+            >
               <Gem /> {formatNumber(gemsNeeded)}
             </div>
-            <div className={styles.Cost}>
+            <div
+              className={styles.Cost}
+              title={`${formatNumber(coinsNeeded, "long")} coins`}
+            >
               <Coin /> {formatNumber(coinsNeeded)}
             </div>
           </div>
