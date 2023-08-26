@@ -1,10 +1,11 @@
+import { Category } from "../types";
 import styles from "./Card.module.css";
 
 export function Card({
   category,
   type,
 }: {
-  category: "drone" | "ship";
+  category: Category;
   type: "generic" | "specific";
 }) {
   let source = "";
@@ -35,6 +36,21 @@ export function Card({
         }
         case "specific": {
           source = "/images/ships/specific-card.jpeg";
+          title = "Ship card";
+          break;
+        }
+      }
+      break;
+    }
+    case "stone": {
+      switch (type) {
+        case "generic": {
+          source = "/images/stones/generic-card.jpeg";
+          title = "Generic ship card";
+          break;
+        }
+        case "specific": {
+          source = "/images/stones/specific-card.png";
           title = "Ship card";
           break;
         }

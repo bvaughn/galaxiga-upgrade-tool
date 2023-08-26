@@ -6,7 +6,7 @@ import { Icon } from "../components/Icon";
 import { NumberInput } from "../components/NumberInput";
 import { ItemImage } from "../components/ItemImage";
 import { MAX_LEVEL_NUMBER, MAX_SUB_LEVEL_NUMBER } from "../data/upgrade-costs";
-import { Tier1Item } from "../types";
+import { Category, Tier1Item } from "../types";
 import { formatNumber } from "../utils/number";
 import styles from "./Tier1ItemUpgrade.module.css";
 import { calculateCost } from "./calculateCost";
@@ -16,7 +16,7 @@ export function Tier1ItemUpgrade({
   category,
   tier1Item,
 }: {
-  category: "drone" | "ship";
+  category: Category;
   tier1Item: Tier1Item;
 }) {
   const [stats, setStats] = useTier1ItemStats(tier1Item.id);

@@ -6,6 +6,7 @@ import {
   GEMS_PER_LEVEL,
   GEMS_TO_MERGE,
 } from "../data/upgrade-costs";
+import { Category } from "../types";
 import { Tier1ItemStats } from "./useTier1ItemStats";
 
 const MAX_LEVEL_INDEX = MAX_LEVEL_NUMBER - 1;
@@ -23,10 +24,7 @@ export type Cost = {
   isEstimateComplete: boolean;
 };
 
-export function calculateCost(
-  stats: Tier1ItemStats,
-  category: "drone" | "ship"
-): Cost {
+export function calculateCost(stats: Tier1ItemStats, category: Category): Cost {
   let cardsNeeded = 0;
   let gemsNeededForLevels = 0;
   let coinsNeeded = 0;

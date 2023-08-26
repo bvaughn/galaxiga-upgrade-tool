@@ -1,4 +1,4 @@
-import { Item } from "../types";
+import { Category, Item } from "../types";
 import styles from "./ItemImage.module.css";
 import { isTier1Item } from "../types";
 import { useRef } from "react";
@@ -8,7 +8,7 @@ export function ItemImage({
   className = "",
   item,
 }: {
-  category: "drone" | "ship";
+  category: Category;
   className?: string;
   item: Item;
 }) {
@@ -33,7 +33,7 @@ export function ItemImage({
   );
 }
 
-function getUrl(category: "drone" | "ship", item: Item, fileExtension: string) {
+function getUrl(category: Category, item: Item, fileExtension: string) {
   return `/images/${category}s/tier_${isTier1Item(item) ? 1 : 2}_${
     item.id
   }.jpeg`;

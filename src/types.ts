@@ -21,6 +21,8 @@ export function isTier2Item(item: Item): item is Tier2Item {
   return item.hasOwnProperty("createdByMerging");
 }
 
+export type Category = "drone" | "ship" | "stone";
+
 // Each evolution level costs a fixed number of cards and gems.
 // There are also 10 incremental upgrades within a level, each of which costs coins.
 export type LevelUpgradeCost = {

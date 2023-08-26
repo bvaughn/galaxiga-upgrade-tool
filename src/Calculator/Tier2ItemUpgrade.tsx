@@ -5,7 +5,7 @@ import { Gem } from "../components/Gem";
 import { ItemImage } from "../components/ItemImage";
 import { TIER_1_DRONES } from "../data/drones";
 import { TIER_1_SHIPS } from "../data/ships";
-import { Tier2Item } from "../types";
+import { Category, Tier1Item, Tier2Item } from "../types";
 import { Tier1ItemUpgrade } from "./Tier1ItemUpgrade";
 
 import useLocalStorage from "../hooks/useLocalStorage";
@@ -14,12 +14,13 @@ import styles from "./Tier2ItemUpgrade.module.css";
 import { Cost, calculateCost } from "./calculateCost";
 import { useTier1ItemStats } from "./useTier1ItemStats";
 import { Icon } from "../components/Icon";
+import { TIER_1_STONES } from "../data/stones";
 
 export function Tier2ItemUpgrade({
   category,
   tier2Item,
 }: {
-  category: "drone" | "ship";
+  category: Category;
   tier2Item: Tier2Item;
 }) {
   const [item1Stats] = useTier1ItemStats(tier2Item.createdByMerging[0]);
@@ -61,6 +62,19 @@ export function Tier2ItemUpgrade({
   if (buyCards) {
     const costPerBox = category === "drone" ? 140 : 280;
     gemsNeeded += Math.ceil(cardsNeeded / 50) * costPerBox;
+  }
+
+  let tier1Items: Tier1Item[];
+  switch (category) {
+    case "drone":
+      tier1Items = TIER_1_DRONES;
+      break;
+    case "ship":
+      tier1Items = TIER_1_SHIPS;
+      break;
+    case "stone":
+      tier1Items = TIER_1_STONES;
+      break;
   }
 
   return (
@@ -111,8 +125,6 @@ export function Tier2ItemUpgrade({
       </div>
       <div className={styles.ItemContainer}>
         {tier2Item.createdByMerging.map((id) => {
-          const tier1Items =
-            category === "drone" ? TIER_1_DRONES : TIER_1_SHIPS;
           const tier1Item = tier1Items.find((item) => item.id === id)!;
 
           return (

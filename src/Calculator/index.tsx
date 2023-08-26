@@ -3,12 +3,14 @@ import { NumberInput } from "../components/NumberInput";
 import { TIER_2_SHIPS } from "../data/ships";
 import { Tier2ItemUpgrade } from "./Tier2ItemUpgrade";
 
+import { useDeferredValue } from "react";
 import { Coin } from "../components/Coin";
 import { Gem } from "../components/Gem";
 import { TIER_2_DRONES } from "../data/drones";
+import { TIER_2_STONES } from "../data/stones";
 import useLocalStorage from "../hooks/useLocalStorage";
+import { Category, Tier2Item } from "../types";
 import styles from "./index.module.css";
-import { useDeferredValue } from "react";
 
 export function Calculator() {
   const [numCoins, setNumCoins] = useLocalStorage<number>("num-coins", 0);
@@ -26,7 +28,7 @@ export function Calculator() {
     false
   );
 
-  const [category, setCategory] = useLocalStorage<"drone" | "ship">(
+  const [category, setCategory] = useLocalStorage<Category>(
     "calculator-category",
     "ship"
   );
@@ -37,12 +39,24 @@ export function Calculator() {
   );
   const deferredFilterByText = useDeferredValue(filterByText.toLowerCase());
 
-  const items = category === "ship" ? TIER_2_SHIPS : TIER_2_DRONES;
-  const filteredItems = deferredFilterByText
-    ? items.filter((item) =>
+  let tier2Items: Tier2Item[];
+  switch (category) {
+    case "drone":
+      tier2Items = TIER_2_DRONES;
+      break;
+    case "ship":
+      tier2Items = TIER_2_SHIPS;
+      break;
+    case "stone":
+      tier2Items = TIER_2_STONES;
+      break;
+  }
+
+  const filteredTier2Items = deferredFilterByText
+    ? tier2Items.filter((item) =>
         item.name.toLowerCase().includes(deferredFilterByText)
       )
-    : items;
+    : tier2Items;
 
   return (
     <div className={styles.Page}>
@@ -73,6 +87,19 @@ export function Calculator() {
           />
           <Card type="generic" category="drone" />
           Drones
+        </label>
+        <label
+          className={styles.LabelRadioGroup}
+          data-selected={category === "stone" || undefined}
+        >
+          <input
+            name="category"
+            onChange={({ target }) => setCategory(target.value as any)}
+            type="radio"
+            value="stone"
+          />
+          <Card type="generic" category="stone" />
+          Stones
         </label>
       </div>
       <div className={styles.OptionsRow}>
@@ -150,7 +177,7 @@ export function Calculator() {
 
       <div className={styles.ItemsRow}>
         <div className={styles.ItemsColumn}>
-          {filteredItems.map((item) => (
+          {filteredTier2Items.map((item) => (
             <Tier2ItemUpgrade
               category={category}
               key={item.id}
