@@ -105,6 +105,9 @@
   align-items: center;
   gap: 0.25em;
 }
+.Cost[data-disabled] {
+  opacity: 0.5;
+}
 
 .AddOrSubtractIcon {
   width: 1rem;

@@ -8,13 +8,15 @@ import { TIER_1_SHIPS } from "../data/ships";
 import { Category, Tier1Item, Tier2Item } from "../types";
 import { Tier1ItemUpgrade } from "./Tier1ItemUpgrade";
 
+import { Icon } from "../components/Icon";
+import { TIER_1_STONES } from "../data/stones";
 import useLocalStorage from "../hooks/useLocalStorage";
 import { formatNumber } from "../utils/number";
 import styles from "./Tier2ItemUpgrade.module.css";
 import { Cost, calculateCost } from "./calculateCost";
-import { useTier1ItemStats } from "./useTier1ItemStats";
-import { Icon } from "../components/Icon";
-import { TIER_1_STONES } from "../data/stones";
+import { useBuyCardsWithGems } from "./useBuyCardsWithGems";
+import { useItemStats } from "./useItemStats";
+import { MAX_LEVEL_NUMBER, MAX_SUB_LEVEL_NUMBER } from "../data/upgrade-costs";
 
 export function Tier2ItemUpgrade({
   category,
@@ -23,20 +25,20 @@ export function Tier2ItemUpgrade({
   category: Category;
   tier2Item: Tier2Item;
 }) {
-  const [item1Stats] = useTier1ItemStats(tier2Item.createdByMerging[0]);
-  const [item2Stats] = useTier1ItemStats(tier2Item.createdByMerging[1]);
+  const [item1Stats] = useItemStats(tier2Item.createdByMerging[0]);
+  const [item2Stats] = useItemStats(tier2Item.createdByMerging[1]);
   const [numGenericCards] = useLocalStorage<number>(
     `num-generic-${category}-cards`,
     0
   );
-  const [buyCards] = useLocalStorage<boolean>("buy-cards-with-gems", false);
+  const [buyCardsWithGems] = useBuyCardsWithGems();
 
   const costForItem1 = useMemo<Cost>(
-    () => calculateCost(item1Stats, category),
+    () => calculateCost(item1Stats, category, 1),
     [category, item1Stats]
   );
   const costForItem2 = useMemo<Cost>(
-    () => calculateCost(item2Stats, category),
+    () => calculateCost(item2Stats, category, 1),
     [category, item2Stats]
   );
 
@@ -44,25 +46,34 @@ export function Tier2ItemUpgrade({
     !costForItem1.isEstimateComplete || !costForItem2.isEstimateComplete;
 
   const isComplete =
-    costForItem1.coinsNeeded === 0 && costForItem2.coinsNeeded === 0;
+    item1Stats.level === MAX_LEVEL_NUMBER &&
+    item1Stats.subLevel === MAX_SUB_LEVEL_NUMBER &&
+    item2Stats.level === MAX_LEVEL_NUMBER &&
+    item2Stats.subLevel === MAX_SUB_LEVEL_NUMBER;
 
-  // The generic cards will have already been factored into both item costs
-  // but they can only be spent once, so add the on top again here
+  // Generic cards have not yet been factored into the cost of tier 1 items
   const cardsNeeded = Math.max(
     0,
-    costForItem1.cardsNeeded + costForItem2.cardsNeeded - numGenericCards
+    buyCardsWithGems
+      ? costForItem1.boxes.with.cardsNeededForLevels +
+          costForItem2.boxes.with.cardsNeededForLevels -
+          numGenericCards
+      : costForItem1.boxes.without.cardsNeededForLevels +
+          costForItem2.boxes.without.cardsNeededForLevels -
+          numGenericCards
   );
-  const coinsNeeded = costForItem1.coinsNeeded + costForItem2.coinsNeeded;
-
-  const gemsNeededToMerge = category === "drone" ? 250 : 500;
-  let gemsNeeded =
-    costForItem1.gemsNeeded.forLevels +
-    costForItem2.gemsNeeded.forLevels +
-    gemsNeededToMerge;
-  if (buyCards) {
-    const costPerBox = category === "drone" ? 140 : 280;
-    gemsNeeded += Math.ceil(cardsNeeded / 50) * costPerBox;
-  }
+  const coinsNeeded = buyCardsWithGems
+    ? costForItem1.boxes.with.coinsNeededForLevels +
+      costForItem2.boxes.with.coinsNeededForLevels
+    : costForItem1.boxes.without.coinsNeededForLevels +
+      costForItem2.boxes.without.coinsNeededForLevels;
+  const gemsNeeded =
+    costForItem1.gemsNeededToMerge! +
+    (buyCardsWithGems
+      ? costForItem1.boxes.with.gemsNeededForLevels +
+        costForItem2.boxes.with.gemsNeededForLevels
+      : costForItem1.boxes.without.gemsNeededForLevels +
+        costForItem2.boxes.without.gemsNeededForLevels);
 
   let tier1Items: Tier1Item[];
   switch (category) {
@@ -98,24 +109,22 @@ export function Tier2ItemUpgrade({
             )}
             <div
               className={styles.Cost}
-              data-disabled={buyCards || undefined}
-              title={
-                buyCards
-                  ? undefined
-                  : `${formatNumber(cardsNeeded, "long")} cards`
-              }
+              data-disabled={cardsNeeded === 0 ? "" : undefined}
+              title={`${formatNumber(cardsNeeded, "long")} cards`}
             >
               <Card type="generic" category={category} />
-              {buyCards ? "N/A" : formatNumber(cardsNeeded)}
+              {formatNumber(cardsNeeded)}
             </div>
             <div
               className={styles.Cost}
+              data-disabled={gemsNeeded === 0 ? "" : undefined}
               title={`${formatNumber(gemsNeeded, "long")} gems`}
             >
               <Gem /> {formatNumber(gemsNeeded)}
             </div>
             <div
               className={styles.Cost}
+              data-disabled={coinsNeeded === 0 ? "" : undefined}
               title={`${formatNumber(coinsNeeded, "long")} coins`}
             >
               <Coin /> {formatNumber(coinsNeeded)}

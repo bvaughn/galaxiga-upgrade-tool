@@ -2,8 +2,12 @@ import { MAX_LEVEL_NUMBER, MAX_SUB_LEVEL_NUMBER } from "../data/upgrade-costs";
 import { calculateCost } from "./calculateCost";
 
 describe("calculateCost", () => {
+  describe("drones", () => {
+    // TODO
+  });
+
   describe("ships", () => {
-    describe("tier 1 to 2", () => {
+    describe("tier 1", () => {
       it("should properly handle a ship that is not yet owned", () => {
         expect(
           calculateCost(
@@ -12,18 +16,24 @@ describe("calculateCost", () => {
               level: 0,
               subLevel: 0,
             },
-            "ship"
+            "ship",
+            1
           )
         ).toMatchInlineSnapshot(`
 Object {
-  "boxesNeeded": 38,
-  "cardsNeeded": 1900,
-  "coinsNeeded": 1321800,
-  "gemsNeeded": Object {
-    "forCards": 10640,
-    "forLevels": 720,
-    "forMerge": 500,
+  "boxes": Object {
+    "with": Object {
+      "cardsNeededForLevels": 0,
+      "coinsNeededForLevels": 1251800,
+      "gemsNeededForLevels": 8560,
+    },
+    "without": Object {
+      "cardsNeededForLevels": 1900,
+      "coinsNeededForLevels": 1321800,
+      "gemsNeededForLevels": 720,
+    },
   },
+  "gemsNeededToMerge": 500,
   "isEstimateComplete": false,
 }
 `);
@@ -37,18 +47,24 @@ Object {
               level: 1,
               subLevel: 0,
             },
-            "ship"
+            "ship",
+            1
           )
         ).toMatchInlineSnapshot(`
 Object {
-  "boxesNeeded": 38,
-  "cardsNeeded": 1900,
-  "coinsNeeded": 1321800,
-  "gemsNeeded": Object {
-    "forCards": 10640,
-    "forLevels": 720,
-    "forMerge": 500,
+  "boxes": Object {
+    "with": Object {
+      "cardsNeededForLevels": 0,
+      "coinsNeededForLevels": 1251800,
+      "gemsNeededForLevels": 8560,
+    },
+    "without": Object {
+      "cardsNeededForLevels": 1900,
+      "coinsNeededForLevels": 1321800,
+      "gemsNeededForLevels": 720,
+    },
   },
+  "gemsNeededToMerge": 500,
   "isEstimateComplete": true,
 }
 `);
@@ -62,18 +78,24 @@ Object {
               level: 7,
               subLevel: 3,
             },
-            "ship"
+            "ship",
+            1
           )
         ).toMatchInlineSnapshot(`
 Object {
-  "boxesNeeded": 20,
-  "cardsNeeded": 1000,
-  "coinsNeeded": 925275,
-  "gemsNeeded": Object {
-    "forCards": 5600,
-    "forLevels": 300,
-    "forMerge": 500,
+  "boxes": Object {
+    "with": Object {
+      "cardsNeededForLevels": 0,
+      "coinsNeededForLevels": 887775,
+      "gemsNeededForLevels": 4500,
+    },
+    "without": Object {
+      "cardsNeededForLevels": 1000,
+      "coinsNeededForLevels": 925275,
+      "gemsNeededForLevels": 300,
+    },
   },
+  "gemsNeededToMerge": 500,
   "isEstimateComplete": true,
 }
 `);
@@ -87,18 +109,24 @@ Object {
               level: MAX_LEVEL_NUMBER,
               subLevel: 5,
             },
-            "ship"
+            "ship",
+            1
           )
         ).toMatchInlineSnapshot(`
 Object {
-  "boxesNeeded": 0,
-  "cardsNeeded": 0,
-  "coinsNeeded": 232305,
-  "gemsNeeded": Object {
-    "forCards": 0,
-    "forLevels": 0,
-    "forMerge": 500,
+  "boxes": Object {
+    "with": Object {
+      "cardsNeededForLevels": 0,
+      "coinsNeededForLevels": 232305,
+      "gemsNeededForLevels": 0,
+    },
+    "without": Object {
+      "cardsNeededForLevels": 0,
+      "coinsNeededForLevels": 232305,
+      "gemsNeededForLevels": 0,
+    },
   },
+  "gemsNeededToMerge": 500,
   "isEstimateComplete": true,
 }
 `);
@@ -112,22 +140,133 @@ Object {
               level: MAX_LEVEL_NUMBER,
               subLevel: MAX_SUB_LEVEL_NUMBER,
             },
-            "ship"
+            "ship",
+            1
           )
         ).toMatchInlineSnapshot(`
 Object {
-  "boxesNeeded": 0,
-  "cardsNeeded": 0,
-  "coinsNeeded": 0,
-  "gemsNeeded": Object {
-    "forCards": 0,
-    "forLevels": 0,
-    "forMerge": 500,
+  "boxes": Object {
+    "with": Object {
+      "cardsNeededForLevels": 0,
+      "coinsNeededForLevels": 0,
+      "gemsNeededForLevels": 0,
+    },
+    "without": Object {
+      "cardsNeededForLevels": 0,
+      "coinsNeededForLevels": 0,
+      "gemsNeededForLevels": 0,
+    },
   },
+  "gemsNeededToMerge": 500,
+  "isEstimateComplete": true,
+}
+`);
+      });
+
+      it("should factor existing cards into counts needed", () => {
+        expect(
+          calculateCost(
+            {
+              cards: 270,
+              level: MAX_LEVEL_NUMBER,
+              subLevel: 0,
+            },
+            "ship",
+            1
+          )
+        ).toMatchInlineSnapshot(`
+Object {
+  "boxes": Object {
+    "with": Object {
+      "cardsNeededForLevels": 0,
+      "coinsNeededForLevels": 434150,
+      "gemsNeededForLevels": 0,
+    },
+    "without": Object {
+      "cardsNeededForLevels": 0,
+      "coinsNeededForLevels": 434150,
+      "gemsNeededForLevels": 0,
+    },
+  },
+  "gemsNeededToMerge": 500,
   "isEstimateComplete": true,
 }
 `);
       });
     });
+
+    describe("tier 2", () => {
+      it("should properly handle a ship that is not yet owned", () => {
+        expect(
+          calculateCost(
+            {
+              cards: 0,
+              level: 0,
+              subLevel: 0,
+            },
+            "ship",
+            2
+          )
+        ).toMatchInlineSnapshot(`
+Object {
+  "boxes": Object {
+    "with": Object {
+      "cardsNeededForLevels": 0,
+      "coinsNeededForLevels": 12068515,
+      "gemsNeededForLevels": 47240,
+    },
+    "without": Object {
+      "cardsNeededForLevels": 10400,
+      "coinsNeededForLevels": 12451015,
+      "gemsNeededForLevels": 4400,
+    },
+  },
+  "gemsNeededToMerge": 1000,
+  "isEstimateComplete": false,
+}
+`);
+      });
+
+      // TODO
+    });
+
+    describe("tier 3", () => {
+      it("should properly handle a ship that is not yet owned", () => {
+        expect(
+          calculateCost(
+            {
+              cards: 0,
+              level: 0,
+              subLevel: 0,
+            },
+            "ship",
+            3
+          )
+        ).toMatchInlineSnapshot(`
+Object {
+  "boxes": Object {
+    "with": Object {
+      "cardsNeededForLevels": 0,
+      "coinsNeededForLevels": 39765975,
+      "gemsNeededForLevels": 145200,
+    },
+    "without": Object {
+      "cardsNeededForLevels": 30000,
+      "coinsNeededForLevels": 40865975,
+      "gemsNeededForLevels": 22000,
+    },
+  },
+  "gemsNeededToMerge": null,
+  "isEstimateComplete": false,
+}
+`);
+      });
+
+      // TODO
+    });
+  });
+
+  describe("stones", () => {
+    // TODO
   });
 });

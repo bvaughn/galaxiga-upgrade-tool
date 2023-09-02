@@ -77,14 +77,19 @@
   }
 }
 
-.FilterInput {
+.FilterInput,
+.SortSelect {
   width: 100%;
   background: black;
   color: #fff;
   outline: none;
-  border: none;
+  border: 2px solid transparent;
   padding: 0.25rem 1ch;
   border-radius: 0.5rem;
+}
+.FilterInput:focus,
+.SortSelect:focus {
+  border-color: #74d522;
 }
 
 .InputLabel {

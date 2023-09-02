@@ -3,7 +3,7 @@ import { NumberInput } from "../components/NumberInput";
 import { TIER_2_SHIPS } from "../data/ships";
 import { Tier2ItemUpgrade } from "./Tier2ItemUpgrade";
 
-import { useDeferredValue } from "react";
+import { useDeferredValue, useMemo } from "react";
 import { Coin } from "../components/Coin";
 import { Gem } from "../components/Gem";
 import { TIER_2_DRONES } from "../data/drones";
@@ -11,6 +11,7 @@ import { TIER_2_STONES } from "../data/stones";
 import useLocalStorage from "../hooks/useLocalStorage";
 import { Category, Tier2Item } from "../types";
 import styles from "./index.module.css";
+import { useBuyCardsWithGems } from "./useBuyCardsWithGems";
 
 export function Calculator() {
   const [numCoins, setNumCoins] = useLocalStorage<number>("num-coins", 0);
@@ -23,10 +24,7 @@ export function Calculator() {
     0
   );
 
-  const [buyCardsWithGems, setByCardsWithGems] = useLocalStorage<boolean>(
-    "buy-cards-with-gems",
-    false
-  );
+  const [buyCardsWithGems, setBuyCardsWithGems] = useBuyCardsWithGems();
 
   const [category, setCategory] = useLocalStorage<Category>(
     "calculator-category",
@@ -38,6 +36,11 @@ export function Calculator() {
     ""
   );
   const deferredFilterByText = useDeferredValue(filterByText.toLowerCase());
+
+  const [sortBy, setSortBy] = useLocalStorage<"cost" | "level" | "name">(
+    "calculator-sort-by",
+    "name"
+  );
 
   let tier2Items: Tier2Item[];
   switch (category) {
@@ -52,11 +55,33 @@ export function Calculator() {
       break;
   }
 
-  const filteredTier2Items = deferredFilterByText
-    ? tier2Items.filter((item) =>
-        item.name.toLowerCase().includes(deferredFilterByText)
-      )
-    : tier2Items;
+  const filteredAndSortedTier2Items = useMemo(() => {
+    let items = deferredFilterByText
+      ? tier2Items.filter((item) =>
+          item.name.toLowerCase().includes(deferredFilterByText)
+        )
+      : tier2Items;
+
+    switch (sortBy) {
+      case "cost":
+        // items = items.sort((a, b) => {
+        //   const costA = getTier1ItemStats()
+        // });
+        // TODO
+        break;
+      case "level":
+        // items = items.sort((a, b) => {
+        //   if (a.)
+        // });
+        // TODO
+        break;
+      case "name":
+        items = items.sort((a, b) => a.name.localeCompare(b.name));
+        break;
+    }
+
+    return items;
+  }, [deferredFilterByText, sortBy, tier2Items]);
 
   return (
     <div className={styles.Page}>
@@ -108,7 +133,7 @@ export function Calculator() {
             <input
               checked={buyCardsWithGems}
               className={styles.Checkbox}
-              onChange={({ target }) => setByCardsWithGems(target.checked)}
+              onChange={({ target }) => setBuyCardsWithGems(target.checked)}
               type="checkbox"
             />
             Buy cards from treasure boxes
@@ -122,6 +147,15 @@ export function Calculator() {
             type="text"
             value={filterByText}
           />
+          <select
+            className={styles.SortSelect}
+            onChange={({ target }) => setSortBy(target.value as any)}
+            value={sortBy}
+          >
+            <option value="cost">Sort by cost</option>
+            <option value="level">Sort by level</option>
+            <option value="name">Sort by name</option>
+          </select>
         </div>
         <div className={styles.OptionsRightColumn}>
           {category === "ship" && (
@@ -177,7 +211,7 @@ export function Calculator() {
 
       <div className={styles.ItemsRow}>
         <div className={styles.ItemsColumn}>
-          {filteredTier2Items.map((item) => (
+          {filteredAndSortedTier2Items.map((item) => (
             <Tier2ItemUpgrade
               category={category}
               key={item.id}

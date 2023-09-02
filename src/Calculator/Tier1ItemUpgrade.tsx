@@ -3,14 +3,15 @@ import { Card } from "../components/Card";
 import { Coin } from "../components/Coin";
 import { Gem } from "../components/Gem";
 import { Icon } from "../components/Icon";
-import { NumberInput } from "../components/NumberInput";
 import { ItemImage } from "../components/ItemImage";
+import { NumberInput } from "../components/NumberInput";
 import { MAX_LEVEL_NUMBER, MAX_SUB_LEVEL_NUMBER } from "../data/upgrade-costs";
 import { Category, Tier1Item } from "../types";
 import { formatNumber } from "../utils/number";
 import styles from "./Tier1ItemUpgrade.module.css";
 import { calculateCost } from "./calculateCost";
-import { useTier1ItemStats } from "./useTier1ItemStats";
+import { useBuyCardsWithGems } from "./useBuyCardsWithGems";
+import { useItemStats } from "./useItemStats";
 
 export function Tier1ItemUpgrade({
   category,
@@ -19,7 +20,9 @@ export function Tier1ItemUpgrade({
   category: Category;
   tier1Item: Tier1Item;
 }) {
-  const [stats, setStats] = useTier1ItemStats(tier1Item.id);
+  const [buyCardsWithGems] = useBuyCardsWithGems();
+
+  const [stats, setStats] = useItemStats(tier1Item.id);
 
   const decreaseLevel = () => {
     setStats({
@@ -46,7 +49,20 @@ export function Tier1ItemUpgrade({
     });
   };
 
-  const cost = useMemo(() => calculateCost(stats, category), [category, stats]);
+  const cost = useMemo(
+    () => calculateCost(stats, category, 1),
+    [category, stats]
+  );
+
+  const cardsNeeded = buyCardsWithGems
+    ? cost.boxes.with.cardsNeededForLevels
+    : cost.boxes.without.cardsNeededForLevels;
+  const coinsNeeded = buyCardsWithGems
+    ? cost.boxes.with.coinsNeededForLevels
+    : cost.boxes.without.coinsNeededForLevels;
+  const gemsNeeded = buyCardsWithGems
+    ? cost.boxes.with.gemsNeededForLevels
+    : cost.boxes.without.gemsNeededForLevels;
 
   return (
     <div className={styles.Container}>
@@ -122,27 +138,31 @@ export function Tier1ItemUpgrade({
           />
         </label>
       </div>
-      {cost.coinsNeeded > 0 && (
+      {(stats.level < MAX_LEVEL_NUMBER ||
+        stats.subLevel < MAX_SUB_LEVEL_NUMBER) && (
         <div className={styles.RightColumn}>
           <div className={styles.Costs}>
             <div
               className={styles.Cost}
-              title={`${formatNumber(cost.cardsNeeded, "long")} cards`}
+              data-disabled={cardsNeeded === 0 ? "" : undefined}
+              title={`${formatNumber(cardsNeeded, "long")} cards`}
             >
               <Card type="generic" category={category} />{" "}
-              {formatNumber(cost.cardsNeeded)}
+              {formatNumber(cardsNeeded)}
             </div>
             <div
               className={styles.Cost}
-              title={`${formatNumber(cost.gemsNeeded.forLevels, "long")} gems`}
+              data-disabled={gemsNeeded === 0 ? "" : undefined}
+              title={`${formatNumber(gemsNeeded, "long")} gems`}
             >
-              <Gem /> {formatNumber(cost.gemsNeeded.forLevels)}
+              <Gem /> {formatNumber(gemsNeeded)}
             </div>
             <div
               className={styles.Cost}
-              title={`${formatNumber(cost.coinsNeeded, "long")} coins`}
+              data-disabled={coinsNeeded === 0 ? "" : undefined}
+              title={`${formatNumber(coinsNeeded, "long")} coins`}
             >
-              <Coin /> {formatNumber(cost.coinsNeeded)}
+              <Coin /> {formatNumber(coinsNeeded)}
             </div>
           </div>
         </div>
