@@ -1,6 +1,11 @@
 import { MAX_LEVEL_NUMBER, MAX_SUB_LEVEL_NUMBER } from "../data/upgrade-costs";
 import { calculateCost } from "./calculateCost";
 
+expect.addSnapshotSerializer({
+  test: (value) => typeof value === "number",
+  print: (value) => new Intl.NumberFormat().format(value as number),
+});
+
 describe("calculateCost", () => {
   describe("drones", () => {
     // TODO
@@ -24,12 +29,12 @@ Object {
   "boxes": Object {
     "with": Object {
       "cardsNeededForLevels": 0,
-      "coinsNeededForLevels": 1251800,
-      "gemsNeededForLevels": 8560,
+      "coinsNeededForLevels": 1,251,800,
+      "gemsNeededForLevels": 8,560,
     },
     "without": Object {
-      "cardsNeededForLevels": 1900,
-      "coinsNeededForLevels": 1321800,
+      "cardsNeededForLevels": 1,900,
+      "coinsNeededForLevels": 1,321,800,
       "gemsNeededForLevels": 720,
     },
   },
@@ -55,12 +60,12 @@ Object {
   "boxes": Object {
     "with": Object {
       "cardsNeededForLevels": 0,
-      "coinsNeededForLevels": 1251800,
-      "gemsNeededForLevels": 8560,
+      "coinsNeededForLevels": 1,251,800,
+      "gemsNeededForLevels": 8,560,
     },
     "without": Object {
-      "cardsNeededForLevels": 1900,
-      "coinsNeededForLevels": 1321800,
+      "cardsNeededForLevels": 1,900,
+      "coinsNeededForLevels": 1,321,800,
       "gemsNeededForLevels": 720,
     },
   },
@@ -86,12 +91,12 @@ Object {
   "boxes": Object {
     "with": Object {
       "cardsNeededForLevels": 0,
-      "coinsNeededForLevels": 887775,
-      "gemsNeededForLevels": 4500,
+      "coinsNeededForLevels": 887,775,
+      "gemsNeededForLevels": 4,500,
     },
     "without": Object {
-      "cardsNeededForLevels": 1000,
-      "coinsNeededForLevels": 925275,
+      "cardsNeededForLevels": 1,000,
+      "coinsNeededForLevels": 925,275,
       "gemsNeededForLevels": 300,
     },
   },
@@ -117,12 +122,12 @@ Object {
   "boxes": Object {
     "with": Object {
       "cardsNeededForLevels": 0,
-      "coinsNeededForLevels": 232305,
+      "coinsNeededForLevels": 232,305,
       "gemsNeededForLevels": 0,
     },
     "without": Object {
       "cardsNeededForLevels": 0,
-      "coinsNeededForLevels": 232305,
+      "coinsNeededForLevels": 232,305,
       "gemsNeededForLevels": 0,
     },
   },
@@ -179,12 +184,12 @@ Object {
   "boxes": Object {
     "with": Object {
       "cardsNeededForLevels": 0,
-      "coinsNeededForLevels": 434150,
+      "coinsNeededForLevels": 434,150,
       "gemsNeededForLevels": 0,
     },
     "without": Object {
       "cardsNeededForLevels": 0,
-      "coinsNeededForLevels": 434150,
+      "coinsNeededForLevels": 434,150,
       "gemsNeededForLevels": 0,
     },
   },
@@ -212,16 +217,16 @@ Object {
   "boxes": Object {
     "with": Object {
       "cardsNeededForLevels": 0,
-      "coinsNeededForLevels": 12068515,
-      "gemsNeededForLevels": 47240,
+      "coinsNeededForLevels": 12,068,515,
+      "gemsNeededForLevels": 47,240,
     },
     "without": Object {
-      "cardsNeededForLevels": 10400,
-      "coinsNeededForLevels": 12451015,
-      "gemsNeededForLevels": 4400,
+      "cardsNeededForLevels": 10,400,
+      "coinsNeededForLevels": 12,451,015,
+      "gemsNeededForLevels": 4,400,
     },
   },
-  "gemsNeededToMerge": 1000,
+  "gemsNeededToMerge": 1,000,
   "isEstimateComplete": false,
 }
 `);
@@ -247,13 +252,13 @@ Object {
   "boxes": Object {
     "with": Object {
       "cardsNeededForLevels": 0,
-      "coinsNeededForLevels": 39765975,
-      "gemsNeededForLevels": 145200,
+      "coinsNeededForLevels": 39,765,975,
+      "gemsNeededForLevels": 145,200,
     },
     "without": Object {
-      "cardsNeededForLevels": 30000,
-      "coinsNeededForLevels": 40865975,
-      "gemsNeededForLevels": 22000,
+      "cardsNeededForLevels": 30,000,
+      "coinsNeededForLevels": 40,865,975,
+      "gemsNeededForLevels": 22,000,
     },
   },
   "gemsNeededToMerge": null,
