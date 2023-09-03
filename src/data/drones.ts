@@ -72,8 +72,8 @@ export const TIER_1_DRONES: Tier1Item[] = [
     name: "Reaper",
   },
   {
-    id: "norther_bear",
-    name: "Norther Bear",
+    id: "northern_bear",
+    name: "Northern Bear",
   },
   {
     id: "rocketeer",
@@ -84,8 +84,8 @@ export const TIER_1_DRONES: Tier1Item[] = [
     name: "Nighturge",
   },
   {
-    id: "tarigon",
-    name: "Tarigon",
+    id: "terigon",
+    name: "Terigon",
   },
   {
     id: "black_widow",
@@ -120,8 +120,8 @@ export const TIER_1_DRONES: Tier1Item[] = [
     name: "Meduzian",
   },
   {
-    id: "protos",
-    name: "Protos",
+    id: "protoss",
+    name: "Protoss",
   },
   {
     id: "twister",
@@ -181,12 +181,12 @@ export const TIER_2_DRONES: Tier2Item[] = [
   {
     id: "northern_rebel",
     name: "Northern Rebel",
-    createdByMerging: ["norther_bear", "rocketeer"],
+    createdByMerging: ["northern_bear", "rocketeer"],
   },
   {
     id: "salamander",
     name: "Salamander",
-    createdByMerging: ["nighturge", "tarigon"],
+    createdByMerging: ["nighturge", "terigon"],
   },
   {
     id: "spider_queen",
@@ -211,7 +211,7 @@ export const TIER_2_DRONES: Tier2Item[] = [
   {
     id: "whirlwind",
     name: "Whirlwind",
-    createdByMerging: ["protos", "twister"],
+    createdByMerging: ["protoss", "twister"],
   },
   {
     id: "wyvern",
