@@ -12,17 +12,6 @@
   flex-wrap: wrap;
 }
 
-@media (max-width: 600px) {
-  .Container {
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .RightColumn {
-    padding-bottom: 1rem;
-  }
-}
-
 .Description {
   width: 9.5rem;
   display: flex;
@@ -50,6 +39,33 @@
   width: 6ch;
 }
 
+.ComponentItemsContainer {
+  border-left: 1px solid lightslategray;
+  padding-left: 1ch;
+  margin-left: 1ch;
+}
 .ComponentItemsContainer[data-is-complete] {
   opacity: 0.5;
+}
+
+@media (max-width: 900px) {
+  .Container {
+    width: 100%;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .RightColumn {
+    padding-bottom: 1rem;
+  }
+
+  .ComponentItemsContainer {
+    width: 100%;
+    border-left: none;
+    padding-left: 0;
+    margin-left: 0;
+    border-top: 1px solid lightslategray;
+    padding-top: 1ch;
+    margin-top: 1ch;
+  }
 }

@@ -94,18 +94,20 @@ export function ItemUpgradePlanner({
             items={isUnlocked ? [item] : componentItems}
           />
         </div>
-        <div
-          className={styles.ComponentItemsContainer}
-          data-is-complete={isUnlocked || undefined}
-        >
-          {componentItems.map((componentItem) => (
-            <ItemUpgradePlanner
-              isNested={true}
-              item={componentItem}
-              key={componentItem.id}
-            />
-          ))}
-        </div>
+        {componentItems.length > 0 && (
+          <div
+            className={styles.ComponentItemsContainer}
+            data-is-complete={isUnlocked || undefined}
+          >
+            {componentItems.map((componentItem) => (
+              <ItemUpgradePlanner
+                isNested={true}
+                item={componentItem}
+                key={componentItem.id}
+              />
+            ))}
+          </div>
+        )}
       </div>
     </>
   );
