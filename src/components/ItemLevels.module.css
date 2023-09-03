@@ -1,4 +1,5 @@
 .Markers {
+  width: 14rem;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -46,16 +47,22 @@
 }
 
 .Spacer {
-  width: 1ch;
+  flex: 1 1 auto;
 }
 
-.AddOrSubtractIcon {
-  width: 1rem;
+.AddOrSubtractButton {
+  outline: none;
+  border: none;
+  width: 2rem;
   height: 1rem;
-  color: white;
-  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.5rem;
+  background-color: white;
+  color: #000;
 }
-.AddOrSubtractIcon[data-disabled] {
-  color: darkslategray;
+.AddOrSubtractButton[data-disabled] {
+  background-color: darkslategray;
   cursor: default;
 }

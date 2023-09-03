@@ -1,3 +1,9 @@
+html,
+body {
+  width: 100%;
+  height: 100%;
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
@@ -6,7 +12,9 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
-  background-color: #111;
+  background-color: #031134;
+  background: linear-gradient(45deg, #020724, #02193e);
+  font-size: 16px;
 }
 
 code {
@@ -16,4 +24,18 @@ code {
 
 * {
   box-sizing: border-box;
+}
+
+#root {
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  overflow: auto;
+}
+
+input,
+select,
+textarea {
+  /* Prevent auto-zoom on iOS */
+  font-size: 16px;
 }

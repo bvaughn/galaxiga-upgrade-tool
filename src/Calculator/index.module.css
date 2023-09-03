@@ -3,7 +3,6 @@
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
-  background-color: #111;
 }
 
 .TabRow {
@@ -89,9 +88,6 @@
   flex-direction: row;
   align-items: center;
   gap: 0.25rem;
-}
-.Input {
-  font-size: 1rem;
 }
 .Input[data-type="cards"] {
   width: 8ch;

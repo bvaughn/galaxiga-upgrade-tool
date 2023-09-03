@@ -1,7 +1,6 @@
-import { useItemStats } from "../hooks/useItemStats";
 import { MAX_LEVEL_NUMBER, MAX_SUB_LEVEL_NUMBER } from "../data/upgrade-costs";
+import { useItemStats } from "../hooks/useItemStats";
 import { Item } from "../types";
-import { Icon } from "./Icon";
 import styles from "./ItemLevels.module.css";
 
 export function ItemLevels({ item }: { item: Item }) {
@@ -52,18 +51,20 @@ export function ItemLevels({ item }: { item: Item }) {
 
         <div className={styles.Spacer} />
 
-        <Icon
+        <button
+          className={styles.AddOrSubtractButton}
           data-disabled={stats.level === 0 || undefined}
-          className={styles.AddOrSubtractIcon}
           onClick={decreaseLevel}
-          type="subtract"
-        />
-        <Icon
+        >
+          -
+        </button>
+        <button
+          className={styles.AddOrSubtractButton}
           data-disabled={stats.level === MAX_LEVEL_NUMBER || undefined}
-          className={styles.AddOrSubtractIcon}
-          onClick={stats.level < MAX_LEVEL_NUMBER ? increaseLevel : undefined}
-          type="add"
-        />
+          onClick={increaseLevel}
+        >
+          +
+        </button>
       </div>
       <div className={styles.Markers}>
         {new Array(stats.subLevel).fill(true).map((_, index) => (
@@ -79,21 +80,22 @@ export function ItemLevels({ item }: { item: Item }) {
                 {stats.subLevel + index + 1}
               </div>
             ))}
+
         <div className={styles.Spacer} />
-        <Icon
+        <button
+          className={styles.AddOrSubtractButton}
           data-disabled={stats.subLevel === 0 || undefined}
-          className={styles.AddOrSubtractIcon}
           onClick={decreaseSubLevel}
-          type="subtract"
-        />
-        <Icon
-          data-disabled={stats.subLevel === MAX_SUB_LEVEL_NUMBER || undefined}
-          className={styles.AddOrSubtractIcon}
-          onClick={
-            stats.subLevel < MAX_SUB_LEVEL_NUMBER ? increaseSubLevel : undefined
-          }
-          type="add"
-        />
+        >
+          -
+        </button>
+        <button
+          className={styles.AddOrSubtractButton}
+          data-disabled={stats.subLevel === MAX_LEVEL_NUMBER || undefined}
+          onClick={increaseSubLevel}
+        >
+          +
+        </button>
       </div>
     </>
   );

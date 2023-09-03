@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { ItemImage } from "../components/ItemImage";
 import { Item } from "../types";
 
-import { GradientContainer } from "../components/GradientContainer";
 import { ItemCosts } from "../components/ItemCosts";
 import { MAX_LEVEL_NUMBER, MAX_SUB_LEVEL_NUMBER } from "../data/upgrade-costs";
 import {
@@ -57,9 +56,14 @@ export function ItemUpgradePlanner({
       itemStats.subLevel === MAX_SUB_LEVEL_NUMBER
   );
 
-  const content = (
-    <>
-      <div className={styles.Container} data-is-nested={isNested || undefined}>
+  return (
+    <div className={styles.Container}>
+      <div
+        className={styles.Panel}
+        data-is-complete={isComplete || undefined}
+        data-is-nested={isNested || undefined}
+        data-component-items-count={componentItems.length}
+      >
         <div className={styles.LeftColumn}>
           <ItemImage
             className={isNested ? styles.NestedImage : styles.Image}
@@ -94,23 +98,16 @@ export function ItemUpgradePlanner({
             items={isUnlocked ? [item] : componentItems}
           />
         </div>
-        {componentItems.length > 0 && (
-          <div
-            className={styles.ComponentItemsContainer}
-            data-is-complete={isUnlocked || undefined}
-          >
-            {componentItems.map((componentItem) => (
-              <ItemUpgradePlanner
-                isNested={true}
-                item={componentItem}
-                key={componentItem.id}
-              />
-            ))}
-          </div>
-        )}
       </div>
-    </>
+      {componentItems.length > 0 ? (
+        <div className={styles.ComponentItems}>
+          {componentItems.map((componentItem) => (
+            <div className={styles.ComponentItem} key={componentItem.id}>
+              <ItemUpgradePlanner isNested={true} item={componentItem} />
+            </div>
+          ))}
+        </div>
+      ) : null}
+    </div>
   );
-
-  return isNested ? content : <GradientContainer>{content}</GradientContainer>;
 }
