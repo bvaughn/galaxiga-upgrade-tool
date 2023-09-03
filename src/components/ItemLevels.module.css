@@ -3,27 +3,50 @@
   flex-direction: row;
   align-items: center;
   user-select: none;
-}
-.LevelMarkers,
-.SubLevelMarkers {
-  width: 7rem;
+  gap: 2px;
 }
 
-.LevelMarkers {
-  color: #74d0fe;
-  font-size: 0.8rem;
+.LevelMarker,
+.LevelMarkerInactive {
+  width: 0.9rem;
+  height: 0.9rem;
+  border-radius: 100%;
+  font-size: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.LevelMarker {
+  background-color: #74d0fe;
+  color: black;
+}
+.LevelMarkerInactive {
+  background-color: #74d0fe44;
+  color: white;
 }
 
-.SubLevelMarkers {
-  color: #74d522;
+.SubLevelMarker,
+.SubLevelMarkerInactive {
+  width: 0.78rem;
+  height: 0.65rem;
+  border-radius: 2px;
+  transform: skew(-25deg);
+  font-size: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-.SubLevelMarkersInactive {
-  color: darkslategray;
+.SubLevelMarker {
+  background-color: #74d522;
+  color: black;
 }
-.SubLevelMarkers,
-.SubLevelMarkersInactive {
-  height: 0.5rem;
-  line-height: 0.5rem;
+.SubLevelMarkerInactive {
+  background-color: darkslategray;
+  color: white;
+}
+
+.Spacer {
+  width: 1ch;
 }
 
 .AddOrSubtractIcon {

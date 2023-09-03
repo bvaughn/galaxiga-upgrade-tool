@@ -1,5 +1,5 @@
-import useLocalStorage, { localStorageGetItem } from "./useLocalStorage";
 import { Item } from "../types";
+import useLocalStorage, { localStorageGetItem } from "./useLocalStorage";
 
 export type ItemStats = {
   cards: number;
@@ -20,18 +20,29 @@ export function getItemStatsKey(item: Item): string {
 export function useItemStats(
   item: Item
 ): [stats: ItemStats, setStats: (value: ItemStats) => void] {
-  return useLocalStorage<ItemStats>(getItemStatsKey(item), {
-    ...DEFAULT_ITEM_STATS,
-  });
+  const [stats, setStats] = useLocalStorage<ItemStats>(
+    getItemStatsKey(item),
+    {} as any
+  );
+
+  return [
+    {
+      ...DEFAULT_ITEM_STATS,
+      ...stats,
+    },
+    setStats,
+  ];
 }
 
 export function getItemStats(item: Item): ItemStats {
+  let stats;
+
   const string = localStorageGetItem(getItemStatsKey(item));
   try {
     if (string) {
-      return JSON.parse(string);
+      stats = JSON.parse(string);
     }
   } catch (error) {}
 
-  return { ...DEFAULT_ITEM_STATS };
+  return { ...DEFAULT_ITEM_STATS, ...stats };
 }

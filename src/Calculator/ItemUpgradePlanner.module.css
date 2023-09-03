@@ -12,10 +12,18 @@
   flex-wrap: wrap;
 }
 
-.Description {
-  width: 9.5rem;
+.NameAndLevels {
   display: flex;
   flex-direction: column;
+  gap: 0.25rem;
+}
+
+.Name {
+  font-size: 1.25rem;
+  margin-bottom: 0.25rem;
+}
+.Container[data-is-nested] .Name {
+  font-size: 1rem;
 }
 
 .Image {
@@ -43,6 +51,9 @@
   border-left: 1px solid lightslategray;
   padding-left: 1ch;
   margin-left: 1ch;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 }
 .ComponentItemsContainer[data-is-complete] {
   opacity: 0.5;

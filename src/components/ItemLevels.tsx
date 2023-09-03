@@ -36,10 +36,22 @@ export function ItemLevels({ item }: { item: Item }) {
   return (
     <>
       <div className={styles.Markers}>
-        <div className={styles.LevelMarkers}>
-          {"●".repeat(stats.level)}
-          {"○".repeat(MAX_LEVEL_NUMBER - stats.level)}
-        </div>
+        {new Array(stats.level).fill(true).map((_, index) => (
+          <div className={styles.LevelMarker} key={index}>
+            {index + 1}
+          </div>
+        ))}
+        {stats.level < MAX_LEVEL_NUMBER &&
+          new Array(MAX_LEVEL_NUMBER - stats.level)
+            .fill(true)
+            .map((_, index) => (
+              <div className={styles.LevelMarkerInactive} key={index}>
+                {stats.level + index + 1}
+              </div>
+            ))}
+
+        <div className={styles.Spacer} />
+
         <Icon
           data-disabled={stats.level === 0 || undefined}
           className={styles.AddOrSubtractIcon}
@@ -54,13 +66,20 @@ export function ItemLevels({ item }: { item: Item }) {
         />
       </div>
       <div className={styles.Markers}>
-        <div className={styles.SubLevelMarkers}>
-          {"▰".repeat(stats.subLevel)}
-          <span className={styles.SubLevelMarkersInactive}>
-            {"▰".repeat(MAX_SUB_LEVEL_NUMBER - stats.subLevel)}
-          </span>
-        </div>
-
+        {new Array(stats.subLevel).fill(true).map((_, index) => (
+          <div className={styles.SubLevelMarker} key={index}>
+            {index + 1}
+          </div>
+        ))}
+        {stats.subLevel < MAX_SUB_LEVEL_NUMBER &&
+          new Array(MAX_SUB_LEVEL_NUMBER - stats.subLevel)
+            .fill(true)
+            .map((_, index) => (
+              <div className={styles.SubLevelMarkerInactive} key={index}>
+                {stats.subLevel + index + 1}
+              </div>
+            ))}
+        <div className={styles.Spacer} />
         <Icon
           data-disabled={stats.subLevel === 0 || undefined}
           className={styles.AddOrSubtractIcon}

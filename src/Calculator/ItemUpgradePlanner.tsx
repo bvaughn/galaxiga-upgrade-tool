@@ -65,7 +65,7 @@ export function ItemUpgradePlanner({
             className={isNested ? styles.NestedImage : styles.Image}
             item={item}
           />
-          <div>
+          <div className={styles.NameAndLevels}>
             <div className={styles.Name}>{item.name}</div>
             <ItemLevels item={item} />
           </div>
