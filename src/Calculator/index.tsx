@@ -133,7 +133,7 @@ export function Calculator() {
           data-selected={category === "ship" || undefined}
         >
           <input
-            defaultChecked={true}
+            defaultChecked={category === "ship"}
             name="category"
             onChange={({ target }) => setCategory(target.value as any)}
             type="radio"
@@ -147,6 +147,7 @@ export function Calculator() {
           data-selected={category === "drone" || undefined}
         >
           <input
+            defaultChecked={category === "drone"}
             name="category"
             onChange={({ target }) => setCategory(target.value as any)}
             type="radio"
@@ -160,6 +161,7 @@ export function Calculator() {
           data-selected={category === "stone" || undefined}
         >
           <input
+            defaultChecked={category === "stone"}
             name="category"
             onChange={({ target }) => setCategory(target.value as any)}
             type="radio"
