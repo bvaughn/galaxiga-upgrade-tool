@@ -180,7 +180,7 @@ export function Calculator() {
               onChange={({ target }) => setBuyCardsWithGems(target.checked)}
               type="checkbox"
             />
-            Buy cards from treasure boxes
+            Buy cards with gems
           </label>
         </div>
         <div className={styles.OptionsMiddleColumn}>
