@@ -67,7 +67,7 @@ export function ItemUpgradePlanner({
           />
           <div className={styles.NameAndLevels}>
             <div className={styles.Name}>{item.name}</div>
-            <ItemLevels item={item} />
+            {isUnlocked && <ItemLevels item={item} />}
           </div>
         </div>
         <div className={styles.RightColumn}>
