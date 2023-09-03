@@ -1,4 +1,8 @@
-import { CARDS_PER_BOX, COINS_PER_BOX, COST_PER_BOX } from "../data/boxes";
+import {
+  CARDS_PER_BOX,
+  COINS_PER_BOX,
+  COST_IN_GEMS_PER_BOX,
+} from "../data/boxes";
 import {
   CARDS_PER_LEVEL,
   COINS_PER_LEVEL,
@@ -83,7 +87,7 @@ export function calculateCost(
 
   const cardsPerBox = CARDS_PER_BOX[category];
   const coinsPerBox = COINS_PER_BOX[category];
-  const costPerBox = COST_PER_BOX[category];
+  const costPerBox = COST_IN_GEMS_PER_BOX[category];
   if (cardsPerBox && coinsPerBox && costPerBox) {
     const genericCardsPerBoxAverage =
       (cardsPerBox.generic[0] + cardsPerBox.generic[1]) / 2;

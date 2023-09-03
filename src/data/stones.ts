@@ -60,8 +60,8 @@ export const TIER_1_STONES: Tier1Item[] = [
     name: "Blast Stone",
   },
   {
-    id: "denab_stone",
-    name: "Denab Stone",
+    id: "deneb_stone",
+    name: "Deneb Stone",
   },
   {
     id: "space_stone",
@@ -115,7 +115,7 @@ export const TIER_2_STONES: Tier2Item[] = [
   {
     id: "phoenix_stone",
     name: "Phoenix Stone",
-    createdByMerging: ["blast_stone", "denab_stone"],
+    createdByMerging: ["blast_stone", "deneb_stone"],
   },
   {
     id: "spacetime_stone",

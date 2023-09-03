@@ -32,6 +32,8 @@ export function Calculator() {
     "num-generic-ship-cards",
     0
   );
+  const [numGenericStoneCards, setNumGenericStoneCards] =
+    useLocalStorage<number>("num-generic-stone-cards", 0);
 
   const [buyCardsWithGems, setBuyCardsWithGems] = useBuyCardsWithGems();
 
@@ -229,10 +231,23 @@ export function Calculator() {
               <NumberInput
                 className={styles.Input}
                 data-type="cards"
-                maxValue={9999}
+                maxValue={999_999_999}
                 minValue={0}
                 onChange={setNumGenericDroneCards}
                 value={numGenericDroneCards}
+              />
+            </label>
+          )}
+          {category === "stone" && (
+            <label className={styles.InputLabel}>
+              <Card type="generic" category="stone" />
+              <NumberInput
+                className={styles.Input}
+                data-type="cards"
+                maxValue={999_999_999}
+                minValue={0}
+                onChange={setNumGenericStoneCards}
+                value={numGenericStoneCards}
               />
             </label>
           )}
