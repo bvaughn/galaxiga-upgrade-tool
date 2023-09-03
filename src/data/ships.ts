@@ -116,7 +116,7 @@ export const TIER_1_SHIPS: Tier1Item[] = [
     name: "Winter Star",
     unlockedBy: "Special event",
   },
-];
+].map((item) => ({ ...item, category: "ship", tier: 1 }));
 
 export const TIER_2_SHIPS: Tier2Item[] = [
   {
@@ -178,4 +178,4 @@ export const TIER_2_SHIPS: Tier2Item[] = [
     name: "Zeus",
     createdByMerging: ["hades", "poseidon"],
   },
-];
+].map((item) => ({ ...item, category: "ship", tier: 2 }));

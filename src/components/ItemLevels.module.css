@@ -1,0 +1,38 @@
+.Markers {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  user-select: none;
+}
+.LevelMarkers,
+.SubLevelMarkers {
+  width: 7rem;
+}
+
+.LevelMarkers {
+  color: #74d0fe;
+  font-size: 0.8rem;
+}
+
+.SubLevelMarkers {
+  color: #74d522;
+}
+.SubLevelMarkersInactive {
+  color: darkslategray;
+}
+.SubLevelMarkers,
+.SubLevelMarkersInactive {
+  height: 0.5rem;
+  line-height: 0.5rem;
+}
+
+.AddOrSubtractIcon {
+  width: 1rem;
+  height: 1rem;
+  color: white;
+  cursor: pointer;
+}
+.AddOrSubtractIcon[data-disabled] {
+  color: darkslategray;
+  cursor: default;
+}

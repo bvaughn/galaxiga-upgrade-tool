@@ -78,6 +78,7 @@
 }
 
 .FilterInput,
+.ShowTierSelect,
 .SortSelect {
   width: 100%;
   background: black;
@@ -88,6 +89,7 @@
   border-radius: 0.5rem;
 }
 .FilterInput:focus,
+.ShowTierSelect:focus,
 .SortSelect:focus {
   border-color: #74d522;
 }

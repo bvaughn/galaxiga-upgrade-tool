@@ -1,16 +1,23 @@
+export type Category = "drone" | "ship" | "stone";
+export type Tier = 1 | 2 | 3;
+
 export type Item = {
+  category: Category;
   description?: string;
   id: string;
   name: string;
   previousName?: string;
+  tier: Tier;
 };
 
 export type Tier1Item = Item & {
   unlockedBy?: string;
+  tier: 1;
 };
 
 export type Tier2Item = Item & {
   createdByMerging: string[];
+  tier: 2;
 };
 
 export function isTier1Item(item: Item): item is Tier1Item {
@@ -20,8 +27,6 @@ export function isTier1Item(item: Item): item is Tier1Item {
 export function isTier2Item(item: Item): item is Tier2Item {
   return item.hasOwnProperty("createdByMerging");
 }
-
-export type Category = "drone" | "ship" | "stone";
 
 // Each evolution level costs a fixed number of cards and gems.
 // There are also 10 incremental upgrades within a level, each of which costs coins.

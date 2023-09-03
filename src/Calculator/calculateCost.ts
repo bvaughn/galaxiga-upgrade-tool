@@ -1,14 +1,14 @@
 import { CARDS_PER_BOX, COINS_PER_BOX, COST_PER_BOX } from "../data/boxes";
 import {
-  MAX_LEVEL_NUMBER,
-  MAX_SUB_LEVEL_NUMBER,
   CARDS_PER_LEVEL,
   COINS_PER_LEVEL,
   GEMS_PER_LEVEL,
   GEMS_TO_MERGE,
+  MAX_LEVEL_NUMBER,
+  MAX_SUB_LEVEL_NUMBER,
 } from "../data/upgrade-costs";
-import { Category } from "../types";
-import { ItemStats } from "./useItemStats";
+import { Category, Tier } from "../types";
+import { ItemStats } from "../hooks/useItemStats";
 
 const MAX_LEVEL_INDEX = MAX_LEVEL_NUMBER - 1;
 const MAX_UPGRADE_INDEX = MAX_SUB_LEVEL_NUMBER - 1;
@@ -33,7 +33,7 @@ export type Cost = {
 export function calculateCost(
   stats: ItemStats,
   category: Category,
-  tier: 1 | 2 | 3
+  tier: Tier
 ): Cost {
   let cardsNeededForLevels = 0;
   let gemsNeededForLevels = 0;

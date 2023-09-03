@@ -79,7 +79,7 @@ export const TIER_1_STONES: Tier1Item[] = [
     id: "power_stone",
     name: "Power Stone",
   },
-];
+].map((item) => ({ ...item, category: "stone", tier: 1 }));
 
 export const TIER_2_STONES: Tier2Item[] = [
   {
@@ -127,4 +127,4 @@ export const TIER_2_STONES: Tier2Item[] = [
     name: "Umbra Stone",
     createdByMerging: ["dark_stone", "power_stone"],
   },
-];
+].map((item) => ({ ...item, category: "stone", tier: 2 }));

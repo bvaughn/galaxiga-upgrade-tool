@@ -1,0 +1,16 @@
+.Costs {
+  font-size: 0.8rem;
+  display: grid;
+  grid-template-columns: repeat(3, auto);
+  gap: 1ch;
+}
+
+.Cost {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.25em;
+}
+.Cost[data-disabled] {
+  opacity: 0.5;
+}

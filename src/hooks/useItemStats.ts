@@ -1,4 +1,5 @@
-import useLocalStorage, { localStorageGetItem } from "../hooks/useLocalStorage";
+import useLocalStorage, { localStorageGetItem } from "./useLocalStorage";
+import { Item } from "../types";
 
 export type ItemStats = {
   cards: number;
@@ -12,16 +13,20 @@ export const DEFAULT_ITEM_STATS: ItemStats = {
   subLevel: 0,
 };
 
+export function getItemStatsKey(item: Item): string {
+  return `tier-${item.tier}-stats:${item.id}`;
+}
+
 export function useItemStats(
-  itemId: string
+  item: Item
 ): [stats: ItemStats, setStats: (value: ItemStats) => void] {
-  return useLocalStorage<ItemStats>(`tier-1-stats:${itemId}`, {
+  return useLocalStorage<ItemStats>(getItemStatsKey(item), {
     ...DEFAULT_ITEM_STATS,
   });
 }
 
-export function getItemStats(itemId: string): ItemStats {
-  const string = localStorageGetItem(`tier-1-stats:${itemId}`);
+export function getItemStats(item: Item): ItemStats {
+  const string = localStorageGetItem(getItemStatsKey(item));
   try {
     if (string) {
       return JSON.parse(string);

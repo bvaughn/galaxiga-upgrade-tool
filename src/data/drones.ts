@@ -135,7 +135,7 @@ export const TIER_1_DRONES: Tier1Item[] = [
     id: "polaris",
     name: "Polaris",
   },
-];
+].map((item) => ({ ...item, category: "drone", tier: 1 }));
 
 export const TIER_2_DRONES: Tier2Item[] = [
   {
@@ -218,4 +218,4 @@ export const TIER_2_DRONES: Tier2Item[] = [
     name: "Wyvern",
     createdByMerging: ["chelonian", "polaris"],
   },
-];
+].map((item) => ({ ...item, category: "drone", tier: 2 }));
