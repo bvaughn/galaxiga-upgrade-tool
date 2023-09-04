@@ -23,7 +23,7 @@ import {
 import { assert } from "../utils/assert";
 import { ItemUpgradePlanner } from "./ItemUpgradePlanner";
 import styles from "./index.module.css";
-import { useBuyCardsWithGems } from "./useBuyCardsWithGems";
+import { useBuyCardsWithGems } from "../hooks/useBuyCardsWithGems";
 
 type SortBy = "level" | "level-reverse" | "name";
 type Tiers = "tier-1" | "tier-2";

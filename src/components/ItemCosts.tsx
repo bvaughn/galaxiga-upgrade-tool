@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import { useBuyCardsWithGems } from "../Calculator/useBuyCardsWithGems";
+import { useBuyCardsWithGems } from "../hooks/useBuyCardsWithGems";
 import { getItemStats } from "../hooks/useItemStats";
 import { Item } from "../types";
 import { Card } from "./Card";
