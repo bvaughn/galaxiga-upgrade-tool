@@ -5,6 +5,9 @@ import { TIER_1_SHIPS, TIER_2_SHIPS } from "../data/ships";
 import { useDeferredValue, useMemo } from "react";
 import { Coin } from "../components/Coin";
 import { Gem } from "../components/Gem";
+import { Input } from "../components/Input";
+import { RadioGroup, RadioOption } from "../components/RadioGroup";
+import { Select, SelectOption } from "../components/Select";
 import { TIER_1_DRONES, TIER_2_DRONES } from "../data/drones";
 import { TIER_1_STONES, TIER_2_STONES } from "../data/stones";
 import { getItemStats } from "../hooks/useItemStats";
@@ -21,6 +24,9 @@ import { assert } from "../utils/assert";
 import { ItemUpgradePlanner } from "./ItemUpgradePlanner";
 import styles from "./index.module.css";
 import { useBuyCardsWithGems } from "./useBuyCardsWithGems";
+
+type SortBy = "level" | "level-reverse" | "name";
+type Tiers = "tier-1" | "tier-2";
 
 export function Calculator() {
   const [numCoins, setNumCoins] = useLocalStorage<number>("num-coins", 0);
@@ -48,15 +54,13 @@ export function Calculator() {
   );
   const deferredFilterByText = useDeferredValue(filterByText.toLowerCase());
 
-  const [sortBy, setSortBy] = useLocalStorage<
-    "level" | "level-reverse" | "name"
-  >("calculator-sort-by", "name");
+  const [sortBy, setSortBy] = useLocalStorage<SortBy>(
+    "calculator-sort-by",
+    "name"
+  );
 
   // TODO This seems to be double triggered when changing to tier 2???
-  const [showTier, setShowTier] = useLocalStorage<"tier-1" | "tier-2">(
-    "show-tier",
-    "tier-1"
-  );
+  const [showTier, setShowTier] = useLocalStorage<Tiers>("show-tier", "tier-1");
 
   const items = useMemo(() => {
     let items: Item[];
@@ -129,49 +133,15 @@ export function Calculator() {
 
   return (
     <div className={styles.Page}>
-      <div className={styles.TabRow}>
-        <label
-          className={styles.LabelRadioGroup}
-          data-selected={category === "ship" || undefined}
-        >
-          <input
-            defaultChecked={category === "ship"}
+      <div className={styles.ItemsRow}>
+        <div className={styles.Tabs}>
+          <RadioGroup
             name="category"
-            onChange={({ target }) => setCategory(target.value as any)}
-            type="radio"
-            value="ship"
+            onChange={setCategory}
+            options={CATEGORY_OPTIONS}
+            value={category}
           />
-          <Card type="generic" category="ship" />
-          Ships
-        </label>
-        <label
-          className={styles.LabelRadioGroup}
-          data-selected={category === "drone" || undefined}
-        >
-          <input
-            defaultChecked={category === "drone"}
-            name="category"
-            onChange={({ target }) => setCategory(target.value as any)}
-            type="radio"
-            value="drone"
-          />
-          <Card type="generic" category="drone" />
-          Drones
-        </label>
-        <label
-          className={styles.LabelRadioGroup}
-          data-selected={category === "stone" || undefined}
-        >
-          <input
-            defaultChecked={category === "stone"}
-            name="category"
-            onChange={({ target }) => setCategory(target.value as any)}
-            type="radio"
-            value="stone"
-          />
-          <Card type="generic" category="stone" />
-          Stones
-        </label>
+        </div>
       </div>
       <div className={styles.OptionsRow}>
         <div className={styles.OptionsLeftColumn}>
@@ -186,30 +156,22 @@ export function Calculator() {
           </label>
         </div>
         <div className={styles.OptionsMiddleColumn}>
-          <input
-            className={styles.FilterInput}
-            onChange={({ target }) => setFilterByText(target.value)}
+          <Input<string>
+            onChange={setFilterByText}
             placeholder="Filter by name..."
             type="text"
             value={filterByText}
           />
-          <select
-            className={styles.SortSelect}
-            onChange={({ target }) => setSortBy(target.value as any)}
+          <Select<SortBy>
+            onChange={setSortBy}
+            options={SORT_BY_OPTIONS}
             value={sortBy}
-          >
-            <option value="name">Sort by name</option>
-            <option value="level">Sort by level (ascending)</option>
-            <option value="level-reverse">Sort by level (descending)</option>
-          </select>
-          <select
-            className={styles.ShowTierSelect}
-            onChange={({ target }) => setShowTier(target.value as any)}
+          />
+          <Select<Tiers>
+            onChange={setShowTier}
+            options={TIERS_OPTIONS}
             value={showTier}
-          >
-            <option value="tier-1">Tier 1</option>
-            <option value="tier-2">Tier 2</option>
-          </select>
+          />
         </div>
         <div className={styles.OptionsRightColumn}>
           {category === "ship" && (
@@ -319,3 +281,44 @@ function Tier2ItemUpgradePlanner({ item }: { item: Tier2Item }) {
 
   return <ItemUpgradePlanner item={item} componentItems={componentItems} />;
 }
+
+const CATEGORY_OPTIONS: RadioOption<Category>[] = [
+  {
+    label: (
+      <>
+        <Card type="generic" category="ship" />
+        Ships
+      </>
+    ),
+    value: "ship",
+  },
+  {
+    label: (
+      <>
+        <Card type="generic" category="drone" />
+        Drones
+      </>
+    ),
+    value: "drone",
+  },
+  {
+    label: (
+      <>
+        <Card type="generic" category="stone" />
+        Stones
+      </>
+    ),
+    value: "stone",
+  },
+];
+
+const SORT_BY_OPTIONS: SelectOption<SortBy>[] = [
+  { label: "Sort by name", value: "name" },
+  { label: "Sort by level", value: "level" },
+  { label: "Sort by level (descending)", value: "level-reverse" },
+];
+
+const TIERS_OPTIONS: SelectOption<Tiers>[] = [
+  { label: "Tier 1", value: "tier-1" },
+  { label: "Tier 2", value: "tier-2" },
+];

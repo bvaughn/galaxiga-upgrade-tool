@@ -5,36 +5,23 @@
   gap: 0.5rem;
 }
 
-.TabRow {
-  flex: 1 1 auto;
+.Tabs {
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: center;
+  margin: 0 auto;
   gap: 0.25rem;
-  font-size: 1.2rem;
-}
-
-.LabelRadioGroup {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.5rem 1rem;
   border-radius: 0.5rem;
-  border: 2px solid #738495;
-  background: #020724;
-  color: #fff;
-}
-.LabelRadioGroup[data-selected] {
-  border-color: #74d522;
+  overflow: hidden;
+  font-size: 1.2rem;
 }
 
 .ItemsRow {
   display: flex;
   flex-direction: row;
   align-items: stretch;
-  gap: 0.5rem;
+  gap: 0.25rem;
 }
 .ItemsColumn {
   flex: 1 1 auto;
@@ -63,23 +50,6 @@
 }
 .OptionsRightColumn {
   justify-content: flex-end;
-}
-
-.FilterInput,
-.ShowTierSelect,
-.SortSelect {
-  width: 100%;
-  background: black;
-  color: #fff;
-  outline: none;
-  border: 2px solid transparent;
-  padding: 0.25rem 1ch;
-  border-radius: 0.5rem;
-}
-.FilterInput:focus,
-.ShowTierSelect:focus,
-.SortSelect:focus {
-  border-color: #74d522;
 }
 
 .InputLabel {
@@ -116,12 +86,6 @@
 
   .OptionsLeftColumn {
     order: 2;
-  }
-
-  .LabelRadioGroup {
-    font-size: 1rem;
-    padding: 0.25rem 0.5rem;
-    gap: 0.25rem;
   }
 
   .InputLabel {
