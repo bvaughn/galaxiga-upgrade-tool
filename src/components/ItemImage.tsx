@@ -16,6 +16,7 @@ export function ItemImage({
       alt={item.name}
       className={`${className} ${styles.Image}`}
       data-category={item.category}
+      data-tier={item.tier}
       onError={({ target }) => {
         if (!didErrorRef.current) {
           didErrorRef.current = true;

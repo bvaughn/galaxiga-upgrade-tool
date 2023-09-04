@@ -5,22 +5,11 @@
   gap: 0.5rem;
 }
 
-.Tabs {
+.ItemsRow {
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  margin: 0 auto;
-  gap: 0.25rem;
-  border-radius: 0.5rem;
-  overflow: hidden;
-  font-size: 1.2rem;
-}
-
-.ItemsRow {
-  display: flex;
-  flex-direction: row;
-  align-items: stretch;
   gap: 0.25rem;
 }
 .ItemsColumn {

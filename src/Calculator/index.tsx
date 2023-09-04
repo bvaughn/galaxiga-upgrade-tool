@@ -1,32 +1,27 @@
 import { Card } from "../components/Card";
 import { NumberInput } from "../components/NumberInput";
-import { TIER_1_SHIPS, TIER_2_SHIPS } from "../data/ships";
 
 import { useDeferredValue, useMemo } from "react";
+import { CategoryTabs } from "../components/CategoryTabs";
 import { Coin } from "../components/Coin";
 import { Gem } from "../components/Gem";
 import { Input } from "../components/Input";
-import { RadioGroup, RadioOption } from "../components/RadioGroup";
 import { Select, SelectOption } from "../components/Select";
-import { TIER_1_DRONES, TIER_2_DRONES } from "../data/drones";
-import { TIER_1_STONES, TIER_2_STONES } from "../data/stones";
+import { TIER_1_DRONES } from "../data/drones";
+import { TIER_1_SHIPS } from "../data/ships";
+import { TIER_1_STONES } from "../data/stones";
+import { useBuyCardsWithGems } from "../hooks/useBuyCardsWithGems";
+import { useCategory } from "../hooks/useCategory";
 import { getItemStats } from "../hooks/useItemStats";
+import { useItems } from "../hooks/useItems";
 import useLocalStorage from "../hooks/useLocalStorage";
-import {
-  Category,
-  Item,
-  Tier1Item,
-  Tier2Item,
-  isTier1Item,
-  isTier2Item,
-} from "../types";
+import { Tiers, useShowTier } from "../hooks/useShowTier";
+import { Item, Tier1Item, Tier2Item, isTier1Item, isTier2Item } from "../types";
 import { assert } from "../utils/assert";
 import { ItemUpgradePlanner } from "./ItemUpgradePlanner";
 import styles from "./index.module.css";
-import { useBuyCardsWithGems } from "../hooks/useBuyCardsWithGems";
 
 type SortBy = "level" | "level-reverse" | "name";
-type Tiers = "tier-1" | "tier-2";
 
 export function Calculator() {
   const [numCoins, setNumCoins] = useLocalStorage<number>("num-coins", 0);
@@ -43,10 +38,7 @@ export function Calculator() {
 
   const [buyCardsWithGems, setBuyCardsWithGems] = useBuyCardsWithGems();
 
-  const [category, setCategory] = useLocalStorage<Category>(
-    "calculator-category",
-    "ship"
-  );
+  const [category] = useCategory();
 
   const [filterByText, setFilterByText] = useLocalStorage<string>(
     "calculator-filter-by-text",
@@ -59,42 +51,11 @@ export function Calculator() {
     "name"
   );
 
-  // TODO This seems to be double triggered when changing to tier 2???
-  const [showTier, setShowTier] = useLocalStorage<Tiers>("show-tier", "tier-1");
+  const [showTier, setShowTier] = useShowTier();
 
+  const unfilteredItems = useItems();
   const items = useMemo(() => {
-    let items: Item[];
-
-    switch (showTier) {
-      case "tier-1": {
-        switch (category) {
-          case "drone":
-            items = TIER_1_DRONES;
-            break;
-          case "ship":
-            items = TIER_1_SHIPS;
-            break;
-          case "stone":
-            items = TIER_1_STONES;
-            break;
-        }
-        break;
-      }
-      case "tier-2": {
-        switch (category) {
-          case "drone":
-            items = TIER_2_DRONES;
-            break;
-          case "ship":
-            items = TIER_2_SHIPS;
-            break;
-          case "stone":
-            items = TIER_2_STONES;
-            break;
-        }
-        break;
-      }
-    }
+    let items: Item[] = [...unfilteredItems];
 
     assert(items != null);
 
@@ -129,19 +90,12 @@ export function Calculator() {
     }
 
     return items;
-  }, [category, deferredFilterByText, sortBy, showTier]);
+  }, [deferredFilterByText, sortBy, unfilteredItems]);
 
   return (
     <div className={styles.Page}>
       <div className={styles.ItemsRow}>
-        <div className={styles.Tabs}>
-          <RadioGroup
-            name="category"
-            onChange={setCategory}
-            options={CATEGORY_OPTIONS}
-            value={category}
-          />
-        </div>
+        <CategoryTabs />
       </div>
       <div className={styles.OptionsRow}>
         <div className={styles.OptionsLeftColumn}>
@@ -281,36 +235,6 @@ function Tier2ItemUpgradePlanner({ item }: { item: Tier2Item }) {
 
   return <ItemUpgradePlanner item={item} componentItems={componentItems} />;
 }
-
-const CATEGORY_OPTIONS: RadioOption<Category>[] = [
-  {
-    label: (
-      <>
-        <Card type="generic" category="ship" />
-        Ships
-      </>
-    ),
-    value: "ship",
-  },
-  {
-    label: (
-      <>
-        <Card type="generic" category="drone" />
-        Drones
-      </>
-    ),
-    value: "drone",
-  },
-  {
-    label: (
-      <>
-        <Card type="generic" category="stone" />
-        Stones
-      </>
-    ),
-    value: "stone",
-  },
-];
 
 const SORT_BY_OPTIONS: SelectOption<SortBy>[] = [
   { label: "Sort by name", value: "name" },

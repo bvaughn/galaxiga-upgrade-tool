@@ -2,10 +2,10 @@ import { CSSProperties, HTMLAttributes, ReactNode } from "react";
 
 import styles from "./Icon.module.css";
 
-export type IconType = "add" | "subtract" | "warn";
+export type IconType = "add" | "menu" | "subtract" | "warn";
 
 export function Icon({
-  className = styles.DefaultIcon,
+  className = "",
   style,
   type,
   ...rest
@@ -20,6 +20,9 @@ export function Icon({
     case "add":
       path =
         "M17,13H13V17H11V13H7V11H11V7H13V11H17M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z";
+      break;
+    case "menu":
+      path = "M3,6H21V8H3V6M3,11H21V13H3V11M3,16H21V18H3V16Z";
       break;
     case "subtract":
       path =
@@ -37,7 +40,7 @@ export function Icon({
 
   return (
     <svg
-      className={className}
+      className={`${className} ${styles.DefaultIcon}`}
       style={style}
       viewBox="0 0 24 24"
       fill="currentColor"

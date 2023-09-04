@@ -4,11 +4,11 @@
   align-items: center;
   gap: 0.5rem;
   padding: 0.5rem 1rem;
-  background: rgba(0, 0, 0, 0.5);
-  color: #fff;
+  background: #0005;
+  color: white;
 }
 .Label[data-selected] {
-  background: black;
+  background: #000c;
 }
 
 @media (max-width: 850px) {

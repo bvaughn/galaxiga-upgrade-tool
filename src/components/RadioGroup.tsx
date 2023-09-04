@@ -7,11 +7,16 @@ export type RadioOption<Value extends number | string> = {
 };
 
 export function RadioGroup<Value extends number | string>({
+  inputClassName,
+  labelClassName,
   name,
   onChange,
   options,
   value,
 }: {
+  className?: string;
+  inputClassName?: string;
+  labelClassName?: string;
   name: string;
   onChange: (value: Value) => void;
   options: RadioOption<Value>[];
@@ -19,8 +24,10 @@ export function RadioGroup<Value extends number | string>({
 }) {
   return options.map((option) => (
     <Radio<Value>
+      inputClassName={inputClassName}
       key={option.value}
       label={option.label}
+      labelClassName={labelClassName}
       name={name}
       onChange={onChange}
       selected={option.value === value}
