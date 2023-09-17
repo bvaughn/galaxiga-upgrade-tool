@@ -53,7 +53,7 @@ export function WizardDataUpgrade({
 
   return (
     <>
-      <div className={styles.Row} key={id}>
+      <div className={styles.Row} data-separator key={id}>
         <ItemImage className={styles.ItemImage} onClick={onClick} item={item} />
         <div className={styles.Column} data-compact data-grow>
           <div className={styles.Row} data-compact>
@@ -69,16 +69,18 @@ export function WizardDataUpgrade({
             coinsNeeded={cost.boxes.without.coinsNeededForLevels}
             gemsNeeded={cost.boxes.without.gemsNeededForLevels}
           />
-          <small className={styles.Row}>
-            or{" "}
-            <ItemCosts
-              buyCards={true}
-              cardsNeeded={cost.boxes.with.cardsNeededForLevels}
-              category={item.category}
-              coinsNeeded={cost.boxes.with.coinsNeededForLevels}
-              gemsNeeded={cost.boxes.with.gemsNeededForLevels}
-            />
-          </small>
+          {cost.boxes.without.cardsNeededForLevels > 0 && (
+            <small className={styles.Row}>
+              or{" "}
+              <ItemCosts
+                buyCards={true}
+                cardsNeeded={cost.boxes.with.cardsNeededForLevels}
+                category={item.category}
+                coinsNeeded={cost.boxes.with.coinsNeededForLevels}
+                gemsNeeded={cost.boxes.with.gemsNeededForLevels}
+              />
+            </small>
+          )}
         </div>
         <div className={styles.Row} data-compact>
           <IconButton

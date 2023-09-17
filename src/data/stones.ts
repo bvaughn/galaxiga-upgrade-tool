@@ -9,122 +9,122 @@ import { Tier1Item, Tier2Item } from "../types";
 export const TIER_1_STONES: Tier1Item[] = [
   {
     id: "frozen_stone",
-    name: "Frozen Stone",
+    name: "Frozen",
   },
   {
     id: "meteor_stone",
-    name: "Meteor Stone",
+    name: "Meteor",
   },
   {
     id: "coral_stone",
-    name: "Coral Stone",
+    name: "Coral",
   },
   {
     id: "wave_stone",
-    name: "Wave Stone",
+    name: "Wave",
   },
   {
     id: "apollo_stone",
-    name: "Apollo Stone",
+    name: "Apollo",
   },
   {
     id: "artemis_stone",
-    name: "Artemis Stone",
+    name: "Artemis",
   },
   {
     id: "mind_stone",
-    name: "Mind Stone",
+    name: "Mind",
   },
   {
     id: "reality_stone",
-    name: "Reality Stone",
+    name: "Reality",
   },
   {
     id: "hocus_stone",
-    name: "Hocus Stone",
+    name: "Hocus",
   },
   {
     id: "pocus_stone",
-    name: "Pocus Stone",
+    name: "Pocus",
   },
   {
     id: "light_stone",
-    name: "Light Stone",
+    name: "Light",
   },
   {
     id: "soul_stone",
-    name: "Soul Stone",
+    name: "Soul",
   },
   {
     id: "blast_stone",
-    name: "Blast Stone",
+    name: "Blast",
   },
   {
     id: "deneb_stone",
-    name: "Deneb Stone",
+    name: "Deneb",
   },
   {
     id: "space_stone",
-    name: "Space Stone",
+    name: "Space",
   },
   {
     id: "time_stone",
-    name: "Time Stone",
+    name: "Time",
   },
   {
     id: "dark_stone",
-    name: "Dark Stone",
+    name: "Dark",
   },
   {
     id: "power_stone",
-    name: "Power Stone",
+    name: "Power",
   },
 ].map((item) => ({ ...item, category: "stone", tier: 1 }));
 
 export const TIER_2_STONES: Tier2Item[] = [
   {
     id: "comet_stone",
-    name: "Comet Stone",
+    name: "Comet",
     createdByMerging: ["frozen_stone", "meteor_stone"],
   },
   {
     id: "dark_tide_stone",
-    name: "Dark Tide Stone",
+    name: "Dark Tide",
     createdByMerging: ["coral_stone", "wave_stone"],
   },
   {
     id: "eclipse_stone",
-    name: "Eclipse Stone",
+    name: "Eclipse",
     createdByMerging: ["apollo_stone", "artemis_stone"],
   },
   {
     id: "fracture_stone",
-    name: "Fracture Stone",
+    name: "Fracture",
     createdByMerging: ["mind_stone", "reality_stone"],
   },
   {
     id: "hocus_pocus_stone",
-    name: "Hocus Pocus Stone",
+    name: "Hocus Pocus",
     createdByMerging: ["hocus_stone", "pocus_stone"],
   },
   {
     id: "lumen_stone",
-    name: "Lumen Stone",
+    name: "Lumen",
     createdByMerging: ["light_stone", "soul_stone"],
   },
   {
     id: "phoenix_stone",
-    name: "Phoenix Stone",
+    name: "Phoenix",
     createdByMerging: ["blast_stone", "deneb_stone"],
   },
   {
     id: "spacetime_stone",
-    name: "Spacetime Stone",
+    name: "Spacetime",
     createdByMerging: ["space_stone", "time_stone"],
   },
   {
     id: "umbra_stone",
-    name: "Umbra Stone",
+    name: "Umbra",
     createdByMerging: ["dark_stone", "power_stone"],
   },
 ].map((item) => ({ ...item, category: "stone", tier: 2 }));
