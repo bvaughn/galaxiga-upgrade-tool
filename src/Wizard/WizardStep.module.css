@@ -47,6 +47,14 @@
   border-top-right-radius: 0.25rem;
   border-bottom-right-radius: 0.25rem;
 }
+.CancelButton:hover,
+.CancelButton:focus,
+.OptionButton:hover,
+.OptionButton:focus,
+.SaveButton:hover,
+.SaveButton:focus {
+  filter: brightness(0.75);
+}
 
 .SaveButton {
   width: 100%;

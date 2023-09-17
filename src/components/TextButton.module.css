@@ -9,16 +9,14 @@
   background: none;
   border: none;
   outline: none;
-  padding: 0;
+
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.5rem;
 }
-.Button:focus,
-.Button:hover {
-  filter: brightness(0.75);
+.Button:hover,
+.Button:focus {
+  background: rgba(255, 255, 255, 0.05);
 }
 .Button:disabled {
   opacity: 0.5;
-}
-
-.Icon {
-  fill: currentColor;
 }

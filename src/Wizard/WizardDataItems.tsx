@@ -10,6 +10,7 @@ import { WizardDataUpgrade } from "./WizardDataUpgrade";
 
 import styles from "./shared.module.css";
 import { uid } from "../utils/uid";
+import { TextButton } from "../components/TextButton";
 
 export function WizardDataItems({
   setPendingWizardData,
@@ -25,7 +26,7 @@ export function WizardDataItems({
   return (
     <>
       <div className={styles.Column} data-center>
-        <div
+        <TextButton
           className={styles.LargeText}
           onClick={() =>
             setPendingWizardData({
@@ -34,7 +35,7 @@ export function WizardDataItems({
           }
         >
           Start an upgrade
-        </div>
+        </TextButton>
       </div>
       <div className={styles.Column}>
         {wizardData.map((data) => {
