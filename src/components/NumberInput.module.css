@@ -1,9 +1,10 @@
 .NumberInput {
-  width: 5ch;
+  width: 7ch;
   background-color: rgba(0, 0, 0, 0.35);
   color: white;
   border: none;
   border-radius: 0.25rem;
+  font-size: 1.25rem;
 }
 .NumberInput:focus {
   outline: none;

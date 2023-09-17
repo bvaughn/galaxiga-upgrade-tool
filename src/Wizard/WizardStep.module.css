@@ -1,0 +1,162 @@
+.Prompt {
+  font-size: 1.2rem;
+  text-align: center;
+}
+
+.OptionList {
+  flex: 0 1 auto;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  border: 1px solid lightslategrey;
+  border-radius: 0.5rem;
+  padding: 0.25rem;
+}
+
+.OptionColumn {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: stretch;
+  gap: 0.25rem;
+}
+
+.OptionButton,
+.SaveButton {
+  background-color: #24a1f5;
+  color: #000;
+  border: none;
+  outline: none;
+  padding: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 1rem;
+  gap: 0.25rem;
+}
+.OptionButton {
+  flex: 1 1 auto;
+}
+.OptionButton:first-of-type {
+  border-top-left-radius: 0.25rem;
+  border-bottom-left-radius: 0.25rem;
+}
+.OptionButton:last-of-type {
+  border-top-right-radius: 0.25rem;
+  border-bottom-right-radius: 0.25rem;
+}
+
+.SaveButton {
+  width: 100%;
+  border-radius: 0.25rem;
+}
+
+.OptionHeader {
+  font-size: 1rem;
+}
+
+.OptionSubText {
+  font-size: 0.75rem;
+}
+
+.CancelButton {
+  width: 100%;
+  font-size: 1rem;
+  border: none;
+  outline: none;
+  padding: 0.5rem;
+  border-radius: 0;
+  border-radius: 0.25rem;
+}
+
+.OptionsItemButton {
+  font-size: 1rem;
+  color: white;
+  background: none;
+  outline: none;
+  border: none;
+  padding: 0.125rem 0.5rem 0.125rem 0.25rem;
+  display: inline-flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 1ch;
+  cursor: pointer;
+  border-radius: 0.5rem;
+  transition: background-color linear 100ms;
+}
+.OptionsItemButton:hover {
+  background-color: #02193e;
+}
+
+.OptionsItemButtonImage {
+  width: 4rem;
+  height: 4rem;
+}
+
+.Levels {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.25rem;
+}
+.Levels:first-of-type {
+  margin-top: 0.5rem;
+}
+.Levels:last-of-type {
+  margin-bottom: 0.5rem;
+}
+
+.ItemName {
+  font-size: 0.75rem;
+}
+
+.TierImageAndLevels {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 1ch;
+}
+
+.CardInputLabel {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.25rem;
+}
+
+.GenericCardsRow {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 1ch;
+}
+.LabelText {
+  font-size: 0.75rem;
+}
+
+.ItemStatsSelector {
+  flex: 1 0 auto;
+}
+
+.CardsColumn {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.125rem;
+}
+
+.ItemImageAndNameColumn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.Spacer {
+  flex: 1 1 auto;
+}

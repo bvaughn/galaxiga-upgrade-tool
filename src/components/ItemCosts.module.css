@@ -1,5 +1,5 @@
 .Costs {
-  font-size: 0.8rem;
+  font-size: 0.75rem;
   display: grid;
   grid-template-columns: repeat(3, auto);
   gap: 1ch;
@@ -13,4 +13,11 @@
 }
 .Cost[data-disabled] {
   opacity: 0.5;
+}
+
+.BatteryImage,
+.DroneBoxImage,
+.ShipBoxImage {
+  height: 16px;
+  width: auto;
 }

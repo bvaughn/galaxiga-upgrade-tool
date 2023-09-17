@@ -1,87 +1,71 @@
-import { useMemo } from "react";
-import { useBuyCardsWithGems } from "../hooks/useBuyCardsWithGems";
-import { getItemStats } from "../hooks/useItemStats";
-import { Item } from "../types";
+import { Category } from "../types";
 import { Card } from "./Card";
 import { Coin } from "./Coin";
 import { Gem } from "./Gem";
 
-import { calculateCost } from "../Calculator/calculateCost";
-import useLocalStorage from "../hooks/useLocalStorage";
 import { formatNumber } from "../utils/number";
 import styles from "./ItemCosts.module.css";
+import { ReactNode } from "react";
 
 export function ItemCosts({
-  deductGenericCards,
-  includeCostToMerge,
-  items,
+  buyCards,
+  category,
+  cardsNeeded,
+  coinsNeeded,
+  gemsNeeded,
 }: {
-  deductGenericCards: boolean;
-  includeCostToMerge: boolean;
-  items: Item[];
+  buyCards: boolean;
+  category: Category;
+  cardsNeeded: number;
+  coinsNeeded: number;
+  gemsNeeded: number;
 }) {
-  const { category } = items[0];
-
-  const [buyCardsWithGems] = useBuyCardsWithGems();
-
-  const [numGenericCards] = useLocalStorage<number>(
-    `num-generic-${category}-cards`,
-    0
-  );
-
-  const { cardsNeeded, coinsNeeded, gemsNeeded } = useMemo(() => {
-    let cardsNeeded = 0;
-    let coinsNeeded = 0;
-    let gemsNeeded = 0;
-
-    items.forEach((item, index) => {
-      // TODO This won't re-trigger when the status change
-      //      Use an effect with an event listener, like ItemUpgradePlanner
-      const stats = getItemStats(item);
-
-      const cost = calculateCost(stats, item.category, item.tier);
-
-      if (includeCostToMerge && index === 0) {
-        gemsNeeded += cost.gemsNeededToMerge ?? 0;
-      }
-
-      cardsNeeded += buyCardsWithGems
-        ? cost.boxes.with.cardsNeededForLevels
-        : cost.boxes.without.cardsNeededForLevels;
-      coinsNeeded += buyCardsWithGems
-        ? cost.boxes.with.coinsNeededForLevels
-        : cost.boxes.without.coinsNeededForLevels;
-      gemsNeeded += buyCardsWithGems
-        ? cost.boxes.with.gemsNeededForLevels
-        : cost.boxes.without.gemsNeededForLevels;
-    });
-
-    if (deductGenericCards) {
-      cardsNeeded = Math.max(0, cardsNeeded - numGenericCards);
+  let boxOrCardUI: ReactNode = null;
+  if (buyCards) {
+    switch (category) {
+      case "drone":
+        boxOrCardUI = (
+          <img
+            className={styles.DroneBoxImage}
+            src="/images/drone-box.jpeg"
+            alt="blank"
+          />
+        );
+        break;
+      case "ship":
+        boxOrCardUI = (
+          <img
+            className={styles.ShipBoxImage}
+            src="/images/ship-box.jpeg"
+            alt="blank"
+          />
+        );
+        break;
+      case "stone":
+        boxOrCardUI = (
+          <img
+            className={styles.BatteryImage}
+            src="/images/battery.jpeg"
+            alt="blank"
+          />
+        );
+        break;
     }
-
-    return {
-      cardsNeeded,
-      coinsNeeded,
-      gemsNeeded,
-    };
-  }, [
-    buyCardsWithGems,
-    deductGenericCards,
-    includeCostToMerge,
-    items,
-    numGenericCards,
-  ]);
-
-  return (
-    <div className={styles.Costs}>
+  } else {
+    boxOrCardUI = (
       <div
         className={styles.Cost}
         data-disabled={cardsNeeded === 0 ? "" : undefined}
         title={`${formatNumber(cardsNeeded, "long")} cards`}
       >
-        <Card type="generic" category={category} /> {formatNumber(cardsNeeded)}
+        <Card type="specific" category={category} /> {formatNumber(cardsNeeded)}
       </div>
+    );
+  }
+
+  return (
+    <div className={styles.Costs}>
+      {boxOrCardUI}
       <div
         className={styles.Cost}
         data-disabled={gemsNeeded === 0 ? "" : undefined}

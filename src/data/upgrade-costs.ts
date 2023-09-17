@@ -2,11 +2,11 @@ export const MAX_LEVEL_NUMBER = 9;
 export const MAX_SUB_LEVEL_NUMBER = 10;
 
 export const CARDS_PER_LEVEL = [
-  // Tier 1
+  // Tier 1: 1,900 total
   [0, 40, 80, 120, 160, 200, 300, 400, 600],
-  // Tier 2
+  // Tier 2: 10,400 total
   [0, 600, 800, 1000, 1200, 1400, 1600, 1800, 2000],
-  // Tier 3
+  // Tier 3: 58,400 total
   [0, 2000, 2500, 3000, 3500, 4000, 4500, 5000, 5500],
 ];
 
@@ -280,18 +280,24 @@ export const GEMS_PER_LEVEL = {
 
 export const GEMS_TO_MERGE = {
   drone: [
+    // Tier 1
+    0,
     // Tier 1 to 2
     250,
     // Tier 2 to 3
     500,
   ],
   ship: [
+    // Tier 1
+    0,
     // Tier 1 to 2
     500,
     // Tier 2 to 3
     1000,
   ],
   stone: [
+    // Tier 1
+    0,
     // Tier 1 to 2
     500,
     // Tier 2 to 3

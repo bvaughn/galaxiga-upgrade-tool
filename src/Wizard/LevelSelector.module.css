@@ -1,0 +1,65 @@
+.Container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 1ch;
+}
+
+.InputsGroup {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.Marker[data-type="level"] {
+  width: 1.25rem;
+  height: 1.25rem;
+  line-height: 1.25rem;
+  border-radius: 100%;
+  font-size: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+
+  border: 2px solid transparent;
+  color: #ffffff;
+  text-shadow: 0 0 1px #000000;
+
+  border-color: #5270a5;
+  background: linear-gradient(#001654, #0b51a0);
+}
+.Marker[data-value="0"] {
+  border-color: slategray;
+  background: darkslategray;
+}
+.Marker[data-type="level"][data-value="1"] {
+  border-color: #f9b802;
+  background: radial-gradient(#f9b802, #b73326);
+}
+
+.Marker[data-type="subLevel"] {
+  width: 1.1rem;
+  height: 0.75rem;
+  line-height: 0.75rem;
+  border-radius: 2px;
+  font-size: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #74d522;
+  color: black;
+  font-weight: bold;
+}
+
+.IconButton {
+  background: none;
+  border: none;
+  outline: none;
+  color: #fff;
+  padding: 0;
+}
+.IconButton:disabled {
+  opacity: 0.5;
+}

@@ -1,12 +1,13 @@
 import { MAX_LEVEL_NUMBER, MAX_SUB_LEVEL_NUMBER } from "../data/upgrade-costs";
-import { calculateCost } from "./calculateCost";
+import { MAX_STATS } from "../hooks/useItemStats";
+import { calculateUpgradeCost } from "./calculateUpgradeCost";
 
 expect.addSnapshotSerializer({
   test: (value) => typeof value === "number",
   print: (value) => new Intl.NumberFormat().format(value as number),
 });
 
-describe("calculateCost", () => {
+describe("calculateUpgradeCost", () => {
   describe("drones", () => {
     // TODO
   });
@@ -15,16 +16,18 @@ describe("calculateCost", () => {
     describe("tier 1", () => {
       it("should properly handle a ship that is not yet owned", () => {
         expect(
-          calculateCost(
-            {
-              cards: 0,
-              level: 0,
-              subLevel: 0,
-            },
-            "ship",
-            1
-          )
-        ).toMatchInlineSnapshot(`
+  calculateUpgradeCost(
+    0,
+    {
+      cards: 0,
+      level: 0,
+      subLevel: 0
+    },
+    MAX_STATS,
+    "ship",
+    1
+  )
+).toMatchInlineSnapshot(`
 Object {
   "boxes": Object {
     "with": Object {
@@ -38,24 +41,26 @@ Object {
       "gemsNeededForLevels": 720,
     },
   },
-  "gemsNeededToMerge": 500,
   "isEstimateComplete": false,
+  "totalCardsRequired": 1,900,
 }
 `);
       });
 
       it("should properly calculate the cost of a full ship upgrade", () => {
         expect(
-          calculateCost(
-            {
-              cards: 0,
-              level: 1,
-              subLevel: 0,
-            },
-            "ship",
-            1
-          )
-        ).toMatchInlineSnapshot(`
+  calculateUpgradeCost(
+    0,
+    {
+      cards: 0,
+      level: 1,
+      subLevel: 0
+    },
+    MAX_STATS,
+    "ship",
+    1
+  )
+).toMatchInlineSnapshot(`
 Object {
   "boxes": Object {
     "with": Object {
@@ -69,24 +74,26 @@ Object {
       "gemsNeededForLevels": 720,
     },
   },
-  "gemsNeededToMerge": 500,
   "isEstimateComplete": true,
+  "totalCardsRequired": 1,900,
 }
 `);
       });
 
       it("should properly calculate the cost of a ship that has been partially upgraded", () => {
         expect(
-          calculateCost(
-            {
-              cards: 0,
-              level: 7,
-              subLevel: 3,
-            },
-            "ship",
-            1
-          )
-        ).toMatchInlineSnapshot(`
+  calculateUpgradeCost(
+    0,
+    {
+      cards: 0,
+      level: 7,
+      subLevel: 3
+    },
+    MAX_STATS,
+    "ship",
+    1
+  )
+).toMatchInlineSnapshot(`
 Object {
   "boxes": Object {
     "with": Object {
@@ -100,24 +107,26 @@ Object {
       "gemsNeededForLevels": 300,
     },
   },
-  "gemsNeededToMerge": 500,
   "isEstimateComplete": true,
+  "totalCardsRequired": 1,000,
 }
 `);
       });
 
       it("should properly calculate the coins cost of a ship that is at the last level but not fully upgraded", () => {
         expect(
-          calculateCost(
-            {
-              cards: 0,
-              level: MAX_LEVEL_NUMBER,
-              subLevel: 5,
-            },
-            "ship",
-            1
-          )
-        ).toMatchInlineSnapshot(`
+  calculateUpgradeCost(
+    0,
+    {
+      cards: 0,
+      level: MAX_LEVEL_NUMBER,
+      subLevel: 5
+    },
+    MAX_STATS,
+    "ship",
+    1
+  )
+).toMatchInlineSnapshot(`
 Object {
   "boxes": Object {
     "with": Object {
@@ -131,24 +140,26 @@ Object {
       "gemsNeededForLevels": 0,
     },
   },
-  "gemsNeededToMerge": 500,
   "isEstimateComplete": true,
+  "totalCardsRequired": 0,
 }
 `);
       });
 
       it("should properly calculate the cost of a ship that has already been fully upgraded", () => {
         expect(
-          calculateCost(
-            {
-              cards: 0,
-              level: MAX_LEVEL_NUMBER,
-              subLevel: MAX_SUB_LEVEL_NUMBER,
-            },
-            "ship",
-            1
-          )
-        ).toMatchInlineSnapshot(`
+  calculateUpgradeCost(
+    0,
+    {
+      cards: 0,
+      level: MAX_LEVEL_NUMBER,
+      subLevel: MAX_SUB_LEVEL_NUMBER
+    },
+    MAX_STATS,
+    "ship",
+    1
+  )
+).toMatchInlineSnapshot(`
 Object {
   "boxes": Object {
     "with": Object {
@@ -162,24 +173,26 @@ Object {
       "gemsNeededForLevels": 0,
     },
   },
-  "gemsNeededToMerge": 500,
   "isEstimateComplete": true,
+  "totalCardsRequired": 0,
 }
 `);
       });
 
       it("should factor existing cards into counts needed", () => {
         expect(
-          calculateCost(
-            {
-              cards: 270,
-              level: MAX_LEVEL_NUMBER,
-              subLevel: 0,
-            },
-            "ship",
-            1
-          )
-        ).toMatchInlineSnapshot(`
+  calculateUpgradeCost(
+    0,
+    {
+      cards: 270,
+      level: MAX_LEVEL_NUMBER,
+      subLevel: 0
+    },
+    MAX_STATS,
+    "ship",
+    1
+  )
+).toMatchInlineSnapshot(`
 Object {
   "boxes": Object {
     "with": Object {
@@ -193,8 +206,8 @@ Object {
       "gemsNeededForLevels": 0,
     },
   },
-  "gemsNeededToMerge": 500,
   "isEstimateComplete": true,
+  "totalCardsRequired": 0,
 }
 `);
       });
@@ -203,16 +216,18 @@ Object {
     describe("tier 2", () => {
       it("should properly handle a ship that is not yet owned", () => {
         expect(
-          calculateCost(
-            {
-              cards: 0,
-              level: 0,
-              subLevel: 0,
-            },
-            "ship",
-            2
-          )
-        ).toMatchInlineSnapshot(`
+  calculateUpgradeCost(
+    0,
+    {
+      cards: 0,
+      level: 0,
+      subLevel: 0
+    },
+    MAX_STATS,
+    "ship",
+    2
+  )
+).toMatchInlineSnapshot(`
 Object {
   "boxes": Object {
     "with": Object {
@@ -226,8 +241,44 @@ Object {
       "gemsNeededForLevels": 4,400,
     },
   },
-  "gemsNeededToMerge": 1,000,
   "isEstimateComplete": false,
+  "totalCardsRequired": 10,400,
+}
+`);
+      });
+
+      it("should properly handle a partial upgrade", () => {
+        expect(
+  calculateUpgradeCost(
+    0,
+    {
+      cards: 0,
+      level: 2,
+      subLevel: 0
+    },
+    {
+      level: 3,
+      subLevel: 4
+    },
+    "ship",
+    1
+  )
+).toMatchInlineSnapshot(`
+Object {
+  "boxes": Object {
+    "with": Object {
+      "cardsNeededForLevels": 0,
+      "coinsNeededForLevels": 9,740,
+      "gemsNeededForLevels": 600,
+    },
+    "without": Object {
+      "cardsNeededForLevels": 80,
+      "coinsNeededForLevels": 14,740,
+      "gemsNeededForLevels": 40,
+    },
+  },
+  "isEstimateComplete": true,
+  "totalCardsRequired": 80,
 }
 `);
       });
@@ -238,16 +289,18 @@ Object {
     describe("tier 3", () => {
       it("should properly handle a ship that is not yet owned", () => {
         expect(
-          calculateCost(
-            {
-              cards: 0,
-              level: 0,
-              subLevel: 0,
-            },
-            "ship",
-            3
-          )
-        ).toMatchInlineSnapshot(`
+  calculateUpgradeCost(
+    0,
+    {
+      cards: 0,
+      level: 0,
+      subLevel: 0
+    },
+    MAX_STATS,
+    "ship",
+    3
+  )
+).toMatchInlineSnapshot(`
 Object {
   "boxes": Object {
     "with": Object {
@@ -261,8 +314,8 @@ Object {
       "gemsNeededForLevels": 22,000,
     },
   },
-  "gemsNeededToMerge": null,
   "isEstimateComplete": false,
+  "totalCardsRequired": 30,000,
 }
 `);
       });

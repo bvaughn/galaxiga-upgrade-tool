@@ -1,0 +1,17 @@
+:root {
+  --font-size-large: 1.25rem;
+  --font-size-normal: 1rem;
+  --font-size-small: 0.75rem;
+
+  --image-size-normal: 4rem;
+
+  --color-blue: #24a1f5;
+  --color-gray-dark: #2f4f4f;
+  --color-gray-light: #d3d3d3;
+  --color-red: #f44336;
+  --color-white: #ffffff;
+
+  --border-color: var(--color-gray-dark);
+  --color-default: var(--color-white);
+  --color-delete: var(--color-red);
+}

@@ -7,17 +7,16 @@ import {
   CARDS_PER_LEVEL,
   COINS_PER_LEVEL,
   GEMS_PER_LEVEL,
-  GEMS_TO_MERGE,
   MAX_LEVEL_NUMBER,
   MAX_SUB_LEVEL_NUMBER,
 } from "../data/upgrade-costs";
-import { Category, Tier } from "../types";
 import { ItemStats } from "../hooks/useItemStats";
+import { Category, Tier } from "../types";
 
 const MAX_LEVEL_INDEX = MAX_LEVEL_NUMBER - 1;
-const MAX_UPGRADE_INDEX = MAX_SUB_LEVEL_NUMBER - 1;
+const MAX_SUB_LEVEL_INDEX = MAX_SUB_LEVEL_NUMBER - 1;
 
-export type Cost = {
+export type UpgradeCost = {
   boxes: {
     with: {
       cardsNeededForLevels: number;
@@ -30,45 +29,52 @@ export type Cost = {
       gemsNeededForLevels: number;
     };
   };
-  gemsNeededToMerge: number | null;
   isEstimateComplete: boolean;
+  totalCardsRequired: number;
 };
 
-export function calculateCost(
-  stats: ItemStats,
+export function calculateUpgradeCost(
+  genericCards: number,
+  fromStats: ItemStats,
+  toStats: Pick<ItemStats, "level" | "subLevel">,
   category: Category,
   tier: Tier
-): Cost {
+): UpgradeCost {
   let cardsNeededForLevels = 0;
   let gemsNeededForLevels = 0;
   let coinsNeededForLevels = 0;
+  let totalCardsRequired = 0;
 
   // If an item has not yet been acquired,
   // We can't calculate the cost because we don't know how much it takes to acquire it
-  const isEstimateComplete = stats.level > 0;
+  const isEstimateComplete = fromStats.level > 0;
 
   const tierIndex = tier - 1;
 
   const cardsPerLevel = CARDS_PER_LEVEL[tierIndex];
   const coinsPerLevel = COINS_PER_LEVEL[category][tierIndex];
   const gemsPerLevel = GEMS_PER_LEVEL[category][tierIndex];
-  const gemsNeededToMerge = GEMS_TO_MERGE[category][tierIndex] ?? null;
 
-  const firstLevelIndex = Math.max(0, stats.level - 1);
+  const firstLevelIndex = Math.max(0, fromStats.level - 1);
+  const lastLevelIndex = Math.min(MAX_LEVEL_INDEX, toStats.level - 1);
 
   for (
     let levelIndex = firstLevelIndex;
-    levelIndex <= MAX_LEVEL_INDEX;
+    levelIndex <= lastLevelIndex;
     levelIndex++
   ) {
     if (levelIndex > firstLevelIndex) {
-      cardsNeededForLevels += cardsPerLevel[levelIndex];
+      totalCardsRequired += cardsPerLevel[levelIndex];
       gemsNeededForLevels += gemsPerLevel[levelIndex];
     }
 
     for (
-      let upgradeIndex = levelIndex === firstLevelIndex ? stats.subLevel : 0;
-      upgradeIndex <= MAX_UPGRADE_INDEX;
+      let upgradeIndex =
+        levelIndex === firstLevelIndex ? fromStats.subLevel : 0;
+      upgradeIndex <=
+      (levelIndex === lastLevelIndex
+        ? toStats.subLevel - 1
+        : MAX_SUB_LEVEL_INDEX);
       upgradeIndex++
     ) {
       const coins = coinsPerLevel[levelIndex][upgradeIndex];
@@ -79,7 +85,10 @@ export function calculateCost(
 
   // Factor in specific cards we already have;
   // The caller can factor in the generic cards (so we don't over-count them)
-  cardsNeededForLevels = Math.max(0, cardsNeededForLevels - stats.cards);
+  cardsNeededForLevels = Math.max(
+    0,
+    totalCardsRequired - fromStats.cards - genericCards
+  );
 
   let boxesNeeded = NaN;
   let coinsFromBoxesProjected = NaN;
@@ -118,7 +127,7 @@ export function calculateCost(
         gemsNeededForLevels,
       },
     },
-    gemsNeededToMerge,
     isEstimateComplete,
+    totalCardsRequired,
   };
 }

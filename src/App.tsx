@@ -1,6 +1,5 @@
-import { Calculator } from "./Calculator/index";
-import { MergeTree } from "./MergeTree";
+import Wizard from "./Wizard";
 
 export default function App() {
-  return <Calculator />;
+  return <Wizard />;
 }

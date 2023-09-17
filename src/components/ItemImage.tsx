@@ -5,9 +5,13 @@ import styles from "./ItemImage.module.css";
 export function ItemImage({
   className = "",
   item,
+  onClick,
+  onDoubleClick,
 }: {
   className?: string;
   item: Item;
+  onClick?: () => void;
+  onDoubleClick?: () => void;
 }) {
   const didErrorRef = useRef(false);
 
@@ -17,6 +21,8 @@ export function ItemImage({
       className={`${className} ${styles.Image}`}
       data-category={item.category}
       data-tier={item.tier}
+      onClick={onClick}
+      onDoubleClick={onDoubleClick}
       onError={({ target }) => {
         if (!didErrorRef.current) {
           didErrorRef.current = true;

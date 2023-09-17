@@ -3,8 +3,14 @@ import { useItemStats } from "../hooks/useItemStats";
 import { Item } from "../types";
 import styles from "./ItemLevels.module.css";
 
-export function ItemLevels({ item }: { item: Item }) {
-  const [stats, setStats] = useItemStats(item);
+export function ItemLevels({
+  item,
+  persistenceKey,
+}: {
+  item: Item;
+  persistenceKey?: string;
+}) {
+  const [stats, setStats] = useItemStats(item, persistenceKey);
 
   const decreaseLevel = () => {
     setStats({
