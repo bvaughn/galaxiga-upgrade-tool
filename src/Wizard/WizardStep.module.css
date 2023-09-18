@@ -95,8 +95,12 @@
   border-radius: 0.5rem;
   transition: background-color linear 100ms;
 }
-.OptionsItemButton:hover {
+.OptionsItemButton:hover,
+.OptionsItemButton:focus {
   background-color: #02193e;
+}
+.OptionsItemButton[data-selected] {
+  background-color: var(--color-gray-dark);
 }
 
 .OptionsItemButtonImage {

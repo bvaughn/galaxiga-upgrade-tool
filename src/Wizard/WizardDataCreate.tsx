@@ -2,10 +2,16 @@ import { useMemo, useState } from "react";
 import { ItemCosts } from "../components/ItemCosts";
 import { ItemImage } from "../components/ItemImage";
 import { calculateCreateCost } from "../utils/calculateCreateCost";
-import { WizardDataCreate as WizardDataCreateType } from "./types";
+import {
+  WizardDataCreateTier2,
+  WizardDataCreateTier3,
+  isWizardDataCreateTier2,
+  isWizardDataCreateTier3,
+} from "./types";
 
 import { IconButton } from "../components/IconButton";
 import { useDoubleTap } from "../hooks/useDoubleTap";
+import { Category, Item, Tier } from "../types";
 import { formatNumber } from "../utils/number";
 import { DebugInfoRow } from "./DebugInfoRow";
 import styles from "./shared.module.css";
@@ -15,11 +21,29 @@ export function WizardDataCreate({
   deleteItem,
   editItem,
 }: {
-  data: WizardDataCreateType;
+  data: WizardDataCreateTier2 | WizardDataCreateTier3;
   deleteItem: () => void;
   editItem: () => void;
 }) {
-  const { genericCards, id, primaryItem: item, secondaryItemStats } = data;
+  const { genericCards, id, secondaryItemStats } = data;
+
+  let category: Category;
+  let item: Item;
+  let name: string;
+  let tier: Tier;
+  if (isWizardDataCreateTier2(data)) {
+    item = data.primaryItem;
+    category = item.category;
+    name = item.name;
+    tier = 2;
+  } else if (isWizardDataCreateTier3(data)) {
+    item = data.secondaryItems[0];
+    category = item.category;
+    name = `Super ${item.name}`;
+    tier = 3;
+  } else {
+    throw Error("Unsupported data");
+  }
 
   const [showDebugRow, setShowDebugRow] = useState(false);
 
@@ -29,11 +53,11 @@ export function WizardDataCreate({
     () =>
       calculateCreateCost({
         genericCards,
-        category: item.category,
+        category,
         itemStatsArray: secondaryItemStats,
-        tier: item.tier,
+        tier,
       }),
-    [genericCards, item, secondaryItemStats]
+    [category, genericCards, secondaryItemStats, tier]
   );
 
   const debugCardString = useMemo(() => {
@@ -53,12 +77,12 @@ export function WizardDataCreate({
         <ItemImage className={styles.ItemImage} onClick={onClick} item={item} />
         <div className={styles.Column} data-compact data-grow>
           <div className={styles.Row} data-compact>
-            <span className={styles.SmallText}>Create</span> {item.name}
+            <span className={styles.SmallText}>Create</span> {name}
           </div>
           <ItemCosts
             buyCards={false}
             cardsNeeded={cost.boxes.without.cardsNeededForLevels}
-            category={item.category}
+            category={category}
             coinsNeeded={cost.boxes.without.coinsNeededForLevels}
             gemsNeeded={
               cost.boxes.without.gemsNeededForLevels + cost.gemsNeededToMerge
@@ -70,7 +94,7 @@ export function WizardDataCreate({
               <ItemCosts
                 buyCards={true}
                 cardsNeeded={cost.boxes.with.cardsNeededForLevels}
-                category={item.category}
+                category={category}
                 coinsNeeded={cost.boxes.with.coinsNeededForLevels}
                 gemsNeeded={
                   cost.boxes.with.gemsNeededForLevels + cost.gemsNeededToMerge

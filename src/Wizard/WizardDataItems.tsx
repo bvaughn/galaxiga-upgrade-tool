@@ -1,5 +1,7 @@
 import {
-  isWizardDataCreate,
+  isWizardDataCreateTier2,
+  isWizardDataCreateTier3,
+  isWizardDataUpgrade,
   PendingWizardData,
   WizardData,
   WizardDataStep,
@@ -8,9 +10,9 @@ import {
 import { WizardDataCreate } from "./WizardDataCreate";
 import { WizardDataUpgrade } from "./WizardDataUpgrade";
 
-import styles from "./shared.module.css";
-import { uid } from "../utils/uid";
 import { TextButton } from "../components/TextButton";
+import { uid } from "../utils/uid";
+import styles from "./shared.module.css";
 
 export function WizardDataItems({
   setPendingWizardData,
@@ -48,7 +50,7 @@ export function WizardDataItems({
             setPendingWizardStep(4);
           };
 
-          if (isWizardDataCreate(data)) {
+          if (isWizardDataCreateTier2(data) || isWizardDataCreateTier3(data)) {
             return (
               <WizardDataCreate
                 data={data}
@@ -57,7 +59,7 @@ export function WizardDataItems({
                 key={data.id}
               />
             );
-          } else {
+          } else if (isWizardDataUpgrade(data)) {
             return (
               <WizardDataUpgrade
                 data={data}
@@ -66,6 +68,8 @@ export function WizardDataItems({
                 key={data.id}
               />
             );
+          } else {
+            throw Error("Unsupported data");
           }
         })}
       </div>

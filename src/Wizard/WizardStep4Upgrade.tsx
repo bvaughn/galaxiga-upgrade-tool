@@ -3,7 +3,7 @@ import { Card } from "../components/Card";
 import { NumberInput } from "../components/NumberInput";
 import { getItemStats } from "../hooks/useItemStats";
 import { assert } from "../utils/assert";
-import { PendingWizardData, WizardData, WizardDataUpgrade } from "./types";
+import { PendingUpgradeData, WizardData, WizardDataUpgrade } from "./types";
 
 import { IconButton } from "../components/IconButton";
 import { ItemStatsSelector } from "./ItemStatsSelector";
@@ -17,7 +17,7 @@ export function WizardStep4Upgrade({
 }: {
   cancel: () => void;
   goToPreviousStep: () => void;
-  pendingWizardData: PendingWizardData;
+  pendingWizardData: PendingUpgradeData;
   save: (wizardData: WizardData) => void;
 }) {
   const { id, primaryItem: item } = pendingWizardData;

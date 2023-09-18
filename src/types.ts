@@ -20,12 +20,21 @@ export type Tier2Item = Item & {
   tier: 2;
 };
 
+export type Tier3Item = Item & {
+  createdByMerging: string[];
+  tier: 3;
+};
+
 export function isTier1Item(item: Item): item is Tier1Item {
-  return !isTier2Item(item);
+  return item.tier === 1;
 }
 
 export function isTier2Item(item: Item): item is Tier2Item {
-  return item.hasOwnProperty("createdByMerging");
+  return item.tier === 2;
+}
+
+export function isTier3Item(item: Item): item is Tier1Item {
+  return item.tier === 3;
 }
 
 // Each evolution level costs a fixed number of cards and gems.

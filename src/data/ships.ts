@@ -1,4 +1,4 @@
-import { Tier1Item, Tier2Item } from "../types";
+import { Tier1Item, Tier2Item, Tier3Item } from "../types";
 
 // T1 and T2 names and descriptions
 // https://galaxiga.fandom.com/wiki/Starships
@@ -179,3 +179,9 @@ export const TIER_2_SHIPS: Tier2Item[] = [
     createdByMerging: ["hades", "poseidon"],
   },
 ].map((item) => ({ ...item, category: "ship", tier: 2 }));
+
+export const TIER_3_SHIPS = TIER_2_SHIPS.map((item) => ({
+  ...item,
+  name: `Super ${item.name}`,
+  tier: 3,
+})) satisfies Tier3Item[];

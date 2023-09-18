@@ -1,11 +1,21 @@
-import { useItems } from "../hooks/useItems";
-import { PendingWizardData, WizardData, WizardDataStep } from "./types";
+import {
+  PendingWizardData,
+  WizardData,
+  WizardDataStep,
+  isPendingCreateTier2Data,
+  isPendingCreateTier3Data,
+  isPendingUpgradeData,
+} from "./types";
 
+import { Tier } from "../types";
+import { getItems } from "../utils/items";
 import { WizardStep1 } from "./WizardStep1";
 import { WizardStep2 } from "./WizardStep2";
-import { WizardStep3 } from "./WizardStep3";
+import { WizardStep3CreateTier2 } from "./WizardStep3CreateTier2";
+import { WizardStep3CreateTier3 } from "./WizardStep3CreateTier3";
 import { WizardStep4Create } from "./WizardStep4Create";
 import { WizardStep4Upgrade } from "./WizardStep4Upgrade";
+import { WizardStep3Upgrade } from "./Wizardstep3Upgrade";
 
 export function WizardDataPrompt({
   pendingWizardData,
@@ -22,11 +32,16 @@ export function WizardDataPrompt({
   setWizardData: (value: WizardData[]) => void;
   wizardData: WizardData[];
 }) {
-  const items = useItems({
-    category: pendingWizardData.category ?? "ship",
-    showTier:
-      pendingWizardData.action === "upgrade-tier-1" ? "tier-1" : "tier-2",
-  });
+  let tier: Tier;
+  if (pendingWizardData.action === "upgrade-tier-1") {
+    tier = 1;
+  } else if (pendingWizardData.action === "upgrade-tier-2") {
+    tier = 2;
+  } else {
+    tier = 3;
+  }
+
+  const items = getItems(pendingWizardData.category ?? "ship", tier);
 
   const cancel = () => {
     setPendingWizardData(null);
@@ -78,17 +93,43 @@ export function WizardDataPrompt({
         />
       );
     case 3:
-      return (
-        <WizardStep3
-          cancel={cancel}
-          goToNextStep={goToNextStep}
-          goToPreviousStep={goToPreviousStep}
-          items={items}
-          pendingWizardData={pendingWizardData}
-        />
-      );
+      if (isPendingCreateTier2Data(pendingWizardData)) {
+        return (
+          <WizardStep3CreateTier2
+            cancel={cancel}
+            goToNextStep={goToNextStep}
+            goToPreviousStep={goToPreviousStep}
+            items={items}
+            pendingWizardData={pendingWizardData}
+          />
+        );
+      } else if (isPendingCreateTier3Data(pendingWizardData)) {
+        return (
+          <WizardStep3CreateTier3
+            cancel={cancel}
+            goToNextStep={goToNextStep}
+            goToPreviousStep={goToPreviousStep}
+            pendingWizardData={pendingWizardData}
+          />
+        );
+      } else if (isPendingUpgradeData(pendingWizardData)) {
+        return (
+          <WizardStep3Upgrade
+            cancel={cancel}
+            goToNextStep={goToNextStep}
+            goToPreviousStep={goToPreviousStep}
+            items={items}
+            pendingWizardData={pendingWizardData}
+          />
+        );
+      } else {
+        throw Error("Unsupported data");
+      }
     case 4:
-      if (pendingWizardData.action === "create-tier-2") {
+      if (
+        isPendingCreateTier3Data(pendingWizardData) ||
+        isPendingCreateTier2Data(pendingWizardData)
+      ) {
         return (
           <WizardStep4Create
             cancel={cancel}
@@ -97,7 +138,7 @@ export function WizardDataPrompt({
             save={save}
           />
         );
-      } else {
+      } else if (isPendingUpgradeData(pendingWizardData)) {
         return (
           <WizardStep4Upgrade
             cancel={cancel}

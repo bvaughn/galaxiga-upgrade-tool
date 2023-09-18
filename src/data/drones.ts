@@ -1,4 +1,4 @@
-import { Tier1Item, Tier2Item } from "../types";
+import { Tier1Item, Tier2Item, Tier3Item } from "../types";
 
 // T1 and T2 names and descriptions
 // https://galaxiga.fandom.com/wiki/Starships
@@ -219,3 +219,9 @@ export const TIER_2_DRONES: Tier2Item[] = [
     createdByMerging: ["chelonian", "polaris"],
   },
 ].map((item) => ({ ...item, category: "drone", tier: 2 }));
+
+export const TIER_3_DRONES = TIER_2_DRONES.map((item) => ({
+  ...item,
+  name: `Super ${item.name}`,
+  tier: 3,
+})) satisfies Tier3Item[];

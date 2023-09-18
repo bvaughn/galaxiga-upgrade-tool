@@ -1,11 +1,11 @@
 import { IconButton } from "../components/IconButton";
 import { ItemImage } from "../components/ItemImage";
 import { Item } from "../types";
-import { PendingWizardData } from "./types";
+import { PendingCreateTier2Data } from "./types";
 
 import styles from "./WizardStep.module.css";
 
-export function WizardStep3({
+export function WizardStep3CreateTier2({
   cancel,
   goToNextStep,
   goToPreviousStep,
@@ -13,18 +13,17 @@ export function WizardStep3({
   pendingWizardData,
 }: {
   cancel: () => void;
-  goToNextStep: (value?: PendingWizardData) => void;
+  goToNextStep: (value?: PendingCreateTier2Data) => void;
   goToPreviousStep: () => void;
   items: Item[];
-  pendingWizardData: PendingWizardData;
+  pendingWizardData: PendingCreateTier2Data;
 }) {
-  const { action, category } = pendingWizardData;
-  const actionLabel = action === "create-tier-2" ? "create" : "upgrade";
+  const { category } = pendingWizardData;
 
   return (
     <>
       <div className={styles.Prompt}>
-        Which {category} would you like to {actionLabel}?
+        Which {category} would you like to create?
       </div>
       <div className={styles.OptionList}>
         {items.map((item) => (

@@ -2,15 +2,19 @@ import { useState } from "react";
 import { Card } from "../components/Card";
 import { ItemImage } from "../components/ItemImage";
 import { NumberInput } from "../components/NumberInput";
-import { TIER_1_DRONES } from "../data/drones";
-import { TIER_1_SHIPS } from "../data/ships";
-import { TIER_1_STONES } from "../data/stones";
 import { getItemStats } from "../hooks/useItemStats";
-import { Tier1Item, Tier2Item } from "../types";
-import { assert } from "../utils/assert";
-import { PendingWizardData, WizardData, WizardDataCreate } from "./types";
+import { Item, Tier2Item } from "../types";
+import {
+  PendingCreateTier2Data,
+  PendingCreateTier3Data,
+  WizardData,
+  WizardDataCreateTier2,
+  isPendingCreateTier2Data,
+  isPendingCreateTier3Data,
+} from "./types";
 
 import { IconButton } from "../components/IconButton";
+import { getItems } from "../utils/items";
 import { ItemStatsSelector } from "./ItemStatsSelector";
 import styles from "./WizardStep.module.css";
 
@@ -22,32 +26,24 @@ export function WizardStep4Create({
 }: {
   cancel: () => void;
   goToPreviousStep: () => void;
-  pendingWizardData: PendingWizardData;
+  pendingWizardData: PendingCreateTier2Data | PendingCreateTier3Data;
   save: (wizardData: WizardData) => void;
 }) {
-  const { primaryItem: item } = pendingWizardData;
-  assert(item);
+  const category = pendingWizardData.category!;
 
   const [genericCards, setGenericCards] = useState(0);
 
-  let tier1Items: Tier1Item[];
-  switch (item.category) {
-    case "drone":
-      tier1Items = TIER_1_DRONES;
-      break;
-    case "ship":
-      tier1Items = TIER_1_SHIPS;
-      break;
-    case "stone":
-      tier1Items = TIER_1_STONES;
-      break;
+  let items: Item[];
+  if (isPendingCreateTier2Data(pendingWizardData)) {
+    const allItems = getItems(category, 1);
+    items = (pendingWizardData.primaryItem as Tier2Item).createdByMerging.map(
+      (itemId) => allItems.find((item) => item.id === itemId)!
+    );
+  } else if (isPendingCreateTier3Data(pendingWizardData)) {
+    items = pendingWizardData.secondaryItems!;
+  } else {
+    throw Error("Unsupported data");
   }
-
-  const items = (
-    pendingWizardData.primaryItem as Tier2Item
-  ).createdByMerging.map(
-    (itemId) => tier1Items.find((item) => item.id === itemId)!
-  );
 
   return (
     <>
@@ -74,8 +70,8 @@ export function WizardStep4Create({
       })}
       <div className={styles.GenericCardsRow}>
         <label className={styles.CardInputLabel}>
-          <div className={styles.LabelText}>Generic {item.category} cards</div>
-          <Card type="generic" category={item.category} />
+          <div className={styles.LabelText}>Generic {category} cards</div>
+          <Card type="generic" category={category} />
           <NumberInput
             className={styles.CardInput}
             maxValue={9999}
@@ -102,7 +98,7 @@ export function WizardStep4Create({
               secondaryItemStats: items.map((item) =>
                 getItemStats(item, `${pendingWizardData.id}:${item.id}`)
               ),
-            } as WizardDataCreate);
+            } as WizardDataCreateTier2);
           }}
         >
           Save
