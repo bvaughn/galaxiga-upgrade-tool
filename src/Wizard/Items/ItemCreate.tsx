@@ -105,15 +105,19 @@ export function ItemCreate({
             </small>
           )}
         </div>
-        <div className={styles.Row} data-compact>
+        <div className={styles.Column} data-actions-column>
           <IconButton
             buttonClassName={styles.EditButton}
+            iconClassName={styles.EditButtonIcon}
             iconType="edit"
+            label="Edit"
             onClick={editItem}
           />
           <IconButton
             buttonClassName={styles.DeleteButton}
+            iconClassName={styles.DeleteButtonIcon}
             iconType="delete"
+            label="Delete"
             onClick={deleteItem}
           />
         </div>

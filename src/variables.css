@@ -11,7 +11,7 @@
   --color-red: #f44336;
   --color-white: #ffffff;
 
-  --border-color: var(--color-gray-dark);
+  --border-color: rgba(255, 255, 255, 0.15);
   --color-default: var(--color-white);
   --color-delete: var(--color-red);
 }
