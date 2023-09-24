@@ -2,6 +2,14 @@ import { TIER_1_DRONES, TIER_2_DRONES, TIER_3_DRONES } from "../data/drones";
 import { TIER_1_SHIPS, TIER_2_SHIPS, TIER_3_SHIPS } from "../data/ships";
 import { TIER_1_STONES, TIER_2_STONES, TIER_3_STONES } from "../data/stones";
 import { Category, Item, Tier } from "../types";
+import { assert } from "./assert";
+
+export function getItem(category: Category, tier: Tier, id: string): Item {
+  const items = getItems(category, tier);
+  const item = items.find((item) => item.id === id);
+  assert(item);
+  return item;
+}
 
 export function getItems(category: Category, tier: Tier): Item[] {
   switch (category) {
