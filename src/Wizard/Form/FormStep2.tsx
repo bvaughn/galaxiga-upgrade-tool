@@ -1,20 +1,20 @@
 import { IconButton } from "../../components/IconButton";
-import { PendingWizardData } from "../types";
+import { PendingAction } from "../types";
 import styles from "./shared.module.css";
 
 export function FormStep2({
-  cancel,
   goToNextStep,
   goToPreviousStep,
-  pendingWizardData,
+  onDismiss,
+  pendingAction,
 }: {
-  cancel: () => void;
-  goToNextStep: (value?: PendingWizardData) => void;
+  goToNextStep: (value?: PendingAction) => void;
   goToPreviousStep: () => void;
-  pendingWizardData: PendingWizardData;
+  onDismiss: () => void;
+  pendingAction: PendingAction;
 }) {
   const actionLabel =
-    pendingWizardData.action === "create-tier-2" ? "create" : "upgrade";
+    pendingAction.type === "create-tier-2" ? "create" : "upgrade";
 
   return (
     <>
@@ -24,7 +24,7 @@ export function FormStep2({
           className={styles.OptionButton}
           onClick={() =>
             goToNextStep({
-              ...pendingWizardData,
+              ...pendingAction,
               category: "ship",
             })
           }
@@ -35,7 +35,7 @@ export function FormStep2({
           className={styles.OptionButton}
           onClick={() =>
             goToNextStep({
-              ...pendingWizardData,
+              ...pendingAction,
               category: "drone",
             })
           }
@@ -46,7 +46,7 @@ export function FormStep2({
           className={styles.OptionButton}
           onClick={() =>
             goToNextStep({
-              ...pendingWizardData,
+              ...pendingAction,
               category: "stone",
             })
           }
@@ -59,11 +59,11 @@ export function FormStep2({
 
       <div className={styles.OptionColumn}>
         <IconButton iconType="previous" onClick={goToPreviousStep} />
-        <button className={styles.CancelButton} onClick={cancel}>
+        <button className={styles.CancelButton} onClick={onDismiss}>
           Cancel
         </button>
         <IconButton
-          disabled={!pendingWizardData.category}
+          disabled={!pendingAction.category}
           iconType="next"
           onClick={() => goToNextStep()}
         />

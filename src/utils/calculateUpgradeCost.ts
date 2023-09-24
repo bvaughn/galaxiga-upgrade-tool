@@ -10,8 +10,7 @@ import {
   MAX_LEVEL_NUMBER,
   MAX_SUB_LEVEL_NUMBER,
 } from "../data/upgrade-costs";
-import { ItemStats } from "../hooks/useItemStats";
-import { Category, Tier } from "../types";
+import { Category, ItemStats, Tier } from "../types";
 
 const MAX_LEVEL_INDEX = MAX_LEVEL_NUMBER - 1;
 const MAX_SUB_LEVEL_INDEX = MAX_SUB_LEVEL_NUMBER - 1;

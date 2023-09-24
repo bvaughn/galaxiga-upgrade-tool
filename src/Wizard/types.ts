@@ -1,93 +1,83 @@
-import { ItemStats } from "../hooks/useItemStats";
-import { Category, Item } from "../types";
+import { Category, Item, ItemStats } from "../types";
 
-export type WizardDataCreateTier2 = {
-  action: "create-tier-2";
+export type CreateTier2Item = {
   category: Category;
   id: string;
   primaryItem: Item;
   secondaryItemStats: ItemStats[];
+  type: "create-tier-2";
 };
 
-export type WizardDataCreateTier3 = {
-  action: "create-tier-3";
+export type CreateTier3Item = {
   category: Category;
   id: string;
   secondaryItems: Item[];
   secondaryItemStats: ItemStats[];
+  type: "create-tier-3";
 };
 
-export type WizardDataUpgrade = {
-  action: "upgrade-tier-1" | "upgrade-tier-2" | "upgrade-tier-3";
+export type UpgradeItem = {
   category: Category;
   id: string;
   itemStatsFrom: ItemStats;
   itemStatsTo: ItemStats;
   primaryItem: Item;
+  type: "upgrade-tier-1" | "upgrade-tier-2" | "upgrade-tier-3";
 };
 
-export type WizardData =
-  | WizardDataCreateTier2
-  | WizardDataCreateTier3
-  | WizardDataUpgrade;
+export type Action = CreateTier2Item | CreateTier3Item | UpgradeItem;
 
-export function isWizardDataCreateTier2(
-  value: WizardData
-): value is WizardDataCreateTier2 {
-  return value.action === "create-tier-2";
+export function isCreateTier2Item(action: Action): action is CreateTier2Item {
+  return action.type === "create-tier-2";
 }
 
-export function isWizardDataCreateTier3(
-  value: WizardData
-): value is WizardDataCreateTier3 {
-  return value.action === "create-tier-3";
+export function isCreateTier3Item(action: Action): action is CreateTier3Item {
+  return action.type === "create-tier-3";
 }
 
-export function isWizardDataUpgrade(
-  value: WizardData
-): value is WizardDataUpgrade {
+export function isUpgradeItem(action: Action): action is UpgradeItem {
   return (
-    value.action === "upgrade-tier-1" ||
-    value.action === "upgrade-tier-2" ||
-    value.action === "upgrade-tier-3"
+    action.type === "upgrade-tier-1" ||
+    action.type === "upgrade-tier-2" ||
+    action.type === "upgrade-tier-3"
   );
 }
 
-export type PendingUpgradeData = Partial<WizardDataUpgrade> & {
+export type PendingUpgradeItem = Partial<UpgradeItem> & {
   id: string;
 };
-export type PendingCreateTier2Data = Partial<WizardDataCreateTier2> & {
+export type PendingCreateTier2Item = Partial<CreateTier2Item> & {
   id: string;
 };
-export type PendingCreateTier3Data = Partial<WizardDataCreateTier3> & {
+export type PendingCreateTier3Item = Partial<CreateTier3Item> & {
   id: string;
 };
 
-export type PendingWizardData =
-  | PendingUpgradeData
-  | PendingCreateTier2Data
-  | PendingCreateTier3Data;
+export type PendingAction =
+  | PendingUpgradeItem
+  | PendingCreateTier2Item
+  | PendingCreateTier3Item;
 
 export type WizardDataStep = 1 | 2 | 3 | 4;
 
-export function isPendingUpgradeData(
-  value: PendingWizardData
-): value is PendingUpgradeData {
+export function isPendingUpgradeItem(
+  value: PendingAction
+): value is PendingUpgradeItem {
   return (
-    value.action === "upgrade-tier-1" ||
-    value.action === "upgrade-tier-2" ||
-    value.action === "upgrade-tier-3"
+    value.type === "upgrade-tier-1" ||
+    value.type === "upgrade-tier-2" ||
+    value.type === "upgrade-tier-3"
   );
 }
 
-export function isPendingCreateTier2Data(
-  value: PendingWizardData
-): value is PendingCreateTier2Data {
-  return value.action === "create-tier-2";
+export function isPendingCreateTier2Item(
+  value: PendingAction
+): value is PendingCreateTier2Item {
+  return value.type === "create-tier-2";
 }
 
-export function isPendingCreateTier3Data(
-  value: PendingWizardData
-): value is PendingCreateTier3Data {
-  return value.action === "create-tier-3";
+export function isPendingCreateTier3Item(
+  value: PendingAction
+): value is PendingCreateTier3Item {
+  return value.type === "create-tier-3";
 }

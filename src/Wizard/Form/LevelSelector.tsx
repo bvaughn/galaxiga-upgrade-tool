@@ -42,6 +42,7 @@ export function LevelSelector({
           className={styles.IconButton}
           disabled={value <= 0}
           onClick={decrease}
+          tabIndex={-1}
         >
           <Icon type="subtract" />
         </button>
@@ -49,6 +50,7 @@ export function LevelSelector({
           className={styles.IconButton}
           disabled={value >= MAX_LEVEL_NUMBER}
           onClick={increase}
+          tabIndex={-1}
         >
           <Icon type="add" />
         </button>

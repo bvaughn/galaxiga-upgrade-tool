@@ -3,21 +3,21 @@ import { IconButton } from "../../components/IconButton";
 import { ItemImage } from "../../components/ItemImage";
 import { Item } from "../../types";
 import { getItems } from "../../utils/items";
-import { PendingCreateTier3Data } from "../types";
+import { PendingCreateTier3Item } from "../types";
 import styles from "./shared.module.css";
 
 export function FormStep3CreateTier3({
-  cancel,
   goToNextStep,
   goToPreviousStep,
-  pendingWizardData,
+  onDismiss,
+  pendingAction,
 }: {
-  cancel: () => void;
-  goToNextStep: (value?: PendingCreateTier3Data) => void;
+  goToNextStep: (value?: PendingCreateTier3Item) => void;
   goToPreviousStep: () => void;
-  pendingWizardData: PendingCreateTier3Data;
+  onDismiss: () => void;
+  pendingAction: PendingCreateTier3Item;
 }) {
-  const { category } = pendingWizardData;
+  const { category } = pendingAction;
 
   const [item1, setItem1] = useState<Item | null>(null);
   const [item2, setItem2] = useState<Item | null>(null);
@@ -28,7 +28,7 @@ export function FormStep3CreateTier3({
   const save = () => {
     if (item1 && item2) {
       goToNextStep({
-        ...pendingWizardData,
+        ...pendingAction,
         secondaryItems: [item1, item2],
       });
     }
@@ -70,7 +70,7 @@ export function FormStep3CreateTier3({
 
       <div className={styles.OptionColumn}>
         <IconButton iconType="previous" onClick={goToPreviousStep} />
-        <button className={styles.CancelButton} onClick={cancel}>
+        <button className={styles.CancelButton} onClick={onDismiss}>
           Cancel
         </button>
         <button

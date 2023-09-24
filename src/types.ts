@@ -1,3 +1,5 @@
+import { MAX_LEVEL_NUMBER, MAX_SUB_LEVEL_NUMBER } from "./data/upgrade-costs";
+
 export type Category = "drone" | "ship" | "stone";
 export type Tier = 1 | 2 | 3;
 
@@ -54,4 +56,22 @@ export type LevelUpgradeCost = {
     subLevel9: number,
     subLevel10: number
   ];
+};
+
+export type ItemStats = {
+  cards: number;
+  level: number;
+  subLevel: number;
+};
+
+export const MAX_STATS: ItemStats = {
+  cards: 0,
+  level: MAX_LEVEL_NUMBER,
+  subLevel: MAX_SUB_LEVEL_NUMBER,
+};
+
+export const DEFAULT_ITEM_STATS: ItemStats = {
+  cards: 0,
+  level: 0,
+  subLevel: 0,
 };

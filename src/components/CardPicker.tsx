@@ -1,18 +1,19 @@
-import { useCards } from "../hooks/useCards";
 import { Category } from "../types";
 import { Card } from "./Card";
 import styles from "./CardPicker.module.css";
 import { NumberInput } from "./NumberInput";
 
 export function CardPicker({
+  cards,
   category,
+  onSave,
   type,
 }: {
+  cards: number;
   category: Category;
+  onSave: (cards: number) => void;
   type: "generic" | "specific";
 }) {
-  const [cards, setCards] = useCards(category, type);
-
   return (
     <div className={styles.CardPicker}>
       <Card category={category} type={type} />
@@ -20,7 +21,7 @@ export function CardPicker({
         className={styles.CardInput}
         maxValue={99_999}
         minValue={0}
-        onChange={setCards}
+        onChange={onSave}
         value={cards}
       />
     </div>

@@ -1,43 +1,41 @@
 import { Card } from "../../components/Card";
 import { NumberInput } from "../../components/NumberInput";
-import { useItemStats } from "../../hooks/useItemStats";
-import { Item } from "../../types";
+import { Category, DEFAULT_ITEM_STATS, ItemStats } from "../../types";
 import styles from "./ItemStatsSelector.module.css";
 import { LevelSelector } from "./LevelSelector";
 
 export function ItemStatsSelector({
+  category,
   className = "",
   hideCardsInput = false,
-  item,
-  persistenceKey,
+  itemStats = DEFAULT_ITEM_STATS,
+  onChange,
 }: {
+  category: Category;
   className?: string;
   hideCardsInput?: boolean;
-  item: Item;
-  persistenceKey: string;
+  itemStats?: Readonly<ItemStats>;
+  onChange: (itemStats: ItemStats) => void;
 }) {
-  const [stats, setStats] = useItemStats(item, persistenceKey);
-
-  const { category } = item;
-  const { cards, level, subLevel } = stats;
+  const { cards, level, subLevel } = itemStats;
 
   const onChangeCards = (cards: number) => {
-    setStats({
-      ...stats,
+    onChange({
+      ...itemStats,
       cards,
     });
   };
 
   const onChangeLevel = (level: number) => {
-    setStats({
-      ...stats,
+    onChange({
+      ...itemStats,
       level,
     });
   };
 
   const onChangeSubLevel = (subLevel: number) => {
-    setStats({
-      ...stats,
+    onChange({
+      ...itemStats,
       subLevel,
     });
   };

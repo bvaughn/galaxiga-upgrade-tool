@@ -1,23 +1,23 @@
 import { IconButton } from "../../components/IconButton";
 import { ItemImage } from "../../components/ItemImage";
 import { Item } from "../../types";
-import { PendingUpgradeData } from "../types";
+import { PendingUpgradeItem } from "../types";
 import styles from "./shared.module.css";
 
 export function FormStep3Upgrade({
-  cancel,
   goToNextStep,
   goToPreviousStep,
   items,
-  pendingWizardData,
+  onDismiss,
+  pendingAction,
 }: {
-  cancel: () => void;
-  goToNextStep: (value?: PendingUpgradeData) => void;
+  goToNextStep: (value?: PendingUpgradeItem) => void;
   goToPreviousStep: () => void;
   items: Item[];
-  pendingWizardData: PendingUpgradeData;
+  onDismiss: () => void;
+  pendingAction: PendingUpgradeItem;
 }) {
-  const { category } = pendingWizardData;
+  const { category } = pendingAction;
 
   return (
     <>
@@ -31,7 +31,7 @@ export function FormStep3Upgrade({
             key={item.id}
             onClick={() =>
               goToNextStep({
-                ...pendingWizardData,
+                ...pendingAction,
                 primaryItem: item,
               })
             }
@@ -46,11 +46,11 @@ export function FormStep3Upgrade({
 
       <div className={styles.OptionColumn}>
         <IconButton iconType="previous" onClick={goToPreviousStep} />
-        <button className={styles.CancelButton} onClick={cancel}>
+        <button className={styles.CancelButton} onClick={onDismiss}>
           Cancel
         </button>
         <IconButton
-          disabled={!pendingWizardData.primaryItem}
+          disabled={!pendingAction.primaryItem}
           iconType="next"
           onClick={() => goToNextStep()}
         />

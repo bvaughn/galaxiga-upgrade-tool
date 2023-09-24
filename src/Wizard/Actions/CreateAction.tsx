@@ -2,50 +2,48 @@ import { useMemo, useState } from "react";
 import { IconButton } from "../../components/IconButton";
 import { ItemCosts } from "../../components/ItemCosts";
 import { ItemImage } from "../../components/ItemImage";
-import { useCards } from "../../hooks/useCards";
 import { useDoubleTap } from "../../hooks/useDoubleTap";
 import { Category, Item, Tier } from "../../types";
 import { calculateCreateCost } from "../../utils/calculateCreateCost";
-import { formatNumber } from "../../utils/number";
 import {
-  WizardDataCreateTier2,
-  WizardDataCreateTier3,
-  isWizardDataCreateTier2,
-  isWizardDataCreateTier3,
+  CreateTier2Item,
+  CreateTier3Item,
+  isCreateTier2Item,
+  isCreateTier3Item,
 } from "../types";
 import { DebugInfoRow } from "./DebugInfoRow";
 import styles from "./shared.module.css";
 
-export function ItemCreate({
-  data,
-  deleteItem,
-  editItem,
+export function CreateAction({
+  action,
+  deleteAction,
+  editAction,
+  genericCards,
 }: {
-  data: WizardDataCreateTier2 | WizardDataCreateTier3;
-  deleteItem: () => void;
-  editItem: () => void;
+  action: CreateTier2Item | CreateTier3Item;
+  deleteAction: () => void;
+  editAction: () => void;
+  genericCards: number;
 }) {
-  const { id, secondaryItemStats } = data;
+  const { id, secondaryItemStats } = action;
 
   let category: Category;
   let item: Item;
   let name: string;
   let tier: Tier;
-  if (isWizardDataCreateTier2(data)) {
-    item = data.primaryItem;
+  if (isCreateTier2Item(action)) {
+    item = action.primaryItem;
     category = item.category;
     name = item.name;
     tier = 2;
-  } else if (isWizardDataCreateTier3(data)) {
-    item = data.secondaryItems[0];
+  } else if (isCreateTier3Item(action)) {
+    item = action.secondaryItems[0];
     category = item.category;
     name = `Super ${item.name}`;
     tier = 3;
   } else {
     throw Error("Unsupported data");
   }
-
-  const [genericCards] = useCards(category, "generic");
 
   const [showDebugRow, setShowDebugRow] = useState(false);
 
@@ -62,16 +60,10 @@ export function ItemCreate({
     [category, genericCards, secondaryItemStats, tier]
   );
 
-  const debugCardString = useMemo(() => {
-    const totalSpecificCards = secondaryItemStats.reduce(
-      (sum, item) => sum + item.cards,
-      0
-    );
-
-    return `${formatNumber(totalSpecificCards)} / ${formatNumber(
-      cost.totalCardsRequired
-    )} cards`;
-  }, [cost, secondaryItemStats]);
+  const cardsAvailable = secondaryItemStats.reduce(
+    (sum, item) => sum + item.cards,
+    0
+  );
 
   return (
     <div className={styles.Column} data-separator key={id}>
@@ -111,18 +103,23 @@ export function ItemCreate({
             iconClassName={styles.EditButtonIcon}
             iconType="edit"
             label="Edit"
-            onClick={editItem}
+            onClick={editAction}
           />
           <IconButton
             buttonClassName={styles.DeleteButton}
             iconClassName={styles.DeleteButtonIcon}
             iconType="delete"
             label="Delete"
-            onClick={deleteItem}
+            onClick={deleteAction}
           />
         </div>
       </div>
-      {showDebugRow && <DebugInfoRow>{debugCardString}</DebugInfoRow>}
+      {showDebugRow && (
+        <DebugInfoRow
+          cardsAvailable={cardsAvailable}
+          cardsTotal={cost.totalCardsRequired}
+        />
+      )}
     </div>
   );
 }

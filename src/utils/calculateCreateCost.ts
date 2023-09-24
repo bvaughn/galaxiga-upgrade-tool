@@ -1,6 +1,5 @@
 import { GEMS_TO_MERGE } from "../data/upgrade-costs";
-import { ItemStats, MAX_STATS } from "../hooks/useItemStats";
-import { Category, Tier } from "../types";
+import { Category, ItemStats, MAX_STATS, Tier } from "../types";
 import { UpgradeCost, calculateUpgradeCost } from "./calculateUpgradeCost";
 
 export type CreateCost = UpgradeCost & {

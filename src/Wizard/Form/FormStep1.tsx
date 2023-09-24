@@ -1,15 +1,15 @@
 import { IconButton } from "../../components/IconButton";
-import { PendingWizardData } from "../types";
+import { PendingAction } from "../types";
 import styles from "./shared.module.css";
 
 export function FormStep1({
-  cancel,
   goToNextStep,
-  pendingWizardData,
+  onDismiss,
+  pendingAction,
 }: {
-  cancel: () => void;
-  goToNextStep: (value?: PendingWizardData) => void;
-  pendingWizardData: PendingWizardData;
+  goToNextStep: (value?: PendingAction) => void;
+  onDismiss: () => void;
+  pendingAction: PendingAction;
 }) {
   return (
     <>
@@ -19,8 +19,8 @@ export function FormStep1({
           className={styles.OptionButton}
           onClick={() =>
             goToNextStep({
-              ...pendingWizardData,
-              action: "upgrade-tier-1",
+              ...pendingAction,
+              type: "upgrade-tier-1",
             })
           }
         >
@@ -31,8 +31,8 @@ export function FormStep1({
           className={styles.OptionButton}
           onClick={() =>
             goToNextStep({
-              ...pendingWizardData,
-              action: "upgrade-tier-2",
+              ...pendingAction,
+              type: "upgrade-tier-2",
             })
           }
         >
@@ -43,8 +43,8 @@ export function FormStep1({
           className={styles.OptionButton}
           onClick={() =>
             goToNextStep({
-              ...pendingWizardData,
-              action: "upgrade-tier-3",
+              ...pendingAction,
+              type: "upgrade-tier-3",
             })
           }
         >
@@ -57,8 +57,8 @@ export function FormStep1({
           className={styles.OptionButton}
           onClick={() =>
             goToNextStep({
-              ...pendingWizardData,
-              action: "create-tier-2",
+              ...pendingAction,
+              type: "create-tier-2",
             })
           }
         >
@@ -69,8 +69,8 @@ export function FormStep1({
           className={styles.OptionButton}
           onClick={() =>
             goToNextStep({
-              ...pendingWizardData,
-              action: "create-tier-3",
+              ...pendingAction,
+              type: "create-tier-3",
             })
           }
         >
@@ -83,11 +83,11 @@ export function FormStep1({
 
       <div className={styles.OptionColumn}>
         <IconButton disabled iconType="previous" />
-        <button className={styles.CancelButton} onClick={cancel}>
+        <button className={styles.CancelButton} onClick={onDismiss}>
           Cancel
         </button>
         <IconButton
-          disabled={!pendingWizardData.action}
+          disabled={!pendingAction.type}
           iconType="next"
           onClick={() => goToNextStep()}
         />

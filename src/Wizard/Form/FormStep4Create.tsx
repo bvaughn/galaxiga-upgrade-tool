@@ -1,50 +1,57 @@
+import { useState } from "react";
 import { IconButton } from "../../components/IconButton";
 import { ItemImage } from "../../components/ItemImage";
-import { getItemStats } from "../../hooks/useItemStats";
-import { Item, Tier2Item } from "../../types";
+import { Item, ItemStats, Tier2Item } from "../../types";
+import { assert } from "../../utils/assert";
 import { getItems } from "../../utils/items";
 import {
-  PendingCreateTier2Data,
-  PendingCreateTier3Data,
-  WizardData,
-  WizardDataCreateTier2,
-  isPendingCreateTier2Data,
-  isPendingCreateTier3Data,
+  Action,
+  CreateTier2Item,
+  PendingCreateTier2Item,
+  PendingCreateTier3Item,
+  isPendingCreateTier2Item,
+  isPendingCreateTier3Item,
 } from "../types";
 import { ItemStatsSelector } from "./ItemStatsSelector";
 import styles from "./shared.module.css";
 
 export function FormStep4Create({
-  cancel,
   goToPreviousStep,
-  pendingWizardData,
-  save,
+  onDismiss,
+  onSave,
+  pendingAction,
 }: {
-  cancel: () => void;
   goToPreviousStep: () => void;
-  pendingWizardData: PendingCreateTier2Data | PendingCreateTier3Data;
-  save: (wizardData: WizardData) => void;
+  onDismiss: () => void;
+  onSave: (wizardData: Action) => void;
+  pendingAction: PendingCreateTier2Item | PendingCreateTier3Item;
 }) {
-  const category = pendingWizardData.category!;
+  const { category } = pendingAction;
+  assert(category);
 
   let items: Item[];
-  if (isPendingCreateTier2Data(pendingWizardData)) {
+  if (isPendingCreateTier2Item(pendingAction)) {
     const allItems = getItems(category, 1);
-    items = (pendingWizardData.primaryItem as Tier2Item).createdByMerging.map(
+    items = (pendingAction.primaryItem as Tier2Item).createdByMerging.map(
       (itemId) => allItems.find((item) => item.id === itemId)!
     );
-  } else if (isPendingCreateTier3Data(pendingWizardData)) {
-    items = pendingWizardData.secondaryItems!;
+  } else if (isPendingCreateTier3Item(pendingAction)) {
+    items = pendingAction.secondaryItems!;
   } else {
     throw Error("Unsupported data");
   }
+  assert(items);
+
+  const [secondaryItemStats, setSecondaryItemStats] = useState<ItemStats[]>(
+    pendingAction.secondaryItemStats ?? []
+  );
 
   return (
     <>
       <div className={styles.Prompt}>
-        What level are your {pendingWizardData.category}s currently?
+        What level are your {pendingAction.category}s currently?
       </div>
-      {items.map((item) => {
+      {items.map((item, index) => {
         return (
           <div className={styles.TierImageAndLevels} key={item.id}>
             <div className={styles.ItemImageAndNameColumn}>
@@ -55,9 +62,14 @@ export function FormStep4Create({
               <div className={styles.ItemName}>{item.name}</div>
             </div>
             <ItemStatsSelector
+              category={category}
               className={styles.ItemStatsSelector}
-              item={item}
-              persistenceKey={`${pendingWizardData.id}:${item.id}`}
+              itemStats={secondaryItemStats[index]}
+              onChange={(itemStats) => {
+                const newSecondaryItemStats = [...secondaryItemStats];
+                newSecondaryItemStats[index] = itemStats;
+                setSecondaryItemStats(newSecondaryItemStats);
+              }}
             />
           </div>
         );
@@ -67,18 +79,16 @@ export function FormStep4Create({
 
       <div className={styles.OptionColumn}>
         <IconButton iconType="previous" onClick={goToPreviousStep} />
-        <button className={styles.CancelButton} onClick={cancel}>
+        <button className={styles.CancelButton} onClick={onDismiss}>
           Cancel
         </button>
         <button
           className={styles.SaveButton}
           onClick={() => {
-            save({
-              ...pendingWizardData,
-              secondaryItemStats: items.map((item) =>
-                getItemStats(item, `${pendingWizardData.id}:${item.id}`)
-              ),
-            } as WizardDataCreateTier2);
+            onSave({
+              ...pendingAction,
+              secondaryItemStats,
+            } as CreateTier2Item);
           }}
         >
           Save

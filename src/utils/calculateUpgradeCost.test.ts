@@ -1,5 +1,5 @@
 import { MAX_LEVEL_NUMBER, MAX_SUB_LEVEL_NUMBER } from "../data/upgrade-costs";
-import { MAX_STATS } from "../hooks/useItemStats";
+import { MAX_STATS } from "../types";
 import { calculateUpgradeCost } from "./calculateUpgradeCost";
 
 expect.addSnapshotSerializer({
@@ -16,18 +16,18 @@ describe("calculateUpgradeCost", () => {
     describe("tier 1", () => {
       it("should properly handle a ship that is not yet owned", () => {
         expect(
-  calculateUpgradeCost(
-    0,
-    {
-      cards: 0,
-      level: 0,
-      subLevel: 0
-    },
-    MAX_STATS,
-    "ship",
-    1
-  )
-).toMatchInlineSnapshot(`
+          calculateUpgradeCost(
+            0,
+            {
+              cards: 0,
+              level: 0,
+              subLevel: 0,
+            },
+            MAX_STATS,
+            "ship",
+            1
+          )
+        ).toMatchInlineSnapshot(`
 Object {
   "boxes": Object {
     "with": Object {
@@ -49,18 +49,18 @@ Object {
 
       it("should properly calculate the cost of a full ship upgrade", () => {
         expect(
-  calculateUpgradeCost(
-    0,
-    {
-      cards: 0,
-      level: 1,
-      subLevel: 0
-    },
-    MAX_STATS,
-    "ship",
-    1
-  )
-).toMatchInlineSnapshot(`
+          calculateUpgradeCost(
+            0,
+            {
+              cards: 0,
+              level: 1,
+              subLevel: 0,
+            },
+            MAX_STATS,
+            "ship",
+            1
+          )
+        ).toMatchInlineSnapshot(`
 Object {
   "boxes": Object {
     "with": Object {
@@ -82,18 +82,18 @@ Object {
 
       it("should properly calculate the cost of a ship that has been partially upgraded", () => {
         expect(
-  calculateUpgradeCost(
-    0,
-    {
-      cards: 0,
-      level: 7,
-      subLevel: 3
-    },
-    MAX_STATS,
-    "ship",
-    1
-  )
-).toMatchInlineSnapshot(`
+          calculateUpgradeCost(
+            0,
+            {
+              cards: 0,
+              level: 7,
+              subLevel: 3,
+            },
+            MAX_STATS,
+            "ship",
+            1
+          )
+        ).toMatchInlineSnapshot(`
 Object {
   "boxes": Object {
     "with": Object {
@@ -115,18 +115,18 @@ Object {
 
       it("should properly calculate the coins cost of a ship that is at the last level but not fully upgraded", () => {
         expect(
-  calculateUpgradeCost(
-    0,
-    {
-      cards: 0,
-      level: MAX_LEVEL_NUMBER,
-      subLevel: 5
-    },
-    MAX_STATS,
-    "ship",
-    1
-  )
-).toMatchInlineSnapshot(`
+          calculateUpgradeCost(
+            0,
+            {
+              cards: 0,
+              level: MAX_LEVEL_NUMBER,
+              subLevel: 5,
+            },
+            MAX_STATS,
+            "ship",
+            1
+          )
+        ).toMatchInlineSnapshot(`
 Object {
   "boxes": Object {
     "with": Object {
@@ -148,18 +148,18 @@ Object {
 
       it("should properly calculate the cost of a ship that has already been fully upgraded", () => {
         expect(
-  calculateUpgradeCost(
-    0,
-    {
-      cards: 0,
-      level: MAX_LEVEL_NUMBER,
-      subLevel: MAX_SUB_LEVEL_NUMBER
-    },
-    MAX_STATS,
-    "ship",
-    1
-  )
-).toMatchInlineSnapshot(`
+          calculateUpgradeCost(
+            0,
+            {
+              cards: 0,
+              level: MAX_LEVEL_NUMBER,
+              subLevel: MAX_SUB_LEVEL_NUMBER,
+            },
+            MAX_STATS,
+            "ship",
+            1
+          )
+        ).toMatchInlineSnapshot(`
 Object {
   "boxes": Object {
     "with": Object {
@@ -181,18 +181,18 @@ Object {
 
       it("should factor existing cards into counts needed", () => {
         expect(
-  calculateUpgradeCost(
-    0,
-    {
-      cards: 270,
-      level: MAX_LEVEL_NUMBER,
-      subLevel: 0
-    },
-    MAX_STATS,
-    "ship",
-    1
-  )
-).toMatchInlineSnapshot(`
+          calculateUpgradeCost(
+            0,
+            {
+              cards: 270,
+              level: MAX_LEVEL_NUMBER,
+              subLevel: 0,
+            },
+            MAX_STATS,
+            "ship",
+            1
+          )
+        ).toMatchInlineSnapshot(`
 Object {
   "boxes": Object {
     "with": Object {
@@ -216,18 +216,18 @@ Object {
     describe("tier 2", () => {
       it("should properly handle a ship that is not yet owned", () => {
         expect(
-  calculateUpgradeCost(
-    0,
-    {
-      cards: 0,
-      level: 0,
-      subLevel: 0
-    },
-    MAX_STATS,
-    "ship",
-    2
-  )
-).toMatchInlineSnapshot(`
+          calculateUpgradeCost(
+            0,
+            {
+              cards: 0,
+              level: 0,
+              subLevel: 0,
+            },
+            MAX_STATS,
+            "ship",
+            2
+          )
+        ).toMatchInlineSnapshot(`
 Object {
   "boxes": Object {
     "with": Object {
@@ -249,21 +249,21 @@ Object {
 
       it("should properly handle a partial upgrade", () => {
         expect(
-  calculateUpgradeCost(
-    0,
-    {
-      cards: 0,
-      level: 2,
-      subLevel: 0
-    },
-    {
-      level: 3,
-      subLevel: 4
-    },
-    "ship",
-    1
-  )
-).toMatchInlineSnapshot(`
+          calculateUpgradeCost(
+            0,
+            {
+              cards: 0,
+              level: 2,
+              subLevel: 0,
+            },
+            {
+              level: 3,
+              subLevel: 4,
+            },
+            "ship",
+            1
+          )
+        ).toMatchInlineSnapshot(`
 Object {
   "boxes": Object {
     "with": Object {
@@ -289,18 +289,18 @@ Object {
     describe("tier 3", () => {
       it("should properly handle a ship that is not yet owned", () => {
         expect(
-  calculateUpgradeCost(
-    0,
-    {
-      cards: 0,
-      level: 0,
-      subLevel: 0
-    },
-    MAX_STATS,
-    "ship",
-    3
-  )
-).toMatchInlineSnapshot(`
+          calculateUpgradeCost(
+            0,
+            {
+              cards: 0,
+              level: 0,
+              subLevel: 0,
+            },
+            MAX_STATS,
+            "ship",
+            3
+          )
+        ).toMatchInlineSnapshot(`
 Object {
   "boxes": Object {
     "with": Object {

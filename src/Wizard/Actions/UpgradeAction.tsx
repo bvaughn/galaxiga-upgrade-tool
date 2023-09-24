@@ -2,28 +2,26 @@ import { useMemo, useState } from "react";
 import { IconButton } from "../../components/IconButton";
 import { ItemCosts } from "../../components/ItemCosts";
 import { ItemImage } from "../../components/ItemImage";
-import { useCards } from "../../hooks/useCards";
 import { useDoubleTap } from "../../hooks/useDoubleTap";
 import { calculateUpgradeCost } from "../../utils/calculateUpgradeCost";
-import { formatNumber } from "../../utils/number";
-import { WizardDataUpgrade as WizardDataUpgradeType } from "../types";
+import { UpgradeItem as WizardDataUpgradeType } from "../types";
 import { DebugInfoRow } from "./DebugInfoRow";
 import styles from "./shared.module.css";
 
-export function ItemUpgrade({
-  data,
-  deleteItem,
-  editItem,
+export function UpgradeAction({
+  action,
+  deleteAction,
+  editAction,
+  genericCards,
 }: {
-  data: WizardDataUpgradeType;
-  deleteItem: () => void;
-  editItem: () => void;
+  action: WizardDataUpgradeType;
+  deleteAction: () => void;
+  editAction: () => void;
+  genericCards: number;
 }) {
-  const { id, itemStatsFrom, itemStatsTo, primaryItem: item } = data;
+  const { id, itemStatsFrom, itemStatsTo, primaryItem: item } = action;
   const from = `${itemStatsFrom.level}.${itemStatsFrom.subLevel}`;
   const to = `${itemStatsTo.level}.${itemStatsTo.subLevel}`;
-
-  const [genericCards] = useCards(item.category, "generic");
 
   const [showDebugRow, setShowDebugRow] = useState(false);
 
@@ -40,12 +38,6 @@ export function ItemUpgrade({
       ),
     [genericCards, item, itemStatsFrom, itemStatsTo]
   );
-
-  const debugCardString = useMemo(() => {
-    return `${formatNumber(itemStatsFrom.cards)}  / ${formatNumber(
-      cost.totalCardsRequired
-    )} cards`;
-  }, [cost, itemStatsFrom]);
 
   return (
     <div className={styles.Column} data-separator key={id}>
@@ -84,18 +76,23 @@ export function ItemUpgrade({
             iconClassName={styles.EditButtonIcon}
             iconType="edit"
             label="Edit"
-            onClick={editItem}
+            onClick={editAction}
           />
           <IconButton
             buttonClassName={styles.DeleteButton}
             iconClassName={styles.DeleteButtonIcon}
             iconType="delete"
             label="Delete"
-            onClick={deleteItem}
+            onClick={deleteAction}
           />
         </div>
       </div>
-      {showDebugRow && <DebugInfoRow>{debugCardString}</DebugInfoRow>}
+      {showDebugRow && (
+        <DebugInfoRow
+          cardsAvailable={itemStatsFrom.cards}
+          cardsTotal={cost.totalCardsRequired}
+        />
+      )}
     </div>
   );
 }

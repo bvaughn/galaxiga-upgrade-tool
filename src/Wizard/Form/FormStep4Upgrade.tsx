@@ -1,47 +1,54 @@
+import { useState } from "react";
 import { Card } from "../../components/Card";
 import { IconButton } from "../../components/IconButton";
 import { NumberInput } from "../../components/NumberInput";
-import { useCards } from "../../hooks/useCards";
-import { getItemStats } from "../../hooks/useItemStats";
+import { DEFAULT_ITEM_STATS, ItemStats } from "../../types";
 import { assert } from "../../utils/assert";
-import { PendingUpgradeData, WizardData, WizardDataUpgrade } from "../types";
+import { Action, PendingUpgradeItem, UpgradeItem } from "../types";
 import { ItemStatsSelector } from "./ItemStatsSelector";
 import styles from "./shared.module.css";
 
 export function FormStep4Upgrade({
-  cancel,
   goToPreviousStep,
-  pendingWizardData,
-  save,
+  onDismiss,
+  onSave,
+  pendingAction,
 }: {
-  cancel: () => void;
   goToPreviousStep: () => void;
-  pendingWizardData: PendingUpgradeData;
-  save: (wizardData: WizardData) => void;
+  onDismiss: () => void;
+  onSave: (wizardData: Action) => void;
+  pendingAction: PendingUpgradeItem;
 }) {
-  const { id, primaryItem: item } = pendingWizardData;
+  const { category, primaryItem: item } = pendingAction;
+  assert(category);
   assert(item);
 
-  const persistenceKeyFrom = `wizard-upgrade-from-${id}`;
-  const persistenceKeyTo = `wizard-upgrade-to-${id}`;
+  const [itemStatsFrom, setItemStatsFrom] = useState<ItemStats>(
+    pendingAction.itemStatsFrom ?? DEFAULT_ITEM_STATS
+  );
+  const [itemStatsTo, setItemStatsTo] = useState<ItemStats>(
+    pendingAction.itemStatsTo ?? DEFAULT_ITEM_STATS
+  );
 
-  const [cards, setCards] = useCards(item.category, "specific");
+  const [cards, setCards] = useState(itemStatsFrom?.cards ?? 0);
 
   return (
     <>
       <div className={styles.Prompt}>What level is {item.name} currently?</div>
       <ItemStatsSelector
+        category={category}
         className={styles.Levels}
         hideCardsInput={true}
-        item={item}
-        persistenceKey={persistenceKeyFrom}
+        itemStats={itemStatsFrom}
+        onChange={setItemStatsFrom}
       />
       <div className={styles.Prompt}>What level would you like to reach?</div>
       <ItemStatsSelector
+        category={category}
         className={styles.Levels}
         hideCardsInput={true}
-        item={item}
-        persistenceKey={persistenceKeyTo}
+        itemStats={itemStatsTo}
+        onChange={setItemStatsTo}
       />
       <div className={styles.Prompt}>How many cards do you have?</div>
       <div className={styles.CardsColumn}>
@@ -64,33 +71,17 @@ export function FormStep4Upgrade({
 
       <div className={styles.OptionColumn}>
         <IconButton iconType="previous" onClick={goToPreviousStep} />
-        <button
-          className={styles.CancelButton}
-          onClick={async () => {
-            setCards(0);
-
-            await Promise.resolve();
-
-            cancel();
-          }}
-        >
+        <button className={styles.CancelButton} onClick={onDismiss}>
           Cancel
         </button>
         <button
           className={styles.SaveButton}
-          onClick={async () => {
-            setCards(0);
-
-            await Promise.resolve();
-
-            save({
-              ...pendingWizardData,
-              itemStatsFrom: {
-                ...getItemStats(item, persistenceKeyFrom),
-                cards,
-              },
-              itemStatsTo: getItemStats(item, persistenceKeyTo),
-            } as WizardDataUpgrade);
+          onClick={() => {
+            onSave({
+              ...pendingAction,
+              itemStatsFrom,
+              itemStatsTo,
+            } as UpgradeItem);
           }}
         >
           Save

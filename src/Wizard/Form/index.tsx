@@ -1,124 +1,97 @@
-import { Tier } from "../../types";
+import { useState } from "react";
 import { getItems } from "../../utils/items";
 import {
-  PendingWizardData,
-  WizardData,
-  WizardDataStep,
-  isPendingCreateTier2Data,
-  isPendingCreateTier3Data,
-  isPendingUpgradeData,
+  Action,
+  PendingAction,
+  isPendingCreateTier2Item,
+  isPendingCreateTier3Item,
+  isPendingUpgradeItem,
 } from "../types";
 import { FormStep1 } from "./FormStep1";
 import { FormStep2 } from "./FormStep2";
 import { FormStep3CreateTier2 } from "./FormStep3CreateTier2";
 import { FormStep3CreateTier3 } from "./FormStep3CreateTier3";
+import { FormStep3Upgrade } from "./FormStep3Upgrade";
 import { FormStep4Create } from "./FormStep4Create";
 import { FormStep4Upgrade } from "./FormStep4Upgrade";
-import { FormStep3Upgrade } from "./FormStep3Upgrade";
 
 export function Form({
-  pendingWizardData,
-  pendingWizardStep,
-  setPendingWizardData,
-  setPendingWizardStep,
-  setWizardData,
-  wizardData,
+  defaultPendingAction,
+  defaultStep,
+  onDismiss,
+  onSave,
 }: {
-  pendingWizardData: PendingWizardData;
-  pendingWizardStep: number;
-  setPendingWizardData: (value: PendingWizardData | null) => void;
-  setPendingWizardStep: (value: WizardDataStep) => void;
-  setWizardData: (value: WizardData[]) => void;
-  wizardData: WizardData[];
+  defaultPendingAction: PendingAction;
+  defaultStep: number;
+  onDismiss: () => void;
+  onSave: (formData: Action) => void;
 }) {
-  let tier: Tier;
-  if (pendingWizardData.action === "upgrade-tier-1") {
-    tier = 1;
-  } else if (pendingWizardData.action === "upgrade-tier-2") {
-    tier = 2;
-  } else {
-    tier = 3;
-  }
+  const [pendingAction, setPendingAction] =
+    useState<PendingAction>(defaultPendingAction);
+  const [step, setStep] = useState<number>(defaultStep);
 
-  const items = getItems(pendingWizardData.category ?? "ship", tier);
+  const goToNextStep = (action?: PendingAction) => {
+    setStep(Math.min(4, step + 1));
 
-  const cancel = () => {
-    setPendingWizardData(null);
-    setPendingWizardStep(1);
-  };
-
-  const goToNextStep = (value?: PendingWizardData) => {
-    setPendingWizardStep(Math.min(4, pendingWizardStep + 1) as WizardDataStep);
-
-    if (value) {
-      setPendingWizardData(value);
+    if (action) {
+      setPendingAction(action);
     }
   };
 
   const goToPreviousStep = () => {
-    setPendingWizardStep(Math.max(1, pendingWizardStep - 1) as WizardDataStep);
+    setStep(Math.max(1, step - 1));
   };
 
-  const save = (newWizardData: WizardData) => {
-    setPendingWizardData(null);
-    setPendingWizardStep(1);
-
-    const index = wizardData.findIndex(({ id }) => id === newWizardData.id);
-    if (index >= 0) {
-      const newArray = [...wizardData];
-      newArray.splice(index, 1, newWizardData);
-      setWizardData(newArray);
-    } else {
-      setWizardData([...wizardData, newWizardData]);
-    }
-  };
-
-  switch (pendingWizardStep) {
+  switch (step) {
     case 1:
       return (
         <FormStep1
-          cancel={cancel}
           goToNextStep={goToNextStep}
-          pendingWizardData={pendingWizardData}
+          onDismiss={onDismiss}
+          pendingAction={pendingAction}
         />
       );
     case 2:
       return (
         <FormStep2
-          cancel={cancel}
           goToNextStep={goToNextStep}
           goToPreviousStep={goToPreviousStep}
-          pendingWizardData={pendingWizardData}
+          onDismiss={onDismiss}
+          pendingAction={pendingAction}
         />
       );
     case 3:
-      if (isPendingCreateTier2Data(pendingWizardData)) {
+      if (isPendingCreateTier2Item(pendingAction)) {
+        const items = getItems(pendingAction.category ?? "ship", 2);
+
         return (
           <FormStep3CreateTier2
-            cancel={cancel}
             goToNextStep={goToNextStep}
             goToPreviousStep={goToPreviousStep}
             items={items}
-            pendingWizardData={pendingWizardData}
+            onDismiss={onDismiss}
+            pendingAction={pendingAction}
           />
         );
-      } else if (isPendingCreateTier3Data(pendingWizardData)) {
+      } else if (isPendingCreateTier3Item(pendingAction)) {
         return (
           <FormStep3CreateTier3
-            cancel={cancel}
             goToNextStep={goToNextStep}
             goToPreviousStep={goToPreviousStep}
-            pendingWizardData={pendingWizardData}
+            onDismiss={onDismiss}
+            pendingAction={pendingAction}
           />
         );
-      } else if (isPendingUpgradeData(pendingWizardData)) {
+      } else if (isPendingUpgradeItem(pendingAction)) {
+        const items = getItems(pendingAction.category ?? "ship", 3);
+
         return (
           <FormStep3Upgrade
-            cancel={cancel}
             goToNextStep={goToNextStep}
             goToPreviousStep={goToPreviousStep}
             items={items}
-            pendingWizardData={pendingWizardData}
+            onDismiss={onDismiss}
+            pendingAction={pendingAction}
           />
         );
       } else {
@@ -126,24 +99,24 @@ export function Form({
       }
     case 4:
       if (
-        isPendingCreateTier3Data(pendingWizardData) ||
-        isPendingCreateTier2Data(pendingWizardData)
+        isPendingCreateTier3Item(pendingAction) ||
+        isPendingCreateTier2Item(pendingAction)
       ) {
         return (
           <FormStep4Create
-            cancel={cancel}
+            onDismiss={onDismiss}
             goToPreviousStep={goToPreviousStep}
-            pendingWizardData={pendingWizardData}
-            save={save}
+            onSave={onSave}
+            pendingAction={pendingAction}
           />
         );
-      } else if (isPendingUpgradeData(pendingWizardData)) {
+      } else if (isPendingUpgradeItem(pendingAction)) {
         return (
           <FormStep4Upgrade
-            cancel={cancel}
+            onDismiss={onDismiss}
             goToPreviousStep={goToPreviousStep}
-            pendingWizardData={pendingWizardData}
-            save={save}
+            onSave={onSave}
+            pendingAction={pendingAction}
           />
         );
       }

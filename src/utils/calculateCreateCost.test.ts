@@ -1,4 +1,4 @@
-import { MAX_STATS } from "../hooks/useItemStats";
+import { MAX_STATS } from "../types";
 import { calculateCreateCost } from "./calculateCreateCost";
 
 expect.addSnapshotSerializer({
@@ -14,25 +14,24 @@ describe("calculateCreateCost", () => {
   describe("ships", () => {
     it("should calculate the cost to create a tier 2 ship from two new tier 1 ships", () => {
       expect(
-  calculateCreateCost({
-    category: "ship",
-    genericCards: 0,
-    itemStatsArray: [
-    {
-      cards: 0,
-      level: 0,
-      subLevel: 0
-    },
-    {
-      cards: 0,
-      level: 0,
-      subLevel: 0
-    }],
-
-
-    tier: 2
-  })
-).toMatchInlineSnapshot(`
+        calculateCreateCost({
+          category: "ship",
+          genericCards: 0,
+          itemStatsArray: [
+            {
+              cards: 0,
+              level: 0,
+              subLevel: 0,
+            },
+            {
+              cards: 0,
+              level: 0,
+              subLevel: 0,
+            },
+          ],
+          tier: 2,
+        })
+      ).toMatchInlineSnapshot(`
 Object {
   "boxes": Object {
     "with": Object {
@@ -55,21 +54,20 @@ Object {
 
     it("should calculate the cost to create a tier 2 ship from a on fully upgraded tier 1 ships", () => {
       expect(
-  calculateCreateCost({
-    category: "ship",
-    genericCards: 0,
-    itemStatsArray: [
-    {
-      cards: 0,
-      level: 0,
-      subLevel: 0
-    },
-    MAX_STATS],
-
-
-    tier: 2
-  })
-).toMatchInlineSnapshot(`
+        calculateCreateCost({
+          category: "ship",
+          genericCards: 0,
+          itemStatsArray: [
+            {
+              cards: 0,
+              level: 0,
+              subLevel: 0,
+            },
+            MAX_STATS,
+          ],
+          tier: 2,
+        })
+      ).toMatchInlineSnapshot(`
 Object {
   "boxes": Object {
     "with": Object {
@@ -92,25 +90,24 @@ Object {
 
     it("should the number of generic and specific cards into the calculation", () => {
       expect(
-  calculateCreateCost({
-    category: "ship",
-    genericCards: 1_500,
-    itemStatsArray: [
-    {
-      cards: 500,
-      level: 5,
-      subLevel: 0
-    },
-    {
-      cards: 250,
-      level: 5,
-      subLevel: 0
-    }],
-
-
-    tier: 2
-  })
-).toMatchInlineSnapshot(`
+        calculateCreateCost({
+          category: "ship",
+          genericCards: 1_500,
+          itemStatsArray: [
+            {
+              cards: 500,
+              level: 5,
+              subLevel: 0,
+            },
+            {
+              cards: 250,
+              level: 5,
+              subLevel: 0,
+            },
+          ],
+          tier: 2,
+        })
+      ).toMatchInlineSnapshot(`
 Object {
   "boxes": Object {
     "with": Object {
