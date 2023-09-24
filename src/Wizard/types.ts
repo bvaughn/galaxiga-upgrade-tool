@@ -4,7 +4,6 @@ import { Category, Item } from "../types";
 export type WizardDataCreateTier2 = {
   action: "create-tier-2";
   category: Category;
-  genericCards: number;
   id: string;
   primaryItem: Item;
   secondaryItemStats: ItemStats[];
@@ -13,7 +12,6 @@ export type WizardDataCreateTier2 = {
 export type WizardDataCreateTier3 = {
   action: "create-tier-3";
   category: Category;
-  genericCards: number;
   id: string;
   secondaryItems: Item[];
   secondaryItemStats: ItemStats[];
@@ -22,7 +20,6 @@ export type WizardDataCreateTier3 = {
 export type WizardDataUpgrade = {
   action: "upgrade-tier-1" | "upgrade-tier-2" | "upgrade-tier-3";
   category: Category;
-  genericCards: number;
   id: string;
   itemStatsFrom: ItemStats;
   itemStatsTo: ItemStats;

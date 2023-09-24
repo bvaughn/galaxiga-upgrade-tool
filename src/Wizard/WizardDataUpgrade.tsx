@@ -5,6 +5,7 @@ import { calculateUpgradeCost } from "../utils/calculateUpgradeCost";
 import { WizardDataUpgrade as WizardDataUpgradeType } from "./types";
 
 import { IconButton } from "../components/IconButton";
+import { useCards } from "../hooks/useCards";
 import { useDoubleTap } from "../hooks/useDoubleTap";
 import { formatNumber } from "../utils/number";
 import { DebugInfoRow } from "./DebugInfoRow";
@@ -19,15 +20,11 @@ export function WizardDataUpgrade({
   deleteItem: () => void;
   editItem: () => void;
 }) {
-  const {
-    genericCards,
-    id,
-    itemStatsFrom,
-    itemStatsTo,
-    primaryItem: item,
-  } = data;
+  const { id, itemStatsFrom, itemStatsTo, primaryItem: item } = data;
   const from = `${itemStatsFrom.level}.${itemStatsFrom.subLevel}`;
   const to = `${itemStatsTo.level}.${itemStatsTo.subLevel}`;
+
+  const [genericCards] = useCards(item.category, "generic");
 
   const [showDebugRow, setShowDebugRow] = useState(false);
 
@@ -46,14 +43,14 @@ export function WizardDataUpgrade({
   );
 
   const debugCardString = useMemo(() => {
-    return `${formatNumber(itemStatsFrom.cards)} specific / ${formatNumber(
-      genericCards
-    )} generic / ${formatNumber(cost.totalCardsRequired)} total`;
-  }, [cost, genericCards, itemStatsFrom]);
+    return `${formatNumber(itemStatsFrom.cards)}  / ${formatNumber(
+      cost.totalCardsRequired
+    )} cards`;
+  }, [cost, itemStatsFrom]);
 
   return (
-    <>
-      <div className={styles.Row} data-separator key={id}>
+    <div className={styles.Column} data-separator key={id}>
+      <div className={styles.Row}>
         <ItemImage className={styles.ItemImage} onClick={onClick} item={item} />
         <div className={styles.Column} data-compact data-grow>
           <div className={styles.Row} data-compact>
@@ -96,6 +93,6 @@ export function WizardDataUpgrade({
         </div>
       </div>
       {showDebugRow && <DebugInfoRow>{debugCardString}</DebugInfoRow>}
-    </>
+    </div>
   );
 }

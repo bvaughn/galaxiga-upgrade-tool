@@ -26,8 +26,7 @@ export function WizardStep4Upgrade({
   const persistenceKeyFrom = `wizard-upgrade-from-${id}`;
   const persistenceKeyTo = `wizard-upgrade-to-${id}`;
 
-  const [cards, setCards] = useCards("specific");
-  const [genericCards, setGenericCards] = useCards("generic");
+  const [cards, setCards] = useCards(item.category, "specific");
 
   return (
     <>
@@ -47,7 +46,7 @@ export function WizardStep4Upgrade({
       />
       <div className={styles.Prompt}>How many cards do you have?</div>
       <div className={styles.CardsColumn}>
-        <div className={styles.GenericCardsRow}>
+        <div className={styles.CardsRow}>
           <label className={styles.CardInputLabel}>
             <div className={styles.LabelText}>{item.name} cards</div>
             <Card type="specific" category={item.category} />
@@ -57,21 +56,6 @@ export function WizardStep4Upgrade({
               minValue={0}
               onChange={setCards}
               value={cards}
-            />
-          </label>
-        </div>
-        <div className={styles.GenericCardsRow}>
-          <label className={styles.CardInputLabel}>
-            <div className={styles.LabelText}>
-              Generic {item.category} cards
-            </div>
-            <Card type="generic" category={item.category} />
-            <NumberInput
-              className={styles.CardInput}
-              maxValue={99999}
-              minValue={0}
-              onChange={setGenericCards}
-              value={genericCards}
             />
           </label>
         </div>
@@ -85,7 +69,6 @@ export function WizardStep4Upgrade({
           className={styles.CancelButton}
           onClick={async () => {
             setCards(0);
-            setGenericCards(0);
 
             await Promise.resolve();
 
@@ -98,13 +81,11 @@ export function WizardStep4Upgrade({
           className={styles.SaveButton}
           onClick={async () => {
             setCards(0);
-            setGenericCards(0);
 
             await Promise.resolve();
 
             save({
               ...pendingWizardData,
-              genericCards,
               itemStatsFrom: {
                 ...getItemStats(item, persistenceKeyFrom),
                 cards,

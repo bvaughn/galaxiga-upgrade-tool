@@ -1,4 +1,4 @@
-import { useLayoutEffect, useRef, useState } from "react";
+import { useCallback, useLayoutEffect, useRef, useState } from "react";
 
 export default function useLocalStorage<Value>(
   key: string,
@@ -12,6 +12,27 @@ export default function useLocalStorage<Value>(
       return defaultValue;
     }
   });
+
+  // Sync changes to React state and local storage
+  const setValueWrapper = useCallback(
+    (value: Value) => {
+      setValue(value);
+
+      const newValue = JSON.stringify(value);
+      const oldValue = committedValuesRef.current.prevValue || "";
+
+      localStorageSetItem(key, newValue);
+
+      window.dispatchEvent(
+        new StorageEvent("storage", {
+          key,
+          newValue,
+          oldValue,
+        })
+      );
+    },
+    [key]
+  );
 
   const committedValuesRef = useRef<{
     prevValue: string | null;
@@ -44,20 +65,7 @@ export default function useLocalStorage<Value>(
     };
   }, [key, value]);
 
-  // Sync changes to local storage
-  useLayoutEffect(() => {
-    window.dispatchEvent(
-      new StorageEvent("storage", {
-        key,
-        newValue: committedValuesRef.current.value || "",
-        oldValue: committedValuesRef.current.prevValue || "",
-      })
-    );
-
-    localStorageSetItem(key, committedValuesRef.current.value);
-  }, [key, value]);
-
-  return [value, setValue];
+  return [value, setValueWrapper];
 }
 
 // Helper methods

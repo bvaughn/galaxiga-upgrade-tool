@@ -1,6 +1,4 @@
-import { Card } from "../components/Card";
 import { ItemImage } from "../components/ItemImage";
-import { NumberInput } from "../components/NumberInput";
 import { getItemStats } from "../hooks/useItemStats";
 import { Item, Tier2Item } from "../types";
 import {
@@ -13,7 +11,6 @@ import {
 } from "./types";
 
 import { IconButton } from "../components/IconButton";
-import { useCards } from "../hooks/useCards";
 import { getItems } from "../utils/items";
 import { ItemStatsSelector } from "./ItemStatsSelector";
 import styles from "./WizardStep.module.css";
@@ -30,8 +27,6 @@ export function WizardStep4Create({
   save: (wizardData: WizardData) => void;
 }) {
   const category = pendingWizardData.category!;
-
-  const [genericCards, setGenericCards] = useCards("generic");
 
   let items: Item[];
   if (isPendingCreateTier2Data(pendingWizardData)) {
@@ -68,46 +63,19 @@ export function WizardStep4Create({
           </div>
         );
       })}
-      <div className={styles.GenericCardsRow}>
-        <label className={styles.CardInputLabel}>
-          <div className={styles.LabelText}>Generic {category} cards</div>
-          <Card type="generic" category={category} />
-          <NumberInput
-            className={styles.CardInput}
-            maxValue={99999}
-            minValue={0}
-            onChange={setGenericCards}
-            value={genericCards}
-          />
-        </label>
-      </div>
 
       <div className={styles.Spacer} />
 
       <div className={styles.OptionColumn}>
         <IconButton iconType="previous" onClick={goToPreviousStep} />
-        <button
-          className={styles.CancelButton}
-          onClick={async () => {
-            setGenericCards(0);
-
-            await Promise.resolve();
-
-            cancel();
-          }}
-        >
+        <button className={styles.CancelButton} onClick={cancel}>
           Cancel
         </button>
         <button
           className={styles.SaveButton}
-          onClick={async () => {
-            setGenericCards(0);
-
-            await Promise.resolve();
-
+          onClick={() => {
             save({
               ...pendingWizardData,
-              genericCards,
               secondaryItemStats: items.map((item) =>
                 getItemStats(item, `${pendingWizardData.id}:${item.id}`)
               ),

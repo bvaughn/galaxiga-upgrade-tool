@@ -23,6 +23,8 @@
 .Row[data-compact] {
   gap: 0.25rem;
 }
+
+.Column[data-separator],
 .Row[data-separator] {
   border-top: 1px solid var(--border-color);
   padding-top: 1rem;
@@ -59,4 +61,17 @@
 
 .SmallText {
   font-size: var(--font-size-small);
+}
+
+.CardRow {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.StartUpgradeButton {
+  font-size: var(--font-size-large);
+  border-radius: 0.5rem;
+  background-color: darkslategrey !important;
 }

@@ -10,6 +10,7 @@ import {
 } from "./types";
 
 import { IconButton } from "../components/IconButton";
+import { useCards } from "../hooks/useCards";
 import { useDoubleTap } from "../hooks/useDoubleTap";
 import { Category, Item, Tier } from "../types";
 import { formatNumber } from "../utils/number";
@@ -25,7 +26,7 @@ export function WizardDataCreate({
   deleteItem: () => void;
   editItem: () => void;
 }) {
-  const { genericCards, id, secondaryItemStats } = data;
+  const { id, secondaryItemStats } = data;
 
   let category: Category;
   let item: Item;
@@ -44,6 +45,8 @@ export function WizardDataCreate({
   } else {
     throw Error("Unsupported data");
   }
+
+  const [genericCards] = useCards(category, "generic");
 
   const [showDebugRow, setShowDebugRow] = useState(false);
 
@@ -66,14 +69,14 @@ export function WizardDataCreate({
       0
     );
 
-    return `${formatNumber(totalSpecificCards)} specific / ${formatNumber(
-      genericCards
-    )} generic / ${formatNumber(cost.totalCardsRequired)} total`;
-  }, [cost, genericCards, secondaryItemStats]);
+    return `${formatNumber(totalSpecificCards)} / ${formatNumber(
+      cost.totalCardsRequired
+    )} cards`;
+  }, [cost, secondaryItemStats]);
 
   return (
-    <>
-      <div className={styles.Row} data-separator key={id}>
+    <div className={styles.Column} data-separator key={id}>
+      <div className={styles.Row}>
         <ItemImage className={styles.ItemImage} onClick={onClick} item={item} />
         <div className={styles.Column} data-compact data-grow>
           <div className={styles.Row} data-compact>
@@ -117,6 +120,6 @@ export function WizardDataCreate({
         </div>
       </div>
       {showDebugRow && <DebugInfoRow>{debugCardString}</DebugInfoRow>}
-    </>
+    </div>
   );
 }
