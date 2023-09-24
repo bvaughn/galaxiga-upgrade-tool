@@ -1,12 +1,15 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { CardPicker } from "../components/CardPicker";
+import { Coin } from "../components/Coin";
+import { Gem } from "../components/Gem";
 import { TextButton } from "../components/TextButton";
 import useLocalStorage from "../hooks/useLocalStorage";
+import { formatNumber } from "../utils/number";
 import { uid } from "../utils/uid";
 import { CreateAction } from "./Actions/CreateAction";
 import { UpgradeAction } from "./Actions/UpgradeAction";
-import styles from "./Actions/shared.module.css";
 import { Form } from "./Form";
+import styles from "./Wizard.module.css";
 import {
   Action,
   PendingAction,
@@ -14,6 +17,8 @@ import {
   isCreateTier3Item,
   isUpgradeItem,
 } from "./types";
+import { calculateCreateCost } from "../utils/calculateCreateCost";
+import { calculateUpgradeCost } from "../utils/calculateUpgradeCost";
 
 export function Wizard() {
   const [droneCards, saveDroneCards] = useLocalStorage<number>(
@@ -34,6 +39,38 @@ export function Wizard() {
     pendingAction: PendingAction;
     step: number;
   } | null>(null);
+
+  const { coinsNeededTotal, gemsNeededTotal } = useMemo(() => {
+    let coinsNeededTotal = 0;
+    let gemsNeededTotal = 0;
+
+    actions.forEach((action) => {
+      if (isUpgradeItem(action)) {
+        const cost = calculateUpgradeCost(
+          0,
+          action.itemStatsFrom,
+          action.itemStatsTo,
+          action.category,
+          action.primaryItem.tier
+        );
+
+        gemsNeededTotal += cost.boxes.without.gemsNeededForLevels;
+        coinsNeededTotal += cost.boxes.without.coinsNeededForLevels;
+      } else {
+        const cost = calculateCreateCost({
+          genericCards: 0,
+          category: action.category,
+          itemStatsArray: action.secondaryItemStats,
+          tier: action.type === "create-tier-2" ? 2 : 3,
+        });
+
+        gemsNeededTotal += cost.boxes.without.gemsNeededForLevels;
+        coinsNeededTotal += cost.boxes.without.coinsNeededForLevels;
+      }
+    });
+
+    return { coinsNeededTotal, gemsNeededTotal };
+  }, [actions]);
 
   const addOrUpdateAction = (item: Action) => {
     setFormData(null);
@@ -64,8 +101,8 @@ export function Wizard() {
   }
 
   return (
-    <>
-      <div className={styles.CardRow}>
+    <div className={styles.Page}>
+      <div className={styles.HeaderSection}>
         <CardPicker
           cards={shipCards}
           category="ship"
@@ -85,7 +122,7 @@ export function Wizard() {
           type="generic"
         />
       </div>
-      <div className={styles.Column} data-center>
+      <div className={styles.ActionSection} data-center>
         <TextButton
           className={styles.StartUpgradeButton}
           onClick={() =>
@@ -100,7 +137,7 @@ export function Wizard() {
           Start an upgrade
         </TextButton>
       </div>
-      <div className={styles.Column}>
+      <div className={styles.MainSection}>
         {actions.map((action) => {
           let genericCards;
           switch (action.category) {
@@ -153,6 +190,22 @@ export function Wizard() {
           }
         })}
       </div>
-    </>
+      <div className={styles.FooterSection}>
+        <div
+          className={styles.Cost}
+          data-disabled={gemsNeededTotal === 0 ? "" : undefined}
+          title={`${formatNumber(gemsNeededTotal, "long")} gems`}
+        >
+          <Gem /> {formatNumber(gemsNeededTotal)}
+        </div>
+        <div
+          className={styles.Cost}
+          data-disabled={coinsNeededTotal === 0 ? "" : undefined}
+          title={`${formatNumber(coinsNeededTotal, "long")} coins`}
+        >
+          <Coin /> {formatNumber(coinsNeededTotal)}
+        </div>
+      </div>
+    </div>
   );
 }

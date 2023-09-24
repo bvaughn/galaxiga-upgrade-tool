@@ -40,10 +40,10 @@ export function UpgradeAction({
   );
 
   return (
-    <div className={styles.Column} data-separator key={id}>
+    <div className={styles.Action} data-separator key={id}>
       <div className={styles.Row}>
         <ItemImage className={styles.ItemImage} onClick={onClick} item={item} />
-        <div className={styles.Column} data-compact data-grow>
+        <div className={styles.MiddleColumn}>
           <div className={styles.Row} data-compact>
             <span className={styles.SmallText}>Upgrade</span> {item.name}
           </div>
@@ -70,7 +70,7 @@ export function UpgradeAction({
             </small>
           )}
         </div>
-        <div className={styles.Column} data-actions-column>
+        <div className={styles.ActionsColumn}>
           <IconButton
             buttonClassName={styles.EditButton}
             iconClassName={styles.EditButtonIcon}

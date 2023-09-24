@@ -1,0 +1,49 @@
+.Page {
+  height: stretch;
+  display: flex;
+  flex-direction: column;
+}
+
+.StartUpgradeButton {
+  width: 100%;
+  background-color: darkslategrey !important;
+  background: linear-gradient(slategray, darkslategray);
+  font-size: var(--font-size-large);
+  justify-content: center;
+}
+
+.HeaderSection,
+.FooterSection {
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: stretch;
+  gap: 0.5rem;
+  padding: 0.5rem;
+}
+.HeaderSection,
+.FooterSection {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+.FooterSection {
+  border-top: 2px solid var(--border-color);
+  justify-content: space-around;
+}
+
+.ActionSection {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 0.5rem 0.5rem;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-bottom: 2px solid var(--border-color);
+}
+
+.MainSection {
+  overflow: auto;
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+}

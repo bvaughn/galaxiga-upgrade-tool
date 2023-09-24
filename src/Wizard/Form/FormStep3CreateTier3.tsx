@@ -35,7 +35,7 @@ export function FormStep3CreateTier3({
   };
 
   return (
-    <>
+    <div className={styles.Form}>
       <div className={styles.Prompt}>
         Which {category}s do you want to merge?
       </div>
@@ -82,6 +82,6 @@ export function FormStep3CreateTier3({
         </button>
         <IconButton disabled={saveDisabled} iconType="next" onClick={save} />
       </div>
-    </>
+    </div>
   );
 }

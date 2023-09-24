@@ -17,7 +17,7 @@ export function FormStep2({
     pendingAction.type === "create-tier-2" ? "create" : "upgrade";
 
   return (
-    <>
+    <div className={styles.Form}>
       <div className={styles.Prompt}>What would you like to {actionLabel}?</div>
       <div className={styles.OptionColumn}>
         <button
@@ -68,6 +68,6 @@ export function FormStep2({
           onClick={() => goToNextStep()}
         />
       </div>
-    </>
+    </div>
   );
 }

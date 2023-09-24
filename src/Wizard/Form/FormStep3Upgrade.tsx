@@ -20,7 +20,7 @@ export function FormStep3Upgrade({
   const { category } = pendingAction;
 
   return (
-    <>
+    <div className={styles.Form}>
       <div className={styles.Prompt}>
         Which {category} would you like to upgrade?
       </div>
@@ -55,6 +55,6 @@ export function FormStep3Upgrade({
           onClick={() => goToNextStep()}
         />
       </div>
-    </>
+    </div>
   );
 }

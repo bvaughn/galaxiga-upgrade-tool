@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { IconButton } from "../../components/IconButton";
 import { ItemImage } from "../../components/ItemImage";
-import { Item, ItemStats, Tier2Item } from "../../types";
+import { DEFAULT_ITEM_STATS, Item, ItemStats, Tier2Item } from "../../types";
 import { assert } from "../../utils/assert";
 import { getItems } from "../../utils/items";
 import {
@@ -43,11 +43,11 @@ export function FormStep4Create({
   assert(items);
 
   const [secondaryItemStats, setSecondaryItemStats] = useState<ItemStats[]>(
-    pendingAction.secondaryItemStats ?? []
+    pendingAction.secondaryItemStats ?? [DEFAULT_ITEM_STATS, DEFAULT_ITEM_STATS]
   );
 
   return (
-    <>
+    <div className={styles.Form}>
       <div className={styles.Prompt}>
         What level are your {pendingAction.category}s currently?
       </div>
@@ -94,6 +94,6 @@ export function FormStep4Create({
           Save
         </button>
       </div>
-    </>
+    </div>
   );
 }

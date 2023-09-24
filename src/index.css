@@ -35,10 +35,6 @@ code {
   overflow: auto;
   background-color: #031134;
   background: linear-gradient(45deg, #020724, #02193e);
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  padding: 1rem;
 }
 
 input,

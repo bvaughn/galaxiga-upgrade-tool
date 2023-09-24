@@ -33,7 +33,7 @@ export function FormStep4Upgrade({
   const [cards, setCards] = useState(itemStatsFrom?.cards ?? 0);
 
   return (
-    <>
+    <div className={styles.Form}>
       <div className={styles.Prompt}>What level is {item.name} currently?</div>
       <ItemStatsSelector
         category={category}
@@ -87,6 +87,6 @@ export function FormStep4Upgrade({
           Save
         </button>
       </div>
-    </>
+    </div>
   );
 }

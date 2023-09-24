@@ -12,7 +12,7 @@ export function FormStep1({
   pendingAction: PendingAction;
 }) {
   return (
-    <>
+    <div className={styles.Form}>
       <div className={styles.Prompt}>What would you like to do?</div>
       <div className={styles.OptionColumn}>
         <button
@@ -92,6 +92,6 @@ export function FormStep1({
           onClick={() => goToNextStep()}
         />
       </div>
-    </>
+    </div>
   );
 }

@@ -1,18 +1,28 @@
-.Column {
+.Action {
   flex: 0 0 auto;
+  padding: 1rem;
   display: flex;
   flex-direction: column;
-  gap: 1rem;
   overflow: auto;
 }
-.Column[data-compact] {
+.Action:not(:first-of-type) {
+  border-top: 1px solid var(--border-color);
+  padding-top: 1rem;
+}
+
+.MiddleColumn {
+  flex: 1 0 auto;
+  display: flex;
+  flex-direction: column;
   gap: 0.25rem;
 }
-.Column[data-center] {
-  align-items: center;
-}
-.Column[data-grow] {
-  flex-grow: 1;
+
+.ActionsColumn {
+  flex: 1 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.125rem;
 }
 
 .Row {
@@ -23,17 +33,6 @@
 }
 .Row[data-compact] {
   gap: 0.25rem;
-}
-
-.Column[data-actions-column] {
-  align-items: flex-end;
-  gap: 0.125rem;
-}
-
-.Column[data-separator],
-.Row[data-separator] {
-  border-top: 1px solid var(--border-color);
-  padding-top: 1rem;
 }
 
 .ItemImage {
@@ -75,19 +74,4 @@
 
 .SmallText {
   font-size: var(--font-size-small);
-}
-
-.CardRow {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: stretch;
-  gap: 1rem;
-}
-
-.StartUpgradeButton {
-  background-color: darkslategrey !important;
-  background: linear-gradient(slategray, darkslategray);
-  border-radius: 0.5rem;
-  font-size: var(--font-size-large);
 }

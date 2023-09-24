@@ -66,10 +66,10 @@ export function CreateAction({
   );
 
   return (
-    <div className={styles.Column} data-separator key={id}>
+    <div className={styles.Action} data-separator key={id}>
       <div className={styles.Row}>
         <ItemImage className={styles.ItemImage} onClick={onClick} item={item} />
-        <div className={styles.Column} data-compact data-grow>
+        <div className={styles.MiddleColumn}>
           <div className={styles.Row} data-compact>
             <span className={styles.SmallText}>Create</span> {name}
           </div>
@@ -97,7 +97,7 @@ export function CreateAction({
             </small>
           )}
         </div>
-        <div className={styles.Column} data-actions-column>
+        <div className={styles.ActionsColumn}>
           <IconButton
             buttonClassName={styles.EditButton}
             iconClassName={styles.EditButtonIcon}

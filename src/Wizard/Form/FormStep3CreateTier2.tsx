@@ -20,7 +20,7 @@ export function FormStep3CreateTier2({
   const { category } = pendingAction;
 
   return (
-    <>
+    <div className={styles.Form}>
       <div className={styles.Prompt}>
         Which {category} would you like to create?
       </div>
@@ -55,6 +55,6 @@ export function FormStep3CreateTier2({
           onClick={() => goToNextStep()}
         />
       </div>
-    </>
+    </div>
   );
 }
