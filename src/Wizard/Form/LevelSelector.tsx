@@ -1,6 +1,9 @@
-import { Icon } from "../components/Icon";
-import { NumberInput } from "../components/NumberInput";
-import { MAX_LEVEL_NUMBER, MAX_SUB_LEVEL_NUMBER } from "../data/upgrade-costs";
+import { Icon } from "../../components/Icon";
+import { NumberInput } from "../../components/NumberInput";
+import {
+  MAX_LEVEL_NUMBER,
+  MAX_SUB_LEVEL_NUMBER,
+} from "../../data/upgrade-costs";
 import styles from "./LevelSelector.module.css";
 
 export function LevelSelector({

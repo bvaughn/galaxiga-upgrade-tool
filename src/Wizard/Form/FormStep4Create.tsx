@@ -1,6 +1,8 @@
-import { ItemImage } from "../components/ItemImage";
-import { getItemStats } from "../hooks/useItemStats";
-import { Item, Tier2Item } from "../types";
+import { IconButton } from "../../components/IconButton";
+import { ItemImage } from "../../components/ItemImage";
+import { getItemStats } from "../../hooks/useItemStats";
+import { Item, Tier2Item } from "../../types";
+import { getItems } from "../../utils/items";
 import {
   PendingCreateTier2Data,
   PendingCreateTier3Data,
@@ -8,14 +10,11 @@ import {
   WizardDataCreateTier2,
   isPendingCreateTier2Data,
   isPendingCreateTier3Data,
-} from "./types";
-
-import { IconButton } from "../components/IconButton";
-import { getItems } from "../utils/items";
+} from "../types";
 import { ItemStatsSelector } from "./ItemStatsSelector";
-import styles from "./WizardStep.module.css";
+import styles from "./shared.module.css";
 
-export function WizardStep4Create({
+export function FormStep4Create({
   cancel,
   goToPreviousStep,
   pendingWizardData,

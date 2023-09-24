@@ -1,9 +1,8 @@
 import useLocalStorage from "../hooks/useLocalStorage";
 import { uid } from "../utils/uid";
+import { Form } from "./Form";
+import { Items } from "./Items";
 import { PendingWizardData, WizardData, WizardDataStep } from "./types";
-
-import { WizardDataItems } from "./WizardDataItems";
-import { WizardDataPrompt } from "./WizardDataPrompt";
 
 export default function Wizard() {
   const [wizardData, setWizardData] = useLocalStorage<WizardData[]>(
@@ -26,7 +25,7 @@ export default function Wizard() {
   return (
     <>
       {pendingWizardData ? (
-        <WizardDataPrompt
+        <Form
           pendingWizardData={pendingWizardData}
           pendingWizardStep={pendingWizardStep}
           setPendingWizardData={setPendingWizardData}
@@ -35,7 +34,7 @@ export default function Wizard() {
           wizardData={wizardData}
         />
       ) : (
-        <WizardDataItems
+        <Items
           setPendingWizardData={setPendingWizardData}
           setWizardData={setWizardData}
           setPendingWizardStep={setPendingWizardStep}

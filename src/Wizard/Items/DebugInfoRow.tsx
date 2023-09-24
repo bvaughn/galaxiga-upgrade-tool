@@ -1,6 +1,6 @@
 import { PropsWithChildren } from "react";
 import styles from "./DebugInfoRow.module.css";
-import { Icon } from "../components/Icon";
+import { Icon } from "../../components/Icon";
 
 export function DebugInfoRow({ children }: PropsWithChildren) {
   return (

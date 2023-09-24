@@ -1,9 +1,8 @@
-import { IconButton } from "../components/IconButton";
-import { PendingWizardData } from "./types";
+import { IconButton } from "../../components/IconButton";
+import { PendingWizardData } from "../types";
+import styles from "./shared.module.css";
 
-import styles from "./WizardStep.module.css";
-
-export function WizardStep1({
+export function FormStep1({
   cancel,
   goToNextStep,
   pendingWizardData,

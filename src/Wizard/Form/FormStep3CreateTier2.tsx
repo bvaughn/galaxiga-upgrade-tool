@@ -1,11 +1,10 @@
-import { IconButton } from "../components/IconButton";
-import { ItemImage } from "../components/ItemImage";
-import { Item } from "../types";
-import { PendingCreateTier2Data } from "./types";
+import { IconButton } from "../../components/IconButton";
+import { ItemImage } from "../../components/ItemImage";
+import { Item } from "../../types";
+import { PendingCreateTier2Data } from "../types";
+import styles from "./shared.module.css";
 
-import styles from "./WizardStep.module.css";
-
-export function WizardStep3CreateTier2({
+export function FormStep3CreateTier2({
   cancel,
   goToNextStep,
   goToPreviousStep,

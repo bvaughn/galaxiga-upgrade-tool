@@ -1,15 +1,14 @@
-import { Card } from "../components/Card";
-import { NumberInput } from "../components/NumberInput";
-import { getItemStats } from "../hooks/useItemStats";
-import { assert } from "../utils/assert";
-import { PendingUpgradeData, WizardData, WizardDataUpgrade } from "./types";
-
-import { IconButton } from "../components/IconButton";
-import { useCards } from "../hooks/useCards";
+import { Card } from "../../components/Card";
+import { IconButton } from "../../components/IconButton";
+import { NumberInput } from "../../components/NumberInput";
+import { useCards } from "../../hooks/useCards";
+import { getItemStats } from "../../hooks/useItemStats";
+import { assert } from "../../utils/assert";
+import { PendingUpgradeData, WizardData, WizardDataUpgrade } from "../types";
 import { ItemStatsSelector } from "./ItemStatsSelector";
-import styles from "./WizardStep.module.css";
+import styles from "./shared.module.css";
 
-export function WizardStep4Upgrade({
+export function FormStep4Upgrade({
   cancel,
   goToPreviousStep,
   pendingWizardData,

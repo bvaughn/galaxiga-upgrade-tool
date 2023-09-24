@@ -1,10 +1,9 @@
-import { LevelSelector } from "./LevelSelector";
-
-import { Card } from "../components/Card";
-import { NumberInput } from "../components/NumberInput";
-import { useItemStats } from "../hooks/useItemStats";
-import { Item } from "../types";
+import { Card } from "../../components/Card";
+import { NumberInput } from "../../components/NumberInput";
+import { useItemStats } from "../../hooks/useItemStats";
+import { Item } from "../../types";
 import styles from "./ItemStatsSelector.module.css";
+import { LevelSelector } from "./LevelSelector";
 
 export function ItemStatsSelector({
   className = "",

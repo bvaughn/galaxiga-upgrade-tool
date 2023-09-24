@@ -1,8 +1,7 @@
 html,
 body {
   width: 100vw;
-  height: fill-available;
-  height: -webkit-fill-available;
+  height: stretch;
 }
 
 body {
@@ -29,8 +28,7 @@ code {
 
 #root {
   height: 100vh;
-  height: fill-available;
-  height: -webkit-fill-available;
+  height: stretch;
   width: 100vw;
   max-width: 35rem;
   margin: 0 auto;

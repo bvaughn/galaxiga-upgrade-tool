@@ -1,17 +1,16 @@
 import { useMemo, useState } from "react";
-import { ItemCosts } from "../components/ItemCosts";
-import { ItemImage } from "../components/ItemImage";
-import { calculateUpgradeCost } from "../utils/calculateUpgradeCost";
-import { WizardDataUpgrade as WizardDataUpgradeType } from "./types";
-
-import { IconButton } from "../components/IconButton";
-import { useCards } from "../hooks/useCards";
-import { useDoubleTap } from "../hooks/useDoubleTap";
-import { formatNumber } from "../utils/number";
+import { IconButton } from "../../components/IconButton";
+import { ItemCosts } from "../../components/ItemCosts";
+import { ItemImage } from "../../components/ItemImage";
+import { useCards } from "../../hooks/useCards";
+import { useDoubleTap } from "../../hooks/useDoubleTap";
+import { calculateUpgradeCost } from "../../utils/calculateUpgradeCost";
+import { formatNumber } from "../../utils/number";
+import { WizardDataUpgrade as WizardDataUpgradeType } from "../types";
 import { DebugInfoRow } from "./DebugInfoRow";
 import styles from "./shared.module.css";
 
-export function WizardDataUpgrade({
+export function ItemUpgrade({
   data,
   deleteItem,
   editItem,

@@ -1,13 +1,12 @@
 import { useState } from "react";
-import { IconButton } from "../components/IconButton";
-import { ItemImage } from "../components/ItemImage";
-import { getItems } from "../utils/items";
-import { PendingCreateTier3Data } from "./types";
+import { IconButton } from "../../components/IconButton";
+import { ItemImage } from "../../components/ItemImage";
+import { Item } from "../../types";
+import { getItems } from "../../utils/items";
+import { PendingCreateTier3Data } from "../types";
+import styles from "./shared.module.css";
 
-import { Item } from "../types";
-import styles from "./WizardStep.module.css";
-
-export function WizardStep3CreateTier3({
+export function FormStep3CreateTier3({
   cancel,
   goToNextStep,
   goToPreviousStep,

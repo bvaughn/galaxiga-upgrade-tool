@@ -1,3 +1,5 @@
+import { Tier } from "../../types";
+import { getItems } from "../../utils/items";
 import {
   PendingWizardData,
   WizardData,
@@ -5,19 +7,16 @@ import {
   isPendingCreateTier2Data,
   isPendingCreateTier3Data,
   isPendingUpgradeData,
-} from "./types";
+} from "../types";
+import { FormStep1 } from "./FormStep1";
+import { FormStep2 } from "./FormStep2";
+import { FormStep3CreateTier2 } from "./FormStep3CreateTier2";
+import { FormStep3CreateTier3 } from "./FormStep3CreateTier3";
+import { FormStep4Create } from "./FormStep4Create";
+import { FormStep4Upgrade } from "./FormStep4Upgrade";
+import { FormStep3Upgrade } from "./FormStep3Upgrade";
 
-import { Tier } from "../types";
-import { getItems } from "../utils/items";
-import { WizardStep1 } from "./WizardStep1";
-import { WizardStep2 } from "./WizardStep2";
-import { WizardStep3CreateTier2 } from "./WizardStep3CreateTier2";
-import { WizardStep3CreateTier3 } from "./WizardStep3CreateTier3";
-import { WizardStep4Create } from "./WizardStep4Create";
-import { WizardStep4Upgrade } from "./WizardStep4Upgrade";
-import { WizardStep3Upgrade } from "./Wizardstep3Upgrade";
-
-export function WizardDataPrompt({
+export function Form({
   pendingWizardData,
   pendingWizardStep,
   setPendingWizardData,
@@ -77,7 +76,7 @@ export function WizardDataPrompt({
   switch (pendingWizardStep) {
     case 1:
       return (
-        <WizardStep1
+        <FormStep1
           cancel={cancel}
           goToNextStep={goToNextStep}
           pendingWizardData={pendingWizardData}
@@ -85,7 +84,7 @@ export function WizardDataPrompt({
       );
     case 2:
       return (
-        <WizardStep2
+        <FormStep2
           cancel={cancel}
           goToNextStep={goToNextStep}
           goToPreviousStep={goToPreviousStep}
@@ -95,7 +94,7 @@ export function WizardDataPrompt({
     case 3:
       if (isPendingCreateTier2Data(pendingWizardData)) {
         return (
-          <WizardStep3CreateTier2
+          <FormStep3CreateTier2
             cancel={cancel}
             goToNextStep={goToNextStep}
             goToPreviousStep={goToPreviousStep}
@@ -105,7 +104,7 @@ export function WizardDataPrompt({
         );
       } else if (isPendingCreateTier3Data(pendingWizardData)) {
         return (
-          <WizardStep3CreateTier3
+          <FormStep3CreateTier3
             cancel={cancel}
             goToNextStep={goToNextStep}
             goToPreviousStep={goToPreviousStep}
@@ -114,7 +113,7 @@ export function WizardDataPrompt({
         );
       } else if (isPendingUpgradeData(pendingWizardData)) {
         return (
-          <WizardStep3Upgrade
+          <FormStep3Upgrade
             cancel={cancel}
             goToNextStep={goToNextStep}
             goToPreviousStep={goToPreviousStep}
@@ -131,7 +130,7 @@ export function WizardDataPrompt({
         isPendingCreateTier2Data(pendingWizardData)
       ) {
         return (
-          <WizardStep4Create
+          <FormStep4Create
             cancel={cancel}
             goToPreviousStep={goToPreviousStep}
             pendingWizardData={pendingWizardData}
@@ -140,7 +139,7 @@ export function WizardDataPrompt({
         );
       } else if (isPendingUpgradeData(pendingWizardData)) {
         return (
-          <WizardStep4Upgrade
+          <FormStep4Upgrade
             cancel={cancel}
             goToPreviousStep={goToPreviousStep}
             pendingWizardData={pendingWizardData}

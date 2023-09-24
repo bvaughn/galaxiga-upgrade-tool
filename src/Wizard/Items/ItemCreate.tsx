@@ -1,23 +1,22 @@
 import { useMemo, useState } from "react";
-import { ItemCosts } from "../components/ItemCosts";
-import { ItemImage } from "../components/ItemImage";
-import { calculateCreateCost } from "../utils/calculateCreateCost";
+import { IconButton } from "../../components/IconButton";
+import { ItemCosts } from "../../components/ItemCosts";
+import { ItemImage } from "../../components/ItemImage";
+import { useCards } from "../../hooks/useCards";
+import { useDoubleTap } from "../../hooks/useDoubleTap";
+import { Category, Item, Tier } from "../../types";
+import { calculateCreateCost } from "../../utils/calculateCreateCost";
+import { formatNumber } from "../../utils/number";
 import {
   WizardDataCreateTier2,
   WizardDataCreateTier3,
   isWizardDataCreateTier2,
   isWizardDataCreateTier3,
-} from "./types";
-
-import { IconButton } from "../components/IconButton";
-import { useCards } from "../hooks/useCards";
-import { useDoubleTap } from "../hooks/useDoubleTap";
-import { Category, Item, Tier } from "../types";
-import { formatNumber } from "../utils/number";
+} from "../types";
 import { DebugInfoRow } from "./DebugInfoRow";
 import styles from "./shared.module.css";
 
-export function WizardDataCreate({
+export function ItemCreate({
   data,
   deleteItem,
   editItem,

@@ -1,11 +1,10 @@
-import { IconButton } from "../components/IconButton";
-import { ItemImage } from "../components/ItemImage";
-import { Item } from "../types";
-import { PendingUpgradeData } from "./types";
+import { IconButton } from "../../components/IconButton";
+import { ItemImage } from "../../components/ItemImage";
+import { Item } from "../../types";
+import { PendingUpgradeData } from "../types";
+import styles from "./shared.module.css";
 
-import styles from "./WizardStep.module.css";
-
-export function WizardStep3Upgrade({
+export function FormStep3Upgrade({
   cancel,
   goToNextStep,
   goToPreviousStep,
