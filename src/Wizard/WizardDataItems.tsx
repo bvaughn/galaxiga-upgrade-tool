@@ -11,6 +11,7 @@ import { WizardDataCreate } from "./WizardDataCreate";
 import { WizardDataUpgrade } from "./WizardDataUpgrade";
 
 import { TextButton } from "../components/TextButton";
+import { useCards } from "../hooks/useCards";
 import { uid } from "../utils/uid";
 import styles from "./shared.module.css";
 
@@ -25,6 +26,9 @@ export function WizardDataItems({
   setPendingWizardStep: (value: WizardDataStep) => void;
   wizardData: WizardData[];
 }) {
+  const [_, setGenericCards] = useCards("generic");
+  const [__, setSpecificCards] = useCards("specific");
+
   return (
     <>
       <div className={styles.Column} data-center>
@@ -46,6 +50,12 @@ export function WizardDataItems({
           };
 
           const editItem = () => {
+            setGenericCards(data.genericCards);
+
+            if (isWizardDataUpgrade(data)) {
+              setSpecificCards(data.itemStatsFrom.cards);
+            }
+
             setPendingWizardData(data);
             setPendingWizardStep(4);
           };

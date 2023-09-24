@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { Card } from "../components/Card";
 import { NumberInput } from "../components/NumberInput";
 import { getItemStats } from "../hooks/useItemStats";
@@ -6,6 +5,7 @@ import { assert } from "../utils/assert";
 import { PendingUpgradeData, WizardData, WizardDataUpgrade } from "./types";
 
 import { IconButton } from "../components/IconButton";
+import { useCards } from "../hooks/useCards";
 import { ItemStatsSelector } from "./ItemStatsSelector";
 import styles from "./WizardStep.module.css";
 
@@ -26,8 +26,8 @@ export function WizardStep4Upgrade({
   const persistenceKeyFrom = `wizard-upgrade-from-${id}`;
   const persistenceKeyTo = `wizard-upgrade-to-${id}`;
 
-  const [cards, setCards] = useState(0);
-  const [genericCards, setGenericCards] = useState(0);
+  const [cards, setCards] = useCards("specific");
+  const [genericCards, setGenericCards] = useCards("generic");
 
   return (
     <>

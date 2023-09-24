@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { Card } from "../components/Card";
 import { ItemImage } from "../components/ItemImage";
 import { NumberInput } from "../components/NumberInput";
@@ -14,6 +13,7 @@ import {
 } from "./types";
 
 import { IconButton } from "../components/IconButton";
+import { useCards } from "../hooks/useCards";
 import { getItems } from "../utils/items";
 import { ItemStatsSelector } from "./ItemStatsSelector";
 import styles from "./WizardStep.module.css";
@@ -31,7 +31,7 @@ export function WizardStep4Create({
 }) {
   const category = pendingWizardData.category!;
 
-  const [genericCards, setGenericCards] = useState(0);
+  const [genericCards, setGenericCards] = useCards("generic");
 
   let items: Item[];
   if (isPendingCreateTier2Data(pendingWizardData)) {
