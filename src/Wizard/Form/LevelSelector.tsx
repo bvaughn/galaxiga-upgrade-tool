@@ -48,7 +48,7 @@ export function LevelSelector({
         </button>
         <button
           className={styles.IconButton}
-          disabled={value >= MAX_LEVEL_NUMBER}
+          disabled={value >= maxValue}
           onClick={increase}
           tabIndex={-1}
         >

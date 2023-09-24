@@ -116,8 +116,9 @@ export function CreateAction({
       </div>
       {showDebugRow && (
         <DebugInfoRow
-          cardsAvailable={cardsAvailable}
-          cardsTotal={cost.totalCardsRequired}
+          genericCards={genericCards}
+          specificCards={cardsAvailable}
+          totalCards={cost.totalCardsRequired}
         />
       )}
     </div>

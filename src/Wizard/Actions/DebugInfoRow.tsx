@@ -4,17 +4,17 @@ import { formatNumber } from "../../utils/number";
 import styles from "./DebugInfoRow.module.css";
 
 export function DebugInfoRow({
-  cardsAvailable,
-  cardsTotal,
+  genericCards,
+  specificCards,
+  totalCards,
 }: {
-  cardsAvailable: number;
-  cardsTotal: number;
+  genericCards: number;
+  specificCards: number;
+  totalCards: number;
 }) {
   const text = useMemo(() => {
-    return `${formatNumber(cardsAvailable)}  / ${formatNumber(
-      cardsTotal
-    )} cards`;
-  }, [cardsAvailable, cardsTotal]);
+    return `${formatNumber(totalCards)} cards needed total`;
+  }, [totalCards]);
 
   return (
     <div className={styles.DebugInfo}>

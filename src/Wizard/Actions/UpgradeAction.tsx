@@ -89,8 +89,9 @@ export function UpgradeAction({
       </div>
       {showDebugRow && (
         <DebugInfoRow
-          cardsAvailable={itemStatsFrom.cards}
-          cardsTotal={cost.totalCardsRequired}
+          genericCards={genericCards}
+          specificCards={itemStatsFrom.cards}
+          totalCards={cost.totalCardsRequired}
         />
       )}
     </div>

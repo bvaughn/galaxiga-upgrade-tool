@@ -79,7 +79,10 @@ export function FormStep4Upgrade({
           onClick={() => {
             onSave({
               ...pendingAction,
-              itemStatsFrom,
+              itemStatsFrom: {
+                ...itemStatsFrom,
+                cards,
+              },
               itemStatsTo,
             } as UpgradeItem);
           }}
