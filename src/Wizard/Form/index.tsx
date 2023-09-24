@@ -14,6 +14,7 @@ import { FormStep3CreateTier3 } from "./FormStep3CreateTier3";
 import { FormStep3Upgrade } from "./FormStep3Upgrade";
 import { FormStep4Create } from "./FormStep4Create";
 import { FormStep4Upgrade } from "./FormStep4Upgrade";
+import { Tier } from "../../types";
 
 export function Form({
   defaultPendingAction,
@@ -83,7 +84,22 @@ export function Form({
           />
         );
       } else if (isPendingUpgradeItem(pendingAction)) {
-        const items = getItems(pendingAction.category ?? "ship", 3);
+        let tier: Tier = 1;
+        switch (pendingAction.type) {
+          case "upgrade-tier-1": {
+            tier = 1;
+            break;
+          }
+          case "upgrade-tier-2": {
+            tier = 2;
+            break;
+          }
+          case "upgrade-tier-3": {
+            tier = 3;
+            break;
+          }
+        }
+        const items = getItems(pendingAction.category ?? "ship", tier);
 
         return (
           <FormStep3Upgrade
