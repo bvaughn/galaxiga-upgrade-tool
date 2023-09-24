@@ -63,7 +63,7 @@ export function ItemStatsSelector({
           <Card type="specific" category={category} />
           <NumberInput
             className={styles.CardInput}
-            maxValue={9999}
+            maxValue={99999}
             minValue={0}
             onChange={onChangeCards}
             value={cards}

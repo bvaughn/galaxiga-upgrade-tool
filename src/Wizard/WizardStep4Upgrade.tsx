@@ -53,7 +53,7 @@ export function WizardStep4Upgrade({
             <Card type="specific" category={item.category} />
             <NumberInput
               className={styles.CardInput}
-              maxValue={9999}
+              maxValue={99999}
               minValue={0}
               onChange={setCards}
               value={cards}
@@ -68,7 +68,7 @@ export function WizardStep4Upgrade({
             <Card type="generic" category={item.category} />
             <NumberInput
               className={styles.CardInput}
-              maxValue={9999}
+              maxValue={99999}
               minValue={0}
               onChange={setGenericCards}
               value={genericCards}
@@ -81,12 +81,27 @@ export function WizardStep4Upgrade({
 
       <div className={styles.OptionColumn}>
         <IconButton iconType="previous" onClick={goToPreviousStep} />
-        <button className={styles.CancelButton} onClick={cancel}>
+        <button
+          className={styles.CancelButton}
+          onClick={async () => {
+            setCards(0);
+            setGenericCards(0);
+
+            await Promise.resolve();
+
+            cancel();
+          }}
+        >
           Cancel
         </button>
         <button
           className={styles.SaveButton}
-          onClick={() => {
+          onClick={async () => {
+            setCards(0);
+            setGenericCards(0);
+
+            await Promise.resolve();
+
             save({
               ...pendingWizardData,
               genericCards,
