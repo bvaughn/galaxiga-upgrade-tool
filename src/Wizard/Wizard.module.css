@@ -5,39 +5,30 @@
 }
 
 .StartUpgradeButton {
-  width: 100%;
+  margin: 0 0.25rem;
+  border-radius: 0.25rem !important;
   background-color: darkslategrey !important;
   background: linear-gradient(slategray, darkslategray);
   font-size: var(--font-size-large);
   justify-content: center;
+  cursor: pointer;
+}
+.StartUpgradeButton:hover {
+  background-color: darkslategrey !important;
+  background: linear-gradient(#607080, #1e3e3e);
 }
 
-.HeaderSection,
-.FooterSection {
+.BlockSection {
   flex: 0 0 auto;
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: stretch;
-  gap: 0.5rem;
-  padding: 0.5rem;
-}
-.HeaderSection,
-.FooterSection {
-  background-color: rgba(255, 255, 255, 0.1);
-}
-.FooterSection {
-  border-top: 2px solid var(--border-color);
   justify-content: space-around;
-}
-
-.ActionSection {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 0 0.5rem 0.5rem;
+  gap: 1ch;
+  padding: 0.5rem;
   background-color: rgba(255, 255, 255, 0.1);
-  border-bottom: 2px solid var(--border-color);
+  margin: 0.25rem;
+  border-radius: 0.25rem;
 }
 
 .MainSection {

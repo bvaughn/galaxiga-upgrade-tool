@@ -102,7 +102,7 @@ export function Wizard() {
 
   return (
     <div className={styles.Page}>
-      <div className={styles.HeaderSection}>
+      <div className={styles.BlockSection}>
         <CardPicker
           cards={shipCards}
           category="ship"
@@ -122,7 +122,7 @@ export function Wizard() {
           type="generic"
         />
       </div>
-      <div className={styles.ActionSection} data-center>
+      <div className={styles.MainSection}>
         <TextButton
           className={styles.StartUpgradeButton}
           onClick={() =>
@@ -136,8 +136,6 @@ export function Wizard() {
         >
           Start an upgrade
         </TextButton>
-      </div>
-      <div className={styles.MainSection}>
         {actions.map((action) => {
           let genericCards;
           switch (action.category) {
@@ -190,7 +188,7 @@ export function Wizard() {
           }
         })}
       </div>
-      <div className={styles.FooterSection}>
+      <div className={styles.BlockSection}>
         <div
           className={styles.Cost}
           data-disabled={gemsNeededTotal === 0 ? "" : undefined}
