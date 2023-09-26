@@ -5,13 +5,8 @@
 }
 
 .StartUpgradeButton {
-  margin: 0 0.25rem;
-  border-radius: 0.25rem !important;
-  background-color: darkslategrey !important;
-  background: linear-gradient(slategray, darkslategray);
   font-size: var(--font-size-large);
   justify-content: center;
-  cursor: pointer;
 }
 .StartUpgradeButton:hover {
   background-color: darkslategrey !important;
