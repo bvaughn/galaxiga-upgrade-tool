@@ -3,14 +3,26 @@ import { IconButton } from "../../components/IconButton";
 import { ItemCosts } from "../../components/ItemCosts";
 import { ItemImage } from "../../components/ItemImage";
 import { useDoubleTap } from "../../hooks/useDoubleTap";
-import { Category, Item, ItemStats, Tier, Tier2Item } from "../../types";
+import {
+  Category,
+  Item,
+  ItemStats,
+  Tier,
+  Tier2Item,
+  Tier4Item,
+  Tier5Item,
+} from "../../types";
 import { calculateCreateCost } from "../../utils/calculateCreateCost";
 import { getItem } from "../../utils/items";
 import {
   CreateTier2Item,
   CreateTier3Item,
+  CreateTier4Item,
+  CreateTier5Item,
   isCreateTier2Item,
   isCreateTier3Item,
+  isCreateTier4Item,
+  isCreateTier5Item,
 } from "../types";
 import { DebugInfoRow } from "./DebugInfoRow";
 import styles from "./shared.module.css";
@@ -21,12 +33,12 @@ export function CreateAction({
   editAction,
   genericCards,
 }: {
-  action: CreateTier2Item | CreateTier3Item;
+  action: CreateTier2Item | CreateTier3Item | CreateTier4Item | CreateTier5Item;
   deleteAction: () => void;
   editAction: () => void;
   genericCards: number;
 }) {
-  const { id, secondaryItemStats } = action;
+  const { id, itemStats } = action;
 
   let category: Category;
   let item: Item;
@@ -44,9 +56,9 @@ export function CreateAction({
 
     const tier2Item = action.primaryItem as Tier2Item;
     itemA = getItem(category, 1, tier2Item.createdByMerging[0]);
-    itemStatsA = action.secondaryItemStats[0];
+    itemStatsA = action.itemStats[0];
     itemB = getItem(category, 1, tier2Item.createdByMerging[1]);
-    itemStatsB = action.secondaryItemStats[0];
+    itemStatsB = action.itemStats[0];
   } else if (isCreateTier3Item(action)) {
     item = action.secondaryItems[0];
     category = item.category;
@@ -54,15 +66,42 @@ export function CreateAction({
     tier = 3;
 
     itemA = action.secondaryItems[0];
-    itemStatsA = action.secondaryItemStats[0];
+    itemStatsA = action.itemStats[0];
     itemB = action.secondaryItems[1];
-    itemStatsB = action.secondaryItemStats[0];
+    itemStatsB = action.itemStats[0];
+  } else if (isCreateTier4Item(action)) {
+    item = action.primaryItem;
+    category = item.category;
+    name = item.name;
+    tier = 4;
+
+    const tier4Item = action.primaryItem as Tier4Item;
+    itemA = getItem(category, 1, tier4Item.createdByMerging[0]);
+    itemStatsA = action.itemStats;
+    itemB = getItem(category, 1, tier4Item.createdByMerging[1]);
+    itemStatsB = action.itemStats;
+  } else if (isCreateTier5Item(action)) {
+    item = action.primaryItem;
+    category = item.category;
+    name = item.name;
+    tier = 5;
+
+    const tier5Item = action.primaryItem as Tier5Item;
+    itemA = getItem(category, 1, tier5Item.createdByMerging[0]);
+    itemStatsA = action.itemStats;
+    itemB = getItem(category, 1, tier5Item.createdByMerging[1]);
+    itemStatsB = action.itemStats;
   } else {
     throw Error("Unsupported data");
   }
 
   const fromA = `${itemA.name} ${itemStatsA.level}.${itemStatsA.subLevel}`;
   const fromB = `${itemB.name} ${itemStatsB.level}.${itemStatsB.subLevel}`;
+
+  const itemStatsArray = useMemo(
+    () => (Array.isArray(itemStats) ? itemStats : [itemStats]),
+    [itemStats]
+  );
 
   const [showDebugRow, setShowDebugRow] = useState(false);
 
@@ -73,13 +112,13 @@ export function CreateAction({
       calculateCreateCost({
         genericCards,
         category,
-        itemStatsArray: secondaryItemStats,
+        itemStatsArray,
         tier,
       }),
-    [category, genericCards, secondaryItemStats, tier]
+    [category, genericCards, itemStatsArray, tier]
   );
 
-  const cardsAvailable = secondaryItemStats.reduce(
+  const cardsAvailable = itemStatsArray.reduce(
     (sum, item) => sum + item.cards,
     0
   );
@@ -92,11 +131,13 @@ export function CreateAction({
           <div className={styles.Row} data-compact>
             <span className={styles.SmallText}>Create</span> {name}
           </div>
-          <div className={styles.Row}>
-            <div
-              className={styles.SmallText}
-            >{`from ${fromA} and ${fromB}`}</div>
-          </div>
+          {tier < 4 && (
+            <div className={styles.Row}>
+              <div
+                className={styles.SmallText}
+              >{`from ${fromA} and ${fromB}`}</div>
+            </div>
+          )}
           <ItemCosts
             buyCards={false}
             cardsNeeded={cost.boxes.without.cardsNeededForLevels}

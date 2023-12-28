@@ -1,7 +1,7 @@
 import { MAX_LEVEL_NUMBER, MAX_SUB_LEVEL_NUMBER } from "./data/upgrade-costs";
 
 export type Category = "drone" | "ship" | "stone";
-export type Tier = 1 | 2 | 3;
+export type Tier = 1 | 2 | 3 | 4 | 5;
 
 export type Item = {
   category: Category;
@@ -25,6 +25,16 @@ export type Tier2Item = Item & {
 export type Tier3Item = Item & {
   createdByMerging: string[];
   tier: 3;
+};
+
+export type Tier4Item = Item & {
+  createdByMerging: string[];
+  tier: 4;
+};
+
+export type Tier5Item = Item & {
+  createdByMerging: string[];
+  tier: 5;
 };
 
 export function isTier1Item(item: Item): item is Tier1Item {

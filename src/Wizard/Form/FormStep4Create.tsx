@@ -9,8 +9,12 @@ import {
   CreateTier2Item,
   PendingCreateTier2Item,
   PendingCreateTier3Item,
+  PendingCreateTier4Item,
+  PendingCreateTier5Item,
   isPendingCreateTier2Item,
   isPendingCreateTier3Item,
+  isPendingCreateTier4Item,
+  isPendingCreateTier5Item,
 } from "../types";
 import { ItemStatsSelector } from "./ItemStatsSelector";
 import styles from "./shared.module.css";
@@ -24,7 +28,11 @@ export function FormStep4Create({
   goToPreviousStep: () => void;
   onDismiss: () => void;
   onSave: (wizardData: Action) => void;
-  pendingAction: PendingCreateTier2Item | PendingCreateTier3Item;
+  pendingAction:
+    | PendingCreateTier2Item
+    | PendingCreateTier3Item
+    | PendingCreateTier4Item
+    | PendingCreateTier5Item;
 }) {
   const { category } = pendingAction;
   assert(category);
@@ -37,13 +45,23 @@ export function FormStep4Create({
     );
   } else if (isPendingCreateTier3Item(pendingAction)) {
     items = pendingAction.secondaryItems!;
+  } else if (isPendingCreateTier4Item(pendingAction)) {
+    const allItems = getItems(category, 3);
+    items = [allItems.find(({ id }) => pendingAction.primaryItem!.id === id)!];
+  } else if (isPendingCreateTier5Item(pendingAction)) {
+    const allItems = getItems(category, 4);
+    items = [allItems.find(({ id }) => pendingAction.primaryItem!.id === id)!];
   } else {
     throw Error("Unsupported data");
   }
   assert(items);
 
-  const [secondaryItemStats, setSecondaryItemStats] = useState<ItemStats[]>(
-    pendingAction.secondaryItemStats ?? [DEFAULT_ITEM_STATS, DEFAULT_ITEM_STATS]
+  const [itemStats, setItemStats] = useState<ItemStats[]>(
+    Array.isArray(pendingAction.itemStats)
+      ? pendingAction.itemStats
+      : pendingAction.itemStats
+      ? [pendingAction.itemStats]
+      : []
   );
 
   return (
@@ -64,11 +82,11 @@ export function FormStep4Create({
             <ItemStatsSelector
               category={category}
               className={styles.ItemStatsSelector}
-              itemStats={secondaryItemStats[index]}
-              onChange={(itemStats) => {
-                const newSecondaryItemStats = [...secondaryItemStats];
-                newSecondaryItemStats[index] = itemStats;
-                setSecondaryItemStats(newSecondaryItemStats);
+              itemStats={itemStats[index] ?? DEFAULT_ITEM_STATS}
+              onChange={(newItemStats) => {
+                const newSecondaryItemStats = [...itemStats];
+                newSecondaryItemStats[index] = newItemStats;
+                setItemStats(newSecondaryItemStats);
               }}
             />
           </div>
@@ -87,7 +105,7 @@ export function FormStep4Create({
           onClick={() => {
             onSave({
               ...pendingAction,
-              secondaryItemStats,
+              itemStats,
             } as CreateTier2Item);
           }}
         >

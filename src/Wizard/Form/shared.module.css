@@ -11,6 +11,11 @@
   text-align: center;
 }
 
+.SubPrompt {
+  font-size: 1rem;
+  text-align: center;
+}
+
 .OptionList {
   flex: 0 1 auto;
   overflow: auto;
@@ -46,14 +51,7 @@
 }
 .OptionButton {
   flex: 1 1 auto;
-}
-.OptionButton:first-of-type {
-  border-top-left-radius: 0.25rem;
-  border-bottom-left-radius: 0.25rem;
-}
-.OptionButton:last-of-type {
-  border-top-right-radius: 0.25rem;
-  border-bottom-right-radius: 0.25rem;
+  border-radius: 0.25rem;
 }
 .CancelButton:hover,
 .CancelButton:focus,
@@ -64,17 +62,37 @@
   filter: brightness(0.75);
 }
 
+.OptionButton[data-tier="1"] {
+  background-color: #aaa;
+  color: #000;
+}
+.OptionButton[data-tier="1"]:disabled {
+  visibility: hidden;
+}
+.OptionButton[data-tier="2"] {
+  background-color: #e83;
+  color: #000;
+}
+.OptionButton[data-tier="3"] {
+  background-color: #80c;
+  color: #fff;
+}
+.OptionButton[data-tier="4"] {
+  background-color: #262;
+  color: #fff;
+}
+.OptionButton[data-tier="5"] {
+  background-color: #262;
+  color: #fff;
+}
+.OptionButton[data-tier="5"]:disabled {
+  opacity: 0.5;
+}
+
 .SaveButton {
   width: 100%;
   border-radius: 0.25rem;
-}
-
-.OptionHeader {
   font-size: 1rem;
-}
-
-.OptionSubText {
-  font-size: 0.75rem;
 }
 
 .CancelButton {

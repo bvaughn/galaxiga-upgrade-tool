@@ -5,6 +5,8 @@ import {
   PendingAction,
   isPendingCreateTier2Item,
   isPendingCreateTier3Item,
+  isPendingCreateTier4Item,
+  isPendingCreateTier5Item,
   isPendingUpgradeItem,
 } from "../types";
 import { FormStep1 } from "./FormStep1";
@@ -15,6 +17,8 @@ import { FormStep3Upgrade } from "./FormStep3Upgrade";
 import { FormStep4Create } from "./FormStep4Create";
 import { FormStep4Upgrade } from "./FormStep4Upgrade";
 import { Tier } from "../../types";
+import { FormStep3CreateTier4 } from "./FormStep3CreateTier4";
+import { FormStep3CreateTier5 } from "./FormStep3CreateTier5";
 
 export function Form({
   defaultPendingAction,
@@ -83,6 +87,30 @@ export function Form({
             pendingAction={pendingAction}
           />
         );
+      } else if (isPendingCreateTier4Item(pendingAction)) {
+        const items = getItems(pendingAction.category ?? "ship", 4);
+
+        return (
+          <FormStep3CreateTier4
+            goToNextStep={goToNextStep}
+            goToPreviousStep={goToPreviousStep}
+            items={items}
+            onDismiss={onDismiss}
+            pendingAction={pendingAction}
+          />
+        );
+      } else if (isPendingCreateTier5Item(pendingAction)) {
+        const items = getItems(pendingAction.category ?? "ship", 5);
+
+        return (
+          <FormStep3CreateTier5
+            goToNextStep={goToNextStep}
+            goToPreviousStep={goToPreviousStep}
+            items={items}
+            onDismiss={onDismiss}
+            pendingAction={pendingAction}
+          />
+        );
       } else if (isPendingUpgradeItem(pendingAction)) {
         let tier: Tier = 1;
         switch (pendingAction.type) {
@@ -96,6 +124,14 @@ export function Form({
           }
           case "upgrade-tier-3": {
             tier = 3;
+            break;
+          }
+          case "upgrade-tier-4": {
+            tier = 4;
+            break;
+          }
+          case "upgrade-tier-5": {
+            tier = 5;
             break;
           }
         }
@@ -115,8 +151,10 @@ export function Form({
       }
     case 4:
       if (
+        isPendingCreateTier2Item(pendingAction) ||
         isPendingCreateTier3Item(pendingAction) ||
-        isPendingCreateTier2Item(pendingAction)
+        isPendingCreateTier4Item(pendingAction) ||
+        isPendingCreateTier5Item(pendingAction)
       ) {
         return (
           <FormStep4Create

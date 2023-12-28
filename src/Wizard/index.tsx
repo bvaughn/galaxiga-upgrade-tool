@@ -4,6 +4,8 @@ import { Coin } from "../components/Coin";
 import { Gem } from "../components/Gem";
 import { TextButton } from "../components/TextButton";
 import useLocalStorage from "../hooks/useLocalStorage";
+import { calculateCreateCost } from "../utils/calculateCreateCost";
+import { calculateUpgradeCost } from "../utils/calculateUpgradeCost";
 import { formatNumber } from "../utils/number";
 import { uid } from "../utils/uid";
 import { CreateAction } from "./Actions/CreateAction";
@@ -15,10 +17,10 @@ import {
   PendingAction,
   isCreateTier2Item,
   isCreateTier3Item,
+  isCreateTier4Item,
+  isCreateTier5Item,
   isUpgradeItem,
 } from "./types";
-import { calculateCreateCost } from "../utils/calculateCreateCost";
-import { calculateUpgradeCost } from "../utils/calculateUpgradeCost";
 
 export function Wizard() {
   const [droneCards, saveDroneCards] = useLocalStorage<number>(
@@ -60,7 +62,9 @@ export function Wizard() {
         const cost = calculateCreateCost({
           genericCards: 0,
           category: action.category,
-          itemStatsArray: action.secondaryItemStats,
+          itemStatsArray: Array.isArray(action.itemStats)
+            ? action.itemStats
+            : [action.itemStats],
           tier: action.type === "create-tier-2" ? 2 : 3,
         });
 
@@ -153,7 +157,12 @@ export function Wizard() {
             }
           }
 
-          if (isCreateTier2Item(action) || isCreateTier3Item(action)) {
+          if (
+            isCreateTier2Item(action) ||
+            isCreateTier3Item(action) ||
+            isCreateTier4Item(action) ||
+            isCreateTier5Item(action)
+          ) {
             return (
               <CreateAction
                 action={action}

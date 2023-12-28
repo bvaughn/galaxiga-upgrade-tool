@@ -14,69 +14,43 @@ export function FormStep1({
   return (
     <div className={styles.Form}>
       <div className={styles.Prompt}>What would you like to do?</div>
+      <div className={styles.SubPrompt}>Upgrade an item...</div>
       <div className={styles.OptionColumn}>
-        <button
-          className={styles.OptionButton}
-          onClick={() =>
-            goToNextStep({
-              ...pendingAction,
-              type: "upgrade-tier-1",
-            })
-          }
-        >
-          <div className={styles.OptionHeader}>Upgrade</div>
-          <div className={styles.OptionSubText}>tier 1</div>
-        </button>
-        <button
-          className={styles.OptionButton}
-          onClick={() =>
-            goToNextStep({
-              ...pendingAction,
-              type: "upgrade-tier-2",
-            })
-          }
-        >
-          <div className={styles.OptionHeader}>Upgrade</div>
-          <div className={styles.OptionSubText}>tier 2</div>
-        </button>
-        <button
-          className={styles.OptionButton}
-          onClick={() =>
-            goToNextStep({
-              ...pendingAction,
-              type: "upgrade-tier-3",
-            })
-          }
-        >
-          <div className={styles.OptionHeader}>Upgrade</div>
-          <div className={styles.OptionSubText}>tier 3</div>
-        </button>
+        {[1, 2, 3, 4, 5].map((tier) => (
+          <button
+            className={styles.OptionButton}
+            data-tier={tier}
+            disabled={tier === 5}
+            key={tier}
+            onClick={() =>
+              goToNextStep({
+                ...pendingAction,
+                type: `upgrade-tier-${tier}` as any,
+              })
+            }
+          >
+            {tier <= 3 ? `Tier ${tier}` : `Elite ${tier - 3}`}
+          </button>
+        ))}
       </div>
+      <div className={styles.SubPrompt}>Create an item...</div>
       <div className={styles.OptionColumn}>
-        <button
-          className={styles.OptionButton}
-          onClick={() =>
-            goToNextStep({
-              ...pendingAction,
-              type: "create-tier-2",
-            })
-          }
-        >
-          <div className={styles.OptionHeader}>Create</div>
-          <div className={styles.OptionSubText}>tier 2</div>
-        </button>
-        <button
-          className={styles.OptionButton}
-          onClick={() =>
-            goToNextStep({
-              ...pendingAction,
-              type: "create-tier-3",
-            })
-          }
-        >
-          <div className={styles.OptionHeader}>Create</div>
-          <div className={styles.OptionSubText}>tier 3</div>
-        </button>
+        {[1, 2, 3, 4, 5].map((tier) => (
+          <button
+            className={styles.OptionButton}
+            disabled={tier === 1 || tier === 5}
+            data-tier={tier}
+            key={tier}
+            onClick={() =>
+              goToNextStep({
+                ...pendingAction,
+                type: `create-tier-${tier}` as any,
+              })
+            }
+          >
+            {tier <= 3 ? `Tier ${tier}` : `Elite ${tier - 3}`}
+          </button>
+        ))}
       </div>
 
       <div className={styles.Spacer} />
