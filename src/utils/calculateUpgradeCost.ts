@@ -33,7 +33,6 @@ export type UpgradeCost = {
 };
 
 export function calculateUpgradeCost(
-  genericCards: number,
   fromStats: ItemStats,
   toStats: Pick<ItemStats, "level" | "subLevel">,
   category: Category,
@@ -82,12 +81,7 @@ export function calculateUpgradeCost(
     }
   }
 
-  // Factor in specific cards we already have;
-  // The caller can factor in the generic cards (so we don't over-count them)
-  cardsNeededForLevels = Math.max(
-    0,
-    totalCardsRequired - fromStats.cards - genericCards
-  );
+  cardsNeededForLevels = totalCardsRequired;
 
   let boxesNeeded = NaN;
   let coinsFromBoxesProjected = NaN;

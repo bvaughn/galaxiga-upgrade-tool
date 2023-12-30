@@ -15,6 +15,8 @@ import {
   isCreateTier5Item,
   isUpgradeItem,
 } from "./types";
+import { ErrorBoundary } from "react-error-boundary";
+import { DeleteCorruptedAction } from "./Actions/DeleteCorruptedAction";
 
 export function Wizard() {
   const [actions, saveActions] = useLocalStorage<Action[]>("wizard-items", []);
@@ -63,31 +65,39 @@ export function Wizard() {
             isCreateTier5Item(action)
           ) {
             return (
-              <CreateAction
-                action={action}
-                deleteAction={() => deleteAction(action)}
-                editAction={() =>
-                  setFormData({
-                    pendingAction: action,
-                    step: 4,
-                  })
-                }
+              <ErrorBoundary
                 key={action.id}
-              />
+                fallback={<DeleteCorruptedAction action={action} />}
+              >
+                <CreateAction
+                  action={action}
+                  deleteAction={() => deleteAction(action)}
+                  editAction={() =>
+                    setFormData({
+                      pendingAction: action,
+                      step: 4,
+                    })
+                  }
+                />
+              </ErrorBoundary>
             );
           } else if (isUpgradeItem(action)) {
             return (
-              <UpgradeAction
-                action={action}
-                deleteAction={() => deleteAction(action)}
-                editAction={() =>
-                  setFormData({
-                    pendingAction: action,
-                    step: 4,
-                  })
-                }
+              <ErrorBoundary
                 key={action.id}
-              />
+                fallback={<DeleteCorruptedAction action={action} />}
+              >
+                <UpgradeAction
+                  action={action}
+                  deleteAction={() => deleteAction(action)}
+                  editAction={() =>
+                    setFormData({
+                      pendingAction: action,
+                      step: 4,
+                    })
+                  }
+                />
+              </ErrorBoundary>
             );
           } else {
             throw Error("Unsupported action");

@@ -18,8 +18,6 @@ import {
 } from "../types";
 import { ItemStatsSelector } from "./ItemStatsSelector";
 import styles from "./shared.module.css";
-import { Card } from "../../components/Card";
-import { NumberInput } from "../../components/NumberInput";
 
 export function FormStep4Create({
   goToPreviousStep,
@@ -38,10 +36,6 @@ export function FormStep4Create({
 }) {
   const { category } = pendingAction;
   assert(category);
-
-  const [genericCards, setGenericCards] = useState<number>(
-    pendingAction.genericCards ?? 0
-  );
 
   let items: Item[];
   if (isPendingCreateTier2Item(pendingAction)) {
@@ -86,7 +80,6 @@ export function FormStep4Create({
               <div className={styles.ItemName}>{item.name}</div>
             </div>
             <ItemStatsSelector
-              category={category}
               className={styles.ItemStatsSelector}
               itemStats={itemStats[index] ?? DEFAULT_ITEM_STATS}
               onChange={(newItemStats) => {
@@ -98,22 +91,6 @@ export function FormStep4Create({
           </div>
         );
       })}
-
-      <div className={styles.CardsColumn}>
-        <div className={styles.CardsRow}>
-          <label className={styles.CardInputLabel}>
-            <div className={styles.LabelText}>Generic {category} cards</div>
-            <Card type="generic" category={category} />
-            <NumberInput
-              className={styles.CardInput}
-              maxValue={99999}
-              minValue={0}
-              onChange={setGenericCards}
-              value={genericCards}
-            />
-          </label>
-        </div>
-      </div>
 
       <div className={styles.Spacer} />
 
@@ -127,7 +104,6 @@ export function FormStep4Create({
           onClick={() => {
             onSave({
               ...pendingAction,
-              genericCards,
               itemStats,
             } as CreateTier2Item);
           }}

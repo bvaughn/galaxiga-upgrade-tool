@@ -1,30 +1,17 @@
-import { Card } from "../../components/Card";
-import { NumberInput } from "../../components/NumberInput";
-import { Category, DEFAULT_ITEM_STATS, ItemStats } from "../../types";
+import { DEFAULT_ITEM_STATS, ItemStats } from "../../types";
 import styles from "./ItemStatsSelector.module.css";
 import { LevelSelector } from "./LevelSelector";
 
 export function ItemStatsSelector({
-  category,
   className = "",
-  hideCardsInput = false,
   itemStats = DEFAULT_ITEM_STATS,
   onChange,
 }: {
-  category: Category;
   className?: string;
-  hideCardsInput?: boolean;
   itemStats?: Readonly<ItemStats>;
   onChange: (itemStats: ItemStats) => void;
 }) {
-  const { cards, level, subLevel } = itemStats;
-
-  const onChangeCards = (cards: number) => {
-    onChange({
-      ...itemStats,
-      cards,
-    });
-  };
+  const { level, subLevel } = itemStats;
 
   const onChangeLevel = (level: number) => {
     onChange({
@@ -54,19 +41,6 @@ export function ItemStatsSelector({
           value={subLevel}
         />
       </div>
-      {hideCardsInput || (
-        <div className={styles.Row}>
-          <div className={styles.Text}>Cards</div>
-          <Card type="specific" category={category} />
-          <NumberInput
-            className={styles.CardInput}
-            maxValue={99999}
-            minValue={0}
-            onChange={onChangeCards}
-            value={cards}
-          />
-        </div>
-      )}
     </div>
   );
 }

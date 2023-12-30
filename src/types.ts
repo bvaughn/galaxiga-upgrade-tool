@@ -69,19 +69,16 @@ export type LevelUpgradeCost = {
 };
 
 export type ItemStats = {
-  cards: number;
   level: number;
   subLevel: number;
 };
 
 export const MAX_STATS: ItemStats = {
-  cards: 0,
   level: MAX_LEVEL_NUMBER,
   subLevel: MAX_SUB_LEVEL_NUMBER,
 };
 
 export const DEFAULT_ITEM_STATS: ItemStats = {
-  cards: 0,
   level: 0,
   subLevel: 0,
 };

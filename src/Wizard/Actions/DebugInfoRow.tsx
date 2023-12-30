@@ -5,13 +5,9 @@ import styles from "./DebugInfoRow.module.css";
 
 export function DebugInfoRow({
   className = "",
-  genericCards,
-  specificCards,
   totalCards,
 }: {
   className?: string;
-  genericCards: number;
-  specificCards: number;
   totalCards: number;
 }) {
   const text = useMemo(() => {

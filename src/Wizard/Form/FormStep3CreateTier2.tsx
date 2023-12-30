@@ -33,6 +33,7 @@ export function FormStep3CreateTier2({
               goToNextStep({
                 ...pendingAction,
                 primaryItem: item,
+                itemStats: [],
               })
             }
           >

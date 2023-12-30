@@ -16,15 +16,12 @@ describe("calculateCreateCost", () => {
       expect(
         calculateCreateCost({
           category: "ship",
-          genericCards: 0,
           itemStatsArray: [
             {
-              cards: 0,
               level: 0,
               subLevel: 0,
             },
             {
-              cards: 0,
               level: 0,
               subLevel: 0,
             },
@@ -56,10 +53,8 @@ Object {
       expect(
         calculateCreateCost({
           category: "ship",
-          genericCards: 0,
           itemStatsArray: [
             {
-              cards: 0,
               level: 0,
               subLevel: 0,
             },
@@ -84,46 +79,6 @@ Object {
   "gemsNeededToMerge": 500,
   "isEstimateComplete": false,
   "totalCardsRequired": 1,900,
-}
-`);
-    });
-
-    it("should the number of generic and specific cards into the calculation", () => {
-      expect(
-        calculateCreateCost({
-          category: "ship",
-          genericCards: 1_500,
-          itemStatsArray: [
-            {
-              cards: 500,
-              level: 5,
-              subLevel: 0,
-            },
-            {
-              cards: 250,
-              level: 5,
-              subLevel: 0,
-            },
-          ],
-          tier: 2,
-        })
-      ).toMatchInlineSnapshot(`
-Object {
-  "boxes": Object {
-    "with": Object {
-      "cardsNeededForLevels": 0,
-      "coinsNeededForLevels": 2,443,960,
-      "gemsNeededForLevels": 4,120,
-    },
-    "without": Object {
-      "cardsNeededForLevels": 750,
-      "coinsNeededForLevels": 2,471,460,
-      "gemsNeededForLevels": 1,040,
-    },
-  },
-  "gemsNeededToMerge": 500,
-  "isEstimateComplete": true,
-  "totalCardsRequired": 3,000,
 }
 `);
     });

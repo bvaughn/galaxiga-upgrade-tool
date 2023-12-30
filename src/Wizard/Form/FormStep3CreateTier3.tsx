@@ -29,6 +29,7 @@ export function FormStep3CreateTier3({
     if (item1 && item2) {
       goToNextStep({
         ...pendingAction,
+        itemStats: [],
         secondaryItems: [item1, item2],
       });
     }

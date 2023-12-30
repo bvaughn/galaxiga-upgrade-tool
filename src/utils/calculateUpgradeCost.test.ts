@@ -17,9 +17,7 @@ describe("calculateUpgradeCost", () => {
       it("should properly handle a ship that is not yet owned", () => {
         expect(
           calculateUpgradeCost(
-            0,
             {
-              cards: 0,
               level: 0,
               subLevel: 0,
             },
@@ -50,9 +48,7 @@ Object {
       it("should properly calculate the cost of a full ship upgrade", () => {
         expect(
           calculateUpgradeCost(
-            0,
             {
-              cards: 0,
               level: 1,
               subLevel: 0,
             },
@@ -83,9 +79,7 @@ Object {
       it("should properly calculate the cost of a ship that has been partially upgraded", () => {
         expect(
           calculateUpgradeCost(
-            0,
             {
-              cards: 0,
               level: 7,
               subLevel: 3,
             },
@@ -116,9 +110,7 @@ Object {
       it("should properly calculate the coins cost of a ship that is at the last level but not fully upgraded", () => {
         expect(
           calculateUpgradeCost(
-            0,
             {
-              cards: 0,
               level: MAX_LEVEL_NUMBER,
               subLevel: 5,
             },
@@ -149,9 +141,7 @@ Object {
       it("should properly calculate the cost of a ship that has already been fully upgraded", () => {
         expect(
           calculateUpgradeCost(
-            0,
             {
-              cards: 0,
               level: MAX_LEVEL_NUMBER,
               subLevel: MAX_SUB_LEVEL_NUMBER,
             },
@@ -182,9 +172,7 @@ Object {
       it("should factor existing cards into counts needed", () => {
         expect(
           calculateUpgradeCost(
-            0,
             {
-              cards: 270,
               level: MAX_LEVEL_NUMBER,
               subLevel: 0,
             },
@@ -217,9 +205,7 @@ Object {
       it("should properly handle a ship that is not yet owned", () => {
         expect(
           calculateUpgradeCost(
-            0,
             {
-              cards: 0,
               level: 0,
               subLevel: 0,
             },
@@ -250,9 +236,7 @@ Object {
       it("should properly handle a partial upgrade", () => {
         expect(
           calculateUpgradeCost(
-            0,
             {
-              cards: 0,
               level: 2,
               subLevel: 0,
             },
@@ -290,9 +274,7 @@ Object {
       it("should properly handle a ship that is not yet owned", () => {
         expect(
           calculateUpgradeCost(
-            0,
             {
-              cards: 0,
               level: 0,
               subLevel: 0,
             },

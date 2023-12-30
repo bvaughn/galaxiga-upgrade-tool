@@ -7,12 +7,10 @@ export type CreateCost = UpgradeCost & {
 };
 
 export function calculateCreateCost({
-  genericCards,
   category,
   itemStatsArray,
   tier,
 }: {
-  genericCards: number;
   category: Category;
   itemStatsArray: ItemStats[];
   tier: Tier;
@@ -38,33 +36,7 @@ export function calculateCreateCost({
   for (let index = 0; index < itemStatsArray.length; index++) {
     const itemStats = itemStatsArray[index];
 
-    let allocatedGenericCards = 0;
-    if (genericCards > 0) {
-      const {
-        boxes: {
-          without: { cardsNeededForLevels },
-        },
-      } = calculateUpgradeCost(
-        0, // Generic cards
-        itemStats,
-        MAX_STATS,
-        category,
-        (tier - 1) as Tier
-      );
-
-      if (cardsNeededForLevels > 0) {
-        if (genericCards >= cardsNeededForLevels) {
-          allocatedGenericCards = cardsNeededForLevels;
-          genericCards -= allocatedGenericCards;
-        } else {
-          allocatedGenericCards = genericCards;
-          genericCards = 0;
-        }
-      }
-    }
-
     const itemCost = calculateUpgradeCost(
-      allocatedGenericCards,
       itemStats,
       MAX_STATS,
       category,

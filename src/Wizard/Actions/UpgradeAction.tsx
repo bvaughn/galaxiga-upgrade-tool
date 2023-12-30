@@ -17,15 +17,7 @@ export function UpgradeAction({
   deleteAction: () => void;
   editAction: () => void;
 }) {
-  const {
-    genericCards,
-    id,
-    itemStatsFrom,
-    itemStatsTo,
-    primaryItem: item,
-  } = action;
-  const from = `${itemStatsFrom.level}.${itemStatsFrom.subLevel}`;
-  const to = `${itemStatsTo.level}.${itemStatsTo.subLevel}`;
+  const { id, itemStatsFrom, itemStatsTo, primaryItem: item } = action;
 
   const [showDebugRow, setShowDebugRow] = useState(false);
 
@@ -34,13 +26,12 @@ export function UpgradeAction({
   const cost = useMemo(
     () =>
       calculateUpgradeCost(
-        genericCards,
         itemStatsFrom,
         itemStatsTo,
         item.category,
         item.tier
       ),
-    [genericCards, item, itemStatsFrom, itemStatsTo]
+    [item, itemStatsFrom, itemStatsTo]
   );
 
   return (
@@ -48,11 +39,10 @@ export function UpgradeAction({
       <div className={styles.Row}>
         <ItemImage className={styles.ItemImage} onClick={onClick} item={item} />
         <div className={styles.MiddleColumn}>
-          <div className={styles.Row} data-compact>
-            <span className={styles.SmallText}>Upgrade</span> {item.name}
-          </div>
-          <div className={styles.Row}>
-            <div className={styles.SmallText}>{`from ${from} → to ${to}`}</div>
+          <div className={styles.ActionPrimaryLabel}>
+            <div className={styles.Row} data-compact>
+              <span className={styles.SmallText}>Upgrade</span> {item.name}
+            </div>
           </div>
           <ItemCosts
             buyCards={false}
@@ -93,8 +83,6 @@ export function UpgradeAction({
       {showDebugRow && (
         <DebugInfoRow
           className={styles.DebugInfo}
-          genericCards={genericCards}
-          specificCards={itemStatsFrom.cards}
           totalCards={cost.totalCardsRequired}
         />
       )}

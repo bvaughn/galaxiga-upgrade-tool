@@ -10,11 +10,24 @@
   padding-top: 0.5rem;
 }
 
+.Action[data-error] {
+  align-items: center;
+  gap: 0.5rem;
+  background-color: #473036;
+}
+
 .MiddleColumn {
   flex: 1 0 auto;
   display: flex;
   flex-direction: column;
   gap: 0.25rem;
+}
+
+.ActionPrimaryLabel {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  margin-bottom: 0.5rem;
 }
 
 .ActionsColumn {
@@ -33,6 +46,9 @@
 }
 .Row[data-compact] {
   gap: 0.25rem;
+}
+.Row[data-indent] {
+  padding-left: 2ch;
 }
 
 .ItemImage {
