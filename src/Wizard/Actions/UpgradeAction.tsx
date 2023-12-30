@@ -1,11 +1,9 @@
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
 import { IconButton } from "../../components/IconButton";
 import { ItemCosts } from "../../components/ItemCosts";
 import { ItemImage } from "../../components/ItemImage";
-import { useDoubleTap } from "../../hooks/useDoubleTap";
 import { calculateUpgradeCost } from "../../utils/calculateUpgradeCost";
 import { UpgradeItem as WizardDataUpgradeType } from "../types";
-import { DebugInfoRow } from "./DebugInfoRow";
 import styles from "./shared.module.css";
 
 export function UpgradeAction({
@@ -18,10 +16,6 @@ export function UpgradeAction({
   editAction: () => void;
 }) {
   const { id, itemStatsFrom, itemStatsTo, primaryItem: item } = action;
-
-  const [showDebugRow, setShowDebugRow] = useState(false);
-
-  const { onClick } = useDoubleTap(() => setShowDebugRow(!showDebugRow));
 
   const cost = useMemo(
     () =>
@@ -37,7 +31,7 @@ export function UpgradeAction({
   return (
     <div className={styles.Action} data-separator key={id}>
       <div className={styles.Row}>
-        <ItemImage className={styles.ItemImage} onClick={onClick} item={item} />
+        <ItemImage className={styles.ItemImage} item={item} />
         <div className={styles.MiddleColumn}>
           <div className={styles.ActionPrimaryLabel}>
             <div className={styles.Row} data-compact>
@@ -80,12 +74,6 @@ export function UpgradeAction({
           />
         </div>
       </div>
-      {showDebugRow && (
-        <DebugInfoRow
-          className={styles.DebugInfo}
-          totalCards={cost.totalCardsRequired}
-        />
-      )}
     </div>
   );
 }

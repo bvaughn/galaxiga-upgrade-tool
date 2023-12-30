@@ -1,8 +1,7 @@
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
 import { IconButton } from "../../components/IconButton";
 import { ItemCosts } from "../../components/ItemCosts";
 import { ItemImage } from "../../components/ItemImage";
-import { useDoubleTap } from "../../hooks/useDoubleTap";
 import { Category, Item, Tier } from "../../types";
 import { calculateCreateCost } from "../../utils/calculateCreateCost";
 import {
@@ -15,7 +14,6 @@ import {
   isCreateTier4Item,
   isCreateTier5Item,
 } from "../types";
-import { DebugInfoRow } from "./DebugInfoRow";
 import styles from "./shared.module.css";
 
 export function CreateAction({
@@ -63,10 +61,6 @@ export function CreateAction({
     [itemStats]
   );
 
-  const [showDebugRow, setShowDebugRow] = useState(false);
-
-  const { onClick } = useDoubleTap(() => setShowDebugRow(!showDebugRow));
-
   const cost = useMemo(
     () =>
       calculateCreateCost({
@@ -80,7 +74,7 @@ export function CreateAction({
   return (
     <div className={styles.Action} data-separator key={id}>
       <div className={styles.Row}>
-        <ItemImage className={styles.ItemImage} onClick={onClick} item={item} />
+        <ItemImage className={styles.ItemImage} item={item} />
         <div className={styles.MiddleColumn}>
           <div className={styles.ActionPrimaryLabel}>
             <div className={styles.Row} data-compact>
@@ -127,12 +121,6 @@ export function CreateAction({
           />
         </div>
       </div>
-      {showDebugRow && (
-        <DebugInfoRow
-          className={styles.DebugInfo}
-          totalCards={cost.totalCardsRequired}
-        />
-      )}
     </div>
   );
 }
