@@ -59,7 +59,6 @@ export function UpgradeAction({
           />
           {cost.boxes.without.cardsNeededForLevels > 0 && (
             <small className={styles.Row}>
-              or{" "}
               <ItemCosts
                 buyCards={true}
                 cardsNeeded={cost.boxes.with.cardsNeededForLevels}

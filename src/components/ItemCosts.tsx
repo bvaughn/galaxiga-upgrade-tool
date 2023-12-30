@@ -25,29 +25,38 @@ export function ItemCosts({
     switch (category) {
       case "drone":
         boxOrCardUI = (
-          <img
-            className={styles.DroneBoxImage}
-            src="/images/drone-box.png"
-            alt="blank"
-          />
+          <span className={styles.BuyCardsWrapper}>
+            or{" "}
+            <img
+              className={styles.DroneBoxImage}
+              src="/images/drone-box.png"
+              alt="blank"
+            />
+          </span>
         );
         break;
       case "ship":
         boxOrCardUI = (
-          <img
-            className={styles.ShipBoxImage}
-            src="/images/ship-box.png"
-            alt="blank"
-          />
+          <span className={styles.BuyCardsWrapper}>
+            or{" "}
+            <img
+              className={styles.ShipBoxImage}
+              src="/images/ship-box.png"
+              alt="blank"
+            />
+          </span>
         );
         break;
       case "stone":
         boxOrCardUI = (
-          <img
-            className={styles.BatteryImage}
-            src="/images/battery.svg"
-            alt="blank"
-          />
+          <span className={styles.BuyCardsWrapper}>
+            or{" "}
+            <img
+              className={styles.BatteryImage}
+              src="/images/battery.svg"
+              alt="blank"
+            />
+          </span>
         );
         break;
     }

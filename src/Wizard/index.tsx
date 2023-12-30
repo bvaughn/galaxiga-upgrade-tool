@@ -1,12 +1,7 @@
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import { CardPicker } from "../components/CardPicker";
-import { Coin } from "../components/Coin";
-import { Gem } from "../components/Gem";
 import { TextButton } from "../components/TextButton";
 import useLocalStorage from "../hooks/useLocalStorage";
-import { calculateCreateCost } from "../utils/calculateCreateCost";
-import { calculateUpgradeCost } from "../utils/calculateUpgradeCost";
-import { formatNumber } from "../utils/number";
 import { uid } from "../utils/uid";
 import { CreateAction } from "./Actions/CreateAction";
 import { UpgradeAction } from "./Actions/UpgradeAction";
@@ -41,40 +36,6 @@ export function Wizard() {
     pendingAction: PendingAction;
     step: number;
   } | null>(null);
-
-  const { coinsNeededTotal, gemsNeededTotal } = useMemo(() => {
-    let coinsNeededTotal = 0;
-    let gemsNeededTotal = 0;
-
-    actions.forEach((action) => {
-      if (isUpgradeItem(action)) {
-        const cost = calculateUpgradeCost(
-          0,
-          action.itemStatsFrom,
-          action.itemStatsTo,
-          action.category,
-          action.primaryItem.tier
-        );
-
-        gemsNeededTotal += cost.boxes.without.gemsNeededForLevels;
-        coinsNeededTotal += cost.boxes.without.coinsNeededForLevels;
-      } else {
-        const cost = calculateCreateCost({
-          genericCards: 0,
-          category: action.category,
-          itemStatsArray: Array.isArray(action.itemStats)
-            ? action.itemStats
-            : [action.itemStats],
-          tier: action.type === "create-tier-2" ? 2 : 3,
-        });
-
-        gemsNeededTotal += cost.boxes.without.gemsNeededForLevels;
-        coinsNeededTotal += cost.boxes.without.coinsNeededForLevels;
-      }
-    });
-
-    return { coinsNeededTotal, gemsNeededTotal };
-  }, [actions]);
 
   const addOrUpdateAction = (item: Action) => {
     setFormData(null);
@@ -196,24 +157,6 @@ export function Wizard() {
             throw Error("Unsupported action");
           }
         })}
-      </div>
-      <div className={styles.BlockSection}>
-        <div
-          className={styles.Cost}
-          data-disabled={gemsNeededTotal === 0 ? "" : undefined}
-          title={`${formatNumber(gemsNeededTotal, "long")} gems`}
-        >
-          <Gem />
-          <div>{formatNumber(gemsNeededTotal)}</div>
-        </div>
-        <div
-          className={styles.Cost}
-          data-disabled={coinsNeededTotal === 0 ? "" : undefined}
-          title={`${formatNumber(coinsNeededTotal, "long")} coins`}
-        >
-          <Coin />
-          <div>{formatNumber(coinsNeededTotal)}</div>
-        </div>
       </div>
     </div>
   );
