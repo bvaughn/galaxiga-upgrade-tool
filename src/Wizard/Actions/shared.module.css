@@ -1,13 +1,13 @@
 .Action {
   flex: 0 0 auto;
-  padding: 1rem;
+  padding: 0.5rem;
   display: flex;
   flex-direction: column;
   overflow: auto;
 }
 .Action:not(:first-of-type) {
   border-top: 1px solid var(--border-color);
-  padding-top: 1rem;
+  padding-top: 0.5rem;
 }
 
 .MiddleColumn {
@@ -46,7 +46,6 @@
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: space-around;
   gap: 1ch;
   background: rgba(0, 0, 0, 0.25) !important;
   border-radius: 0.25rem;
@@ -78,4 +77,8 @@
 
 .SmallText {
   font-size: var(--font-size-small);
+}
+
+.DebugInfo {
+  margin-top: 0.5rem;
 }

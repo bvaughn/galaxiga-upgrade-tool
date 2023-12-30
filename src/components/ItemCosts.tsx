@@ -26,7 +26,7 @@ export function ItemCosts({
       case "drone":
         boxOrCardUI = (
           <span className={styles.BuyCardsWrapper}>
-            or{" "}
+            or
             <img
               className={styles.DroneBoxImage}
               src="/images/drone-box.png"
@@ -38,7 +38,7 @@ export function ItemCosts({
       case "ship":
         boxOrCardUI = (
           <span className={styles.BuyCardsWrapper}>
-            or{" "}
+            or
             <img
               className={styles.ShipBoxImage}
               src="/images/ship-box.png"
@@ -50,7 +50,7 @@ export function ItemCosts({
       case "stone":
         boxOrCardUI = (
           <span className={styles.BuyCardsWrapper}>
-            or{" "}
+            or
             <img
               className={styles.BatteryImage}
               src="/images/battery.svg"

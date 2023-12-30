@@ -31,14 +31,12 @@ export function CreateAction({
   action,
   deleteAction,
   editAction,
-  genericCards,
 }: {
   action: CreateTier2Item | CreateTier3Item | CreateTier4Item | CreateTier5Item;
   deleteAction: () => void;
   editAction: () => void;
-  genericCards: number;
 }) {
-  const { id, itemStats } = action;
+  const { genericCards, id, itemStats } = action;
 
   let category: Category;
   let item: Item;
@@ -180,6 +178,7 @@ export function CreateAction({
       </div>
       {showDebugRow && (
         <DebugInfoRow
+          className={styles.DebugInfo}
           genericCards={genericCards}
           specificCards={cardsAvailable}
           totalCards={cost.totalCardsRequired}

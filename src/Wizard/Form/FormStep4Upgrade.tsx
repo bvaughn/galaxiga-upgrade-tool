@@ -31,6 +31,9 @@ export function FormStep4Upgrade({
   );
 
   const [cards, setCards] = useState(itemStatsFrom?.cards ?? 0);
+  const [genericCards, setGenericCards] = useState<number>(
+    pendingAction.genericCards ?? 0
+  );
 
   return (
     <div className={styles.Form}>
@@ -66,6 +69,23 @@ export function FormStep4Upgrade({
           </label>
         </div>
       </div>
+      <div className={styles.CardsColumn}>
+        <div className={styles.CardsRow}>
+          <label className={styles.CardInputLabel}>
+            <div className={styles.LabelText}>
+              Generic {item.category} cards
+            </div>
+            <Card type="generic" category={item.category} />
+            <NumberInput
+              className={styles.CardInput}
+              maxValue={99999}
+              minValue={0}
+              onChange={setGenericCards}
+              value={genericCards}
+            />
+          </label>
+        </div>
+      </div>
 
       <div className={styles.Spacer} />
 
@@ -79,6 +99,7 @@ export function FormStep4Upgrade({
           onClick={() => {
             onSave({
               ...pendingAction,
+              genericCards,
               itemStatsFrom: {
                 ...itemStatsFrom,
                 cards,

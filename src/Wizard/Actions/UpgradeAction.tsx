@@ -12,14 +12,18 @@ export function UpgradeAction({
   action,
   deleteAction,
   editAction,
-  genericCards,
 }: {
   action: WizardDataUpgradeType;
   deleteAction: () => void;
   editAction: () => void;
-  genericCards: number;
 }) {
-  const { id, itemStatsFrom, itemStatsTo, primaryItem: item } = action;
+  const {
+    genericCards,
+    id,
+    itemStatsFrom,
+    itemStatsTo,
+    primaryItem: item,
+  } = action;
   const from = `${itemStatsFrom.level}.${itemStatsFrom.subLevel}`;
   const to = `${itemStatsTo.level}.${itemStatsTo.subLevel}`;
 
@@ -88,6 +92,7 @@ export function UpgradeAction({
       </div>
       {showDebugRow && (
         <DebugInfoRow
+          className={styles.DebugInfo}
           genericCards={genericCards}
           specificCards={itemStatsFrom.cards}
           totalCards={cost.totalCardsRequired}

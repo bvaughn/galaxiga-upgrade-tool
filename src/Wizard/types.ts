@@ -2,6 +2,7 @@ import { Category, Item, ItemStats } from "../types";
 
 export type CreateTier2Item = {
   category: Category;
+  genericCards: number;
   id: string;
   itemStats: ItemStats[];
   primaryItem: Item;
@@ -10,6 +11,7 @@ export type CreateTier2Item = {
 
 export type CreateTier3Item = {
   category: Category;
+  genericCards: number;
   id: string;
   itemStats: ItemStats[];
   secondaryItems: Item[];
@@ -18,6 +20,7 @@ export type CreateTier3Item = {
 
 export type CreateTier4Item = {
   category: Category;
+  genericCards: number;
   id: string;
   itemStats: ItemStats;
   primaryItem: Item;
@@ -26,6 +29,7 @@ export type CreateTier4Item = {
 
 export type CreateTier5Item = {
   category: Category;
+  genericCards: number;
   id: string;
   itemStats: ItemStats;
   primaryItem: Item;
@@ -34,6 +38,7 @@ export type CreateTier5Item = {
 
 export type UpgradeItem = {
   category: Category;
+  genericCards: number;
   id: string;
   itemStatsFrom: ItemStats;
   itemStatsTo: ItemStats;

@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { CardPicker } from "../components/CardPicker";
 import { TextButton } from "../components/TextButton";
 import useLocalStorage from "../hooks/useLocalStorage";
 import { uid } from "../utils/uid";
@@ -18,18 +17,6 @@ import {
 } from "./types";
 
 export function Wizard() {
-  const [droneCards, saveDroneCards] = useLocalStorage<number>(
-    "generic-drone-cards",
-    0
-  );
-  const [shipCards, saveShipCards] = useLocalStorage<number>(
-    "generic-ship-cards",
-    0
-  );
-  const [stoneCards, saveStoneCards] = useLocalStorage<number>(
-    "generic-stone-cards",
-    0
-  );
   const [actions, saveActions] = useLocalStorage<Action[]>("wizard-items", []);
 
   const [defaultFormData, setFormData] = useState<{
@@ -67,57 +54,8 @@ export function Wizard() {
 
   return (
     <div className={styles.Page}>
-      <div className={styles.BlockSection}>
-        <CardPicker
-          cards={shipCards}
-          category="ship"
-          onSave={saveShipCards}
-          type="generic"
-        />
-        <CardPicker
-          cards={droneCards}
-          category="drone"
-          onSave={saveDroneCards}
-          type="generic"
-        />
-        <CardPicker
-          cards={stoneCards}
-          category="stone"
-          onSave={saveStoneCards}
-          type="generic"
-        />
-      </div>
       <div className={styles.MainSection}>
-        <TextButton
-          className={styles.StartUpgradeButton}
-          onClick={() =>
-            setFormData({
-              pendingAction: {
-                id: uid(),
-              },
-              step: 1,
-            })
-          }
-        >
-          Start an upgrade
-        </TextButton>
         {actions.map((action) => {
-          let genericCards;
-          switch (action.category) {
-            case "drone": {
-              genericCards = droneCards;
-              break;
-            }
-            case "ship": {
-              genericCards = shipCards;
-              break;
-            }
-            case "stone": {
-              genericCards = stoneCards;
-              break;
-            }
-          }
-
           if (
             isCreateTier2Item(action) ||
             isCreateTier3Item(action) ||
@@ -134,7 +72,6 @@ export function Wizard() {
                     step: 4,
                   })
                 }
-                genericCards={genericCards}
                 key={action.id}
               />
             );
@@ -149,7 +86,6 @@ export function Wizard() {
                     step: 4,
                   })
                 }
-                genericCards={genericCards}
                 key={action.id}
               />
             );
@@ -158,6 +94,19 @@ export function Wizard() {
           }
         })}
       </div>
+      <TextButton
+        className={styles.StartUpgradeButton}
+        onClick={() =>
+          setFormData({
+            pendingAction: {
+              id: uid(),
+            },
+            step: 1,
+          })
+        }
+      >
+        Start an upgrade
+      </TextButton>
     </div>
   );
 }

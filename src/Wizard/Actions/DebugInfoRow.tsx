@@ -4,10 +4,12 @@ import { formatNumber } from "../../utils/number";
 import styles from "./DebugInfoRow.module.css";
 
 export function DebugInfoRow({
+  className = "",
   genericCards,
   specificCards,
   totalCards,
 }: {
+  className?: string;
   genericCards: number;
   specificCards: number;
   totalCards: number;
@@ -17,7 +19,7 @@ export function DebugInfoRow({
   }, [totalCards]);
 
   return (
-    <div className={styles.DebugInfo}>
+    <div className={`${styles.DebugInfo} ${className}`}>
       <div className={styles.DebugInfoRow}>
         <Icon className={styles.DebugInfoIcon} type="info" />
         <div className={styles.DebugInfoColumn}>{text}</div>
