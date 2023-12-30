@@ -15,12 +15,12 @@ export function Card({
     case "drone": {
       switch (type) {
         case "generic": {
-          source = "/images/drones/generic-card.jpeg";
+          source = "/images/drones/generic-card.svg";
           title = "Generic drone card";
           break;
         }
         case "specific": {
-          source = "/images/drones/specific-card.jpeg";
+          source = "/images/drones/specific-card.svg";
           title = "Drone card";
           break;
         }
@@ -30,12 +30,12 @@ export function Card({
     case "ship": {
       switch (type) {
         case "generic": {
-          source = "/images/ships/generic-card.jpeg";
+          source = "/images/ships/generic-card.svg";
           title = "Generic ship card";
           break;
         }
         case "specific": {
-          source = "/images/ships/specific-card.jpeg";
+          source = "/images/ships/specific-card.svg";
           title = "Ship card";
           break;
         }
@@ -45,12 +45,12 @@ export function Card({
     case "stone": {
       switch (type) {
         case "generic": {
-          source = "/images/stones/generic-card.jpeg";
+          source = "/images/stones/generic-card.svg";
           title = "Generic ship card";
           break;
         }
         case "specific": {
-          source = "/images/stones/specific-card.png";
+          source = "/images/stones/specific-card.svg";
           title = "Ship card";
           break;
         }

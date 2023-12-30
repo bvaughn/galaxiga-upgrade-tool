@@ -19,6 +19,6 @@
 .BatteryImage,
 .DroneBoxImage,
 .ShipBoxImage {
-  height: 16px;
-  width: auto;
+  height: 20px;
+  width: 20px;
 }

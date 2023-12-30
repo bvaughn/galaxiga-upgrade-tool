@@ -203,14 +203,16 @@ export function Wizard() {
           data-disabled={gemsNeededTotal === 0 ? "" : undefined}
           title={`${formatNumber(gemsNeededTotal, "long")} gems`}
         >
-          <Gem /> {formatNumber(gemsNeededTotal)}
+          <Gem />
+          <div>{formatNumber(gemsNeededTotal)}</div>
         </div>
         <div
           className={styles.Cost}
           data-disabled={coinsNeededTotal === 0 ? "" : undefined}
           title={`${formatNumber(coinsNeededTotal, "long")} coins`}
         >
-          <Coin /> {formatNumber(coinsNeededTotal)}
+          <Coin />
+          <div>{formatNumber(coinsNeededTotal)}</div>
         </div>
       </div>
     </div>

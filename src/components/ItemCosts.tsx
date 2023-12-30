@@ -27,7 +27,7 @@ export function ItemCosts({
         boxOrCardUI = (
           <img
             className={styles.DroneBoxImage}
-            src="/images/drone-box.jpeg"
+            src="/images/drone-box.png"
             alt="blank"
           />
         );
@@ -36,7 +36,7 @@ export function ItemCosts({
         boxOrCardUI = (
           <img
             className={styles.ShipBoxImage}
-            src="/images/ship-box.jpeg"
+            src="/images/ship-box.png"
             alt="blank"
           />
         );
@@ -45,7 +45,7 @@ export function ItemCosts({
         boxOrCardUI = (
           <img
             className={styles.BatteryImage}
-            src="/images/battery.jpeg"
+            src="/images/battery.svg"
             alt="blank"
           />
         );
