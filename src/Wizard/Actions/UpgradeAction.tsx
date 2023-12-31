@@ -2,7 +2,7 @@ import { useMemo } from "react";
 import { IconButton } from "../../components/IconButton";
 import { ItemCosts } from "../../components/ItemCosts";
 import { ItemImage } from "../../components/ItemImage";
-import { calculateUpgradeCost } from "../../utils/calculateUpgradeCost";
+import { calculateUpgradeItemCost } from "../../utils/calculateUpgradeItemCost";
 import { UpgradeItem as WizardDataUpgradeType } from "../types";
 import styles from "./shared.module.css";
 
@@ -15,18 +15,14 @@ export function UpgradeAction({
   deleteAction: () => void;
   editAction: () => void;
 }) {
-  const { id, itemStatsFrom, itemStatsTo, primaryItem: item } = action;
+  const { id, itemStatsTo, primaryItem: item } = action;
 
-  const cost = useMemo(
-    () =>
-      calculateUpgradeCost(
-        itemStatsFrom,
-        itemStatsTo,
-        item.category,
-        item.tier
-      ),
-    [item, itemStatsFrom, itemStatsTo]
-  );
+  const toString =
+    itemStatsTo.subLevel === 0
+      ? itemStatsTo.level
+      : `${itemStatsTo.level}.${itemStatsTo.subLevel}`;
+
+  const cost = useMemo(() => calculateUpgradeItemCost(action), [action]);
 
   return (
     <div className={styles.Action} data-separator key={id}>
@@ -35,7 +31,8 @@ export function UpgradeAction({
         <div className={styles.MiddleColumn}>
           <div className={styles.ActionPrimaryLabel}>
             <div className={styles.Row} data-compact>
-              <span className={styles.SmallText}>Upgrade</span> {item.name}
+              <span className={styles.SmallText}>Upgrade</span> {item.name}{" "}
+              <span className={styles.SmallText}>to {toString}</span>
             </div>
           </div>
           <ItemCosts

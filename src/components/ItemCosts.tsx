@@ -11,12 +11,14 @@ export function ItemCosts({
   buyCards,
   category,
   cardsNeeded,
+  centerAlign = false,
   coinsNeeded,
   gemsNeeded,
 }: {
   buyCards: boolean;
   category: Category;
   cardsNeeded: number;
+  centerAlign?: boolean;
   coinsNeeded: number;
   gemsNeeded: number;
 }) {
@@ -73,7 +75,10 @@ export function ItemCosts({
   }
 
   return (
-    <div className={styles.Costs}>
+    <div
+      className={styles.Costs}
+      data-align={centerAlign ? "center" : undefined}
+    >
       {boxOrCardUI}
       <div
         className={styles.Cost}

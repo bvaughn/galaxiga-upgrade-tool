@@ -29,7 +29,7 @@ export function Form({
   defaultPendingAction: PendingAction;
   defaultStep: number;
   onDismiss: () => void;
-  onSave: (formData: Action) => void;
+  onSave: (action: Action) => void;
 }) {
   const [pendingAction, setPendingAction] =
     useState<PendingAction>(defaultPendingAction);

@@ -2,13 +2,10 @@ import { useMemo } from "react";
 import { IconButton } from "../../components/IconButton";
 import { ItemCosts } from "../../components/ItemCosts";
 import { ItemImage } from "../../components/ItemImage";
-import { Category, Item, Tier } from "../../types";
-import { calculateCreateCost } from "../../utils/calculateCreateCost";
+import { Category, Item } from "../../types";
+import { calculateCreateItemCost } from "../../utils/calculateCreateItemCost";
 import {
-  CreateTier2Item,
-  CreateTier3Item,
-  CreateTier4Item,
-  CreateTier5Item,
+  CreateItem,
   isCreateTier2Item,
   isCreateTier3Item,
   isCreateTier4Item,
@@ -21,55 +18,37 @@ export function CreateAction({
   deleteAction,
   editAction,
 }: {
-  action: CreateTier2Item | CreateTier3Item | CreateTier4Item | CreateTier5Item;
+  action: CreateItem;
   deleteAction: () => void;
   editAction: () => void;
 }) {
-  const { id, itemStats } = action;
+  const { id } = action;
 
   let category: Category;
   let item: Item;
   let name: string;
-  let tier: Tier;
 
   if (isCreateTier2Item(action)) {
     item = action.primaryItem;
     category = item.category;
     name = item.name;
-    tier = 2;
   } else if (isCreateTier3Item(action)) {
     item = action.secondaryItems[0];
     category = item.category;
     name = `Super ${item.name}`;
-    tier = 3;
   } else if (isCreateTier4Item(action)) {
     item = action.primaryItem;
     category = item.category;
     name = item.name;
-    tier = 4;
   } else if (isCreateTier5Item(action)) {
     item = action.primaryItem;
     category = item.category;
     name = item.name;
-    tier = 5;
   } else {
     throw Error("Unsupported data");
   }
 
-  const itemStatsArray = useMemo(
-    () => (Array.isArray(itemStats) ? itemStats : [itemStats]),
-    [itemStats]
-  );
-
-  const cost = useMemo(
-    () =>
-      calculateCreateCost({
-        category,
-        itemStatsArray,
-        tier,
-      }),
-    [category, itemStatsArray, tier]
-  );
+  const cost = useMemo(() => calculateCreateItemCost(action), [action]);
 
   return (
     <div className={styles.Action} data-separator key={id}>

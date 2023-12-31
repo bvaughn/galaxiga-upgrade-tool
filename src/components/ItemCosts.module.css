@@ -6,6 +6,10 @@
   gap: 1ch;
 }
 
+.Costs[data-align="center"] .Cost {
+  justify-content: center;
+}
+
 .BuyCardsWrapper {
   display: flex;
   flex-direction: row;

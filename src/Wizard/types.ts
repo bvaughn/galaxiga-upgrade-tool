@@ -46,12 +46,19 @@ export type UpgradeItem = {
     | "upgrade-tier-5";
 };
 
-export type Action =
+export type CreateItem =
   | CreateTier2Item
   | CreateTier3Item
   | CreateTier4Item
-  | CreateTier5Item
-  | UpgradeItem;
+  | CreateTier5Item;
+
+export type Action = CreateItem | UpgradeItem;
+
+export type FormData = {
+  actions: Action[];
+  pendingAction: PendingAction;
+  step: number;
+};
 
 export function isCreateTier2Item(action: Action): action is CreateTier2Item {
   return action.type === "create-tier-2";

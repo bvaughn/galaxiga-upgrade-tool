@@ -1,13 +1,21 @@
+.Group {
+  flex: 0 0 auto;
+  border: 1px solid var(--border-color);
+  border-radius: 0.5rem;
+  overflow: hidden;
+  background: var(--border-color);
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
 .Action {
   flex: 0 0 auto;
   padding: 0.5rem;
   display: flex;
   flex-direction: column;
   overflow: auto;
-}
-.Action:not(:first-of-type) {
-  border-top: 1px solid var(--border-color);
-  padding-top: 0.5rem;
+  background-color: #031134;
 }
 
 .Action[data-error] {
@@ -97,4 +105,22 @@
 
 .DebugInfo {
   margin-top: 0.5rem;
+}
+
+.AddActionButton {
+  width: 100%;
+  padding: 0.25rem 0.75rem;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  justify-content: center;
+  gap: 1ch;
+}
+
+.AddActionIcon {
+  width: 1rem;
+  height: 1rem;
+}
+
+.GroupCostRow {
+  padding: 0.25rem 0.5rem;
 }

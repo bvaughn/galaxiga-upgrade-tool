@@ -1,53 +1,64 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { TextButton } from "../components/TextButton";
 import useLocalStorage from "../hooks/useLocalStorage";
 import { uid } from "../utils/uid";
-import { CreateAction } from "./Actions/CreateAction";
-import { UpgradeAction } from "./Actions/UpgradeAction";
+import { Group } from "./Actions/Group";
 import { Form } from "./Form";
 import styles from "./Wizard.module.css";
-import {
-  Action,
-  PendingAction,
-  isCreateTier2Item,
-  isCreateTier3Item,
-  isCreateTier4Item,
-  isCreateTier5Item,
-  isUpgradeItem,
-} from "./types";
-import { ErrorBoundary } from "react-error-boundary";
-import { DeleteCorruptedAction } from "./Actions/DeleteCorruptedAction";
+import { Action, FormData } from "./types";
 
 export function Wizard() {
-  const [actions, saveActions] = useLocalStorage<Action[]>("wizard-items", []);
+  const [savedActionsUnsafe, setSavedActions] = useLocalStorage<Action[][]>(
+    "wizard-items",
+    []
+  );
 
-  const [defaultFormData, setFormData] = useState<{
-    pendingAction: PendingAction;
-    step: number;
-  } | null>(null);
+  // Just in place migrate old data
+  const savedActions = useMemo(
+    () =>
+      savedActionsUnsafe.length === 0
+        ? []
+        : Array.isArray(savedActionsUnsafe[0])
+        ? savedActionsUnsafe
+        : savedActionsUnsafe.map((action) => [action as any as Action]),
+    [savedActionsUnsafe]
+  );
 
-  const addOrUpdateAction = (item: Action) => {
-    setFormData(null);
+  const [formData, setFormData] = useState<FormData | null>(null);
 
-    const index = actions.findIndex(({ id }) => id === item.id);
-    if (index >= 0) {
-      const newItems = [...actions];
-      newItems.splice(index, 1, item);
-      saveActions(newItems);
-    } else {
-      saveActions([...actions, item]);
+  const addOrUpdateAction = (action: Action) => {
+    if (formData) {
+      const { actions } = formData;
+
+      setFormData(null);
+
+      let index = -1;
+
+      const newActions = [...actions];
+      index = actions.findIndex(({ id }) => id === action.id);
+      if (index >= 0) {
+        newActions.splice(index, 1, action);
+      } else {
+        newActions.push(action);
+      }
+
+      const newSavedActions = [...savedActions];
+      index = newSavedActions.indexOf(actions);
+      if (index >= 0) {
+        newSavedActions.splice(index, 1, newActions);
+      } else {
+        newSavedActions.push(newActions);
+      }
+
+      setSavedActions(newSavedActions);
     }
   };
 
-  const deleteAction = (item: Action) => {
-    saveActions(actions.filter(({ id }) => item.id !== id));
-  };
-
-  if (defaultFormData) {
+  if (formData) {
     return (
       <Form
-        defaultPendingAction={defaultFormData.pendingAction}
-        defaultStep={defaultFormData.step}
+        defaultPendingAction={formData.pendingAction}
+        defaultStep={formData.step}
         onDismiss={() => setFormData(null)}
         onSave={addOrUpdateAction}
       />
@@ -57,57 +68,51 @@ export function Wizard() {
   return (
     <div className={styles.Page}>
       <div className={styles.MainSection}>
-        {actions.map((action) => {
-          if (
-            isCreateTier2Item(action) ||
-            isCreateTier3Item(action) ||
-            isCreateTier4Item(action) ||
-            isCreateTier5Item(action)
-          ) {
-            return (
-              <ErrorBoundary
-                key={action.id}
-                fallback={<DeleteCorruptedAction action={action} />}
-              >
-                <CreateAction
-                  action={action}
-                  deleteAction={() => deleteAction(action)}
-                  editAction={() =>
-                    setFormData({
-                      pendingAction: action,
-                      step: 4,
-                    })
-                  }
-                />
-              </ErrorBoundary>
-            );
-          } else if (isUpgradeItem(action)) {
-            return (
-              <ErrorBoundary
-                key={action.id}
-                fallback={<DeleteCorruptedAction action={action} />}
-              >
-                <UpgradeAction
-                  action={action}
-                  deleteAction={() => deleteAction(action)}
-                  editAction={() =>
-                    setFormData({
-                      pendingAction: action,
-                      step: 4,
-                    })
-                  }
-                />
-              </ErrorBoundary>
-            );
-          } else {
-            throw Error("Unsupported action");
-          }
-        })}
+        {savedActions.map((actions, index) => (
+          <Group
+            actions={actions}
+            addAction={() => {
+              setFormData({
+                actions,
+                pendingAction: {
+                  id: uid(),
+                },
+                step: 1,
+              });
+            }}
+            deleteAction={(action: Action) => {
+              if (actions.length === 1) {
+                setSavedActions(
+                  savedActions.filter((prev) => prev !== actions)
+                );
+              } else {
+                setSavedActions(
+                  savedActions.map((prev) => {
+                    if (prev === actions) {
+                      return prev.filter(({ id }) => action.id !== id);
+                    } else {
+                      return prev;
+                    }
+                  })
+                );
+              }
+            }}
+            editAction={(action: Action) => {
+              setFormData({
+                actions,
+                pendingAction: action,
+                step: 4,
+              });
+            }}
+            key={index}
+          />
+        ))}
       </div>
       <TextButton
         className={styles.StartUpgradeButton}
         onClick={() =>
           setFormData({
+            actions: [],
             pendingAction: {
               id: uid(),
             },

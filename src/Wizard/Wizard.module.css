@@ -2,14 +2,13 @@
   height: stretch;
   display: flex;
   flex-direction: column;
+  padding: 0.5rem;
 }
 
 .StartUpgradeButton {
+  justify-content: center;
   font-size: 1rem;
   padding: 0.5rem;
-  justify-content: center;
-  padding: 0.5rem;
-  margin: 0.5rem;
 }
 
 .BlockSection {
@@ -31,6 +30,7 @@
   display: flex;
   flex-direction: column;
   overflow: auto;
+  gap: 0.5rem;
 }
 
 .Cost {
