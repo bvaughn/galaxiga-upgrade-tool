@@ -121,6 +121,13 @@
   height: 1rem;
 }
 
+.AddActionButton:hover {
+  filter: none;
+}
+.AddActionButton:hover .AddActionIcon {
+  color: #81ff12;
+}
+
 .GroupCostRow {
   padding: 0.25rem 0.5rem;
 }

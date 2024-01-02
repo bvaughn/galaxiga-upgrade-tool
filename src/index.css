@@ -30,7 +30,6 @@ code {
   height: 100vh;
   height: stretch;
   width: 100vw;
-  max-width: 35rem;
   margin: 0 auto;
   overflow: auto;
   background-color: #031134;

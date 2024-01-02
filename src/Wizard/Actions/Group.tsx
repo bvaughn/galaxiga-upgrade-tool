@@ -65,7 +65,6 @@ export function Group({
       ),
     [actions]
   );
-  console.log(totalCost);
 
   return (
     <div className={styles.Group}>
