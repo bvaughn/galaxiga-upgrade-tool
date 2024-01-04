@@ -428,7 +428,7 @@ export const GEMS_TO_MERGE = {
     // Tier 3 to Elite 1
     2500,
     // Elite 1 to Elite 2
-    2500, // TODO: Verify this guess
+    2500,
   ],
   ship: [
     // Tier 1
@@ -440,7 +440,7 @@ export const GEMS_TO_MERGE = {
     // Tier 3 to Elite 1
     5000,
     // Elite 1 to Elite 2
-    5000, // TODO: Verify this guess
+    5000,
   ],
   stone: [
     // Tier 1
@@ -452,6 +452,6 @@ export const GEMS_TO_MERGE = {
     // Tier 3 to Elite 1
     5000,
     // Elite 1 to Elite 2
-    5000, // TODO: Verify this guess
+    5000,
   ],
 };

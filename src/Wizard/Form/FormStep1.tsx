@@ -38,7 +38,7 @@ export function FormStep1({
         {[1, 2, 3, 4, 5].map((tier) => (
           <button
             className={styles.OptionButton}
-            disabled={tier === 1 || tier === 5}
+            disabled={tier === 1}
             data-tier={tier}
             key={tier}
             onClick={() =>
