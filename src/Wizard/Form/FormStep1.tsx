@@ -20,7 +20,6 @@ export function FormStep1({
           <button
             className={styles.OptionButton}
             data-tier={tier}
-            disabled={tier === 5}
             key={tier}
             onClick={() =>
               goToNextStep({
