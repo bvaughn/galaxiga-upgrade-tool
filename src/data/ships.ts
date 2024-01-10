@@ -14,6 +14,21 @@ import {
 
 export const TIER_1_SHIPS: Tier1Item[] = [
   {
+    id: "auxo",
+    name: "Auxo",
+    unlockedBy: "Unknown",
+  },
+  {
+    id: "blizzard",
+    name: "Blizzard",
+    unlockedBy: "Special event",
+  },
+  {
+    id: "bright_rise",
+    name: "Bright Rise",
+    unlockedBy: "Unknown",
+  },
+  {
     id: "captain_g",
     name: "Captain G",
     unlockedBy: "Special event",
@@ -23,6 +38,11 @@ export const TIER_1_SHIPS: Tier1Item[] = [
     id: "fierce_piercer",
     name: "Fierce Piercer",
     unlockedBy: "350 gems",
+  },
+  {
+    id: "frostbite",
+    name: "Frostbite",
+    unlockedBy: "Unknown",
   },
   {
     id: "gladiator",
@@ -53,9 +73,24 @@ export const TIER_1_SHIPS: Tier1Item[] = [
     unlockedBy: "20 gems",
   },
   {
+    id: "loreley",
+    name: "Loreley",
+    unlockedBy: "Unknown",
+  },
+  {
+    id: "melodios",
+    name: "Melodios",
+    unlockedBy: "Unknown",
+  },
+  {
     id: "new_moon",
     name: "New Moon",
     unlockedBy: "100 gems",
+  },
+  {
+    id: "night_fall",
+    name: "Night Fall",
+    unlockedBy: "Unknown",
   },
   {
     id: "phantom",
@@ -103,6 +138,11 @@ export const TIER_1_SHIPS: Tier1Item[] = [
     unlockedBy: "Training sequence",
   },
   {
+    id: "theros",
+    name: "Theros",
+    unlockedBy: "Unknown",
+  },
+  {
     id: "typhoon",
     name: "Typhoon",
     unlockedBy: "2,000 gems",
@@ -131,6 +171,11 @@ export const TIER_2_SHIPS: Tier2Item[] = [
     createdByMerging: ["new_moon", "santa_007"],
   },
   {
+    id: "bright_fall",
+    name: "Bright Fall",
+    createdByMerging: ["night_fall", "bright_rise"],
+  },
+  {
     id: "dragon_star",
     name: "Dragon Star",
     createdByMerging: ["greataxe", "warlock"],
@@ -139,6 +184,11 @@ export const TIER_2_SHIPS: Tier2Item[] = [
     id: "grim_reapor",
     name: "Grim Reapor",
     createdByMerging: ["phantom", "spector"],
+  },
+  {
+    id: "helios",
+    name: "Helios",
+    createdByMerging: ["auxo", "theros"],
   },
   {
     id: "heimdall",
@@ -150,6 +200,11 @@ export const TIER_2_SHIPS: Tier2Item[] = [
     name: "Liberator",
     createdByMerging: ["ranger_x", "steel_sky"],
     description: `Special power: Pillar of Light - Kick into overdrive and unleash a cluster of laser beams.`,
+  },
+  {
+    id: "luvan_b33",
+    name: "Luvan B33",
+    createdByMerging: ["melodios", "loreley"],
   },
   {
     id: "orion",
@@ -175,8 +230,8 @@ export const TIER_2_SHIPS: Tier2Item[] = [
     createdByMerging: ["storm_slayer", "falcon"],
   },
   {
-    id: "terragon",
-    name: "Terragon",
+    id: "tarragon",
+    name: "Tarragon",
     createdByMerging: ["hydra", "typhoon"],
   },
   {

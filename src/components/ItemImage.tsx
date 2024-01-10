@@ -16,29 +16,31 @@ export function ItemImage({
   const didErrorRef = useRef(false);
 
   return (
-    <img
-      alt={item.name}
-      className={`${className} ${styles.Image}`}
-      data-category={item.category}
-      data-tier={item.tier}
-      onClick={onClick}
-      onDoubleClick={onDoubleClick}
-      onError={({ target }) => {
-        if (!didErrorRef.current) {
-          didErrorRef.current = true;
-          (target as HTMLImageElement).src = getUrl(item, "png");
-        } else {
-          (target as HTMLImageElement).src = "/images/fallback.png";
-          (target as HTMLImageElement).setAttribute("data-not-found", "");
-        }
-      }}
-      src={getUrl(item, "jpeg")}
-    />
+    <div className={`${className} ${styles.Wrapper}`}>
+      <img
+        alt={item.name}
+        className={`${className} ${styles.Image}`}
+        data-category={item.category}
+        data-tier={item.tier}
+        onClick={onClick}
+        onDoubleClick={onDoubleClick}
+        onError={({ target }) => {
+          if (!didErrorRef.current) {
+            didErrorRef.current = true;
+            (target as HTMLImageElement).src = getUrl(item, "png");
+          } else {
+            (target as HTMLImageElement).src = "/images/fallback.png";
+            (target as HTMLImageElement).setAttribute("data-not-found", "");
+          }
+        }}
+        src={getUrl(item, "jpeg")}
+      />
+    </div>
   );
 }
 
 function getUrl(item: Item, fileExtension: string) {
   return `/images/${item.category}s/tier_${isTier1Item(item) ? 1 : 2}_${
     item.id
-  }.jpeg`;
+  }.${fileExtension}`;
 }

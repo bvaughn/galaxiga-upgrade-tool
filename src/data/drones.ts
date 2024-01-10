@@ -14,136 +14,205 @@ import {
 
 export const TIER_1_DRONES: Tier1Item[] = [
   {
+    id: "altair",
+    name: "Altair",
+  },
+  {
     id: "auto_gunner",
     name: "Auto Gunner",
   },
   {
-    id: "gunner",
-    name: "Gunner",
-  },
-  {
-    id: "bouncer",
-    name: "Bouncer",
-  },
-  {
-    id: "flash",
-    name: "Flash",
-  },
-  {
-    id: "chakram",
-    name: "Chakram",
-  },
-  {
-    id: "vega",
-    name: "Vega",
-  },
-  {
-    id: "cyclop",
-    name: "Cyclop",
-  },
-  {
-    id: "night_wing",
-    name: "Night Wing",
-  },
-  {
-    id: "cavalier",
-    name: "Cavalier",
-  },
-  {
-    id: "twin_sun",
-    name: "Twin Sun",
-  },
-  {
-    id: "frost_flower",
-    name: "Frost Flower",
-  },
-  {
-    id: "peppermint",
-    name: "Peppermint",
-  },
-  {
-    id: "hammerhead",
-    name: "Hammerhead",
-  },
-  {
-    id: "whipslash",
-    name: "Whipslash",
-  },
-  {
-    id: "god_of_thunder",
-    name: "God of Thunder",
-  },
-  {
-    id: "reaper",
-    name: "Reaper",
-  },
-  {
-    id: "northern_bear",
-    name: "Northern Bear",
-  },
-  {
-    id: "rocketeer",
-    name: "Rocketeer",
-  },
-  {
-    id: "nighturge",
-    name: "Nighturge",
-  },
-  {
-    id: "terigon",
-    name: "Terigon",
+    id: "bandalore",
+    name: "Bandalore",
   },
   {
     id: "black_widow",
     name: "Black Widow",
   },
   {
-    id: "opilion",
-    name: "Opilion",
+    id: "boomba",
+    name: "Boomba",
   },
   {
-    id: "deep_blue",
-    name: "Deep Blue",
+    id: "bouncer",
+    name: "Bouncer",
   },
   {
-    id: "trine",
-    name: "Trine",
+    id: "cavalier",
+    name: "Cavalier",
   },
   {
-    id: "altair",
-    name: "Altair",
+    id: "cephalos",
+    name: "Cephalos",
   },
   {
-    id: "triple_spike",
-    name: "Triple Spike",
-  },
-  {
-    id: "crustitia",
-    name: "Crustitia",
-  },
-  {
-    id: "meduzian",
-    name: "Meduzian",
-  },
-  {
-    id: "protoss",
-    name: "Protoss",
-  },
-  {
-    id: "twister",
-    name: "Twister",
+    id: "chakram",
+    name: "Chakram",
   },
   {
     id: "chelonian",
     name: "Chelonian",
   },
   {
+    id: "crustitia",
+    name: "Crustitia",
+  },
+  {
+    id: "cyclop",
+    name: "Cyclop",
+  },
+  {
+    id: "deep_blue",
+    name: "Deep Blue",
+  },
+  {
+    id: "drumpa",
+    name: "Drumpa",
+  },
+  {
+    id: "flash",
+    name: "Flash",
+  },
+  {
+    id: "fluita",
+    name: "Fluita",
+  },
+  {
+    id: "frost_flower",
+    name: "Frost Flower",
+  },
+  {
+    id: "gleamer",
+    name: "Gleamer",
+  },
+  {
+    id: "god_of_thunder",
+    name: "God of Thunder",
+  },
+  {
+    id: "gunner",
+    name: "Gunner",
+  },
+  {
+    id: "hammerhead",
+    name: "Hammerhead",
+  },
+  {
+    id: "ice_vapor",
+    name: "Ice Vapor",
+  },
+  {
+    id: "javelin",
+    name: "Javelin",
+  },
+  {
+    id: "lyra",
+    name: "Lyra",
+  },
+  {
+    id: "meduzian",
+    name: "Meduzian",
+  },
+  {
+    id: "mobius",
+    name: "Mobius",
+  },
+  {
+    id: "night_wing",
+    name: "Night Wing",
+  },
+  {
+    id: "nighturge",
+    name: "Nighturge",
+  },
+  {
+    id: "northern_bear",
+    name: "Northern Bear",
+  },
+  {
+    id: "opilion",
+    name: "Opilion",
+  },
+  {
+    id: "peppermint",
+    name: "Peppermint",
+  },
+  {
     id: "polaris",
     name: "Polaris",
+  },
+  {
+    id: "protoss",
+    name: "Protoss",
+  },
+  {
+    id: "reaper",
+    name: "Reaper",
+  },
+  {
+    id: "rocketeer",
+    name: "Rocketeer",
+  },
+  {
+    id: "ronin",
+    name: "Ronin",
+  },
+  {
+    id: "samurai",
+    name: "Samurai",
+  },
+  {
+    id: "snow_drop",
+    name: "Snow Drop",
+  },
+  {
+    id: "stella",
+    name: "Stella",
+  },
+  {
+    id: "terigon",
+    name: "Terigon",
+  },
+  {
+    id: "trine",
+    name: "Trine",
+  },
+  {
+    id: "triple_spike",
+    name: "Triple Spike",
+  },
+  {
+    id: "twin_sun",
+    name: "Twin Sun",
+  },
+  {
+    id: "twinkler",
+    name: "Twinkler",
+  },
+  {
+    id: "twister",
+    name: "Twister",
+  },
+  {
+    id: "vega",
+    name: "Vega",
+  },
+  {
+    id: "vesica",
+    name: "Vesica",
+  },
+  {
+    id: "whipslash",
+    name: "Whipslash",
   },
 ].map((item) => ({ ...item, category: "drone", tier: 1 }));
 
 export const TIER_2_DRONES: Tier2Item[] = [
+  {
+    id: "bandalorian",
+    name: "Bandalorian",
+    createdByMerging: ["bandalore", "javelin"],
+  },
   {
     id: "buster",
     name: "Buster",
@@ -170,6 +239,11 @@ export const TIER_2_DRONES: Tier2Item[] = [
     createdByMerging: ["cavalier", "twin_sun"],
   },
   {
+    id: "haripie",
+    name: "Haripie",
+    createdByMerging: ["mobius", "vesica"],
+  },
+  {
     id: "lumen_flower",
     name: "Lumen Flower",
     createdByMerging: ["frost_flower", "peppermint"],
@@ -178,6 +252,11 @@ export const TIER_2_DRONES: Tier2Item[] = [
     id: "megalodon",
     name: "Megalodon",
     createdByMerging: ["hammerhead", "whipslash"],
+  },
+  {
+    id: "micropie",
+    name: "Micropie",
+    createdByMerging: ["fluita", "boomba"],
   },
   {
     id: "mine_spray",
@@ -190,9 +269,24 @@ export const TIER_2_DRONES: Tier2Item[] = [
     createdByMerging: ["northern_bear", "rocketeer"],
   },
   {
+    id: "octavia",
+    name: "Octavia",
+    createdByMerging: ["stella", "cephalos"],
+  },
+  {
+    id: "quadtrica",
+    name: "Quadtrica",
+    createdByMerging: ["mobius", "vesica"],
+  },
+  {
     id: "salamander",
     name: "Salamander",
     createdByMerging: ["nighturge", "terigon"],
+  },
+  {
+    id: "shogun",
+    name: "Shogun",
+    createdByMerging: ["samurai", "ronin"],
   },
   {
     id: "spider_queen",
