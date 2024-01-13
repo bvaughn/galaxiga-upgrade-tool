@@ -1,6 +1,6 @@
 import { IconButton } from "../../components/IconButton";
 import { ItemImage } from "../../components/ItemImage";
-import { Item } from "../../types";
+import { DEFAULT_ITEM_STATS, Item } from "../../types";
 import { PendingUpgradeItem } from "../types";
 import styles from "./shared.module.css";
 
@@ -33,6 +33,8 @@ export function FormStep3Upgrade({
               goToNextStep({
                 ...pendingAction,
                 primaryItem: item,
+                itemStatsFrom: DEFAULT_ITEM_STATS,
+                itemStatsTo: DEFAULT_ITEM_STATS,
               })
             }
           >

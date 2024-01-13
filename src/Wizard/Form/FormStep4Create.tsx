@@ -34,7 +34,7 @@ export function FormStep4Create({
     | PendingCreateTier4Item
     | PendingCreateTier5Item;
 }) {
-  const { category } = pendingAction;
+  const { category, itemStats: defaultItemStats } = pendingAction;
   assert(category);
 
   let items: Item[];
@@ -55,14 +55,13 @@ export function FormStep4Create({
     throw Error("Unsupported data");
   }
   assert(items);
+  assert(defaultItemStats);
 
   const [itemStats, setItemStats] = useState<ItemStats[]>(
-    Array.isArray(pendingAction.itemStats)
-      ? pendingAction.itemStats
-      : pendingAction.itemStats
-      ? [pendingAction.itemStats]
-      : []
+    Array.isArray(defaultItemStats) ? defaultItemStats : [defaultItemStats]
   );
+
+  assert(itemStats.length === items.length);
 
   return (
     <div className={styles.Form}>

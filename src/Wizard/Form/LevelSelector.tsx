@@ -7,15 +7,16 @@ import {
 import styles from "./LevelSelector.module.css";
 
 export function LevelSelector({
+  minValue,
   onChange,
   type,
   value = 0,
 }: {
+  minValue: number;
   onChange: (value: number) => void;
   type: "level" | "subLevel";
   value?: number;
 }) {
-  const minValue = 0;
   const maxValue = type === "level" ? MAX_LEVEL_NUMBER : MAX_SUB_LEVEL_NUMBER;
 
   const decrease = () => {

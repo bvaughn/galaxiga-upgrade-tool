@@ -1,6 +1,6 @@
 import { IconButton } from "../../components/IconButton";
 import { ItemImage } from "../../components/ItemImage";
-import { Item } from "../../types";
+import { DEFAULT_ITEM_STATS, Item } from "../../types";
 import { PendingCreateTier2Item } from "../types";
 import styles from "./shared.module.css";
 
@@ -32,8 +32,8 @@ export function FormStep3CreateTier2({
             onClick={() =>
               goToNextStep({
                 ...pendingAction,
+                itemStats: [DEFAULT_ITEM_STATS, DEFAULT_ITEM_STATS],
                 primaryItem: item,
-                itemStats: [],
               })
             }
           >

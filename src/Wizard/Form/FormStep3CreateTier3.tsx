@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { IconButton } from "../../components/IconButton";
 import { ItemImage } from "../../components/ItemImage";
-import { Item } from "../../types";
+import { DEFAULT_ITEM_STATS, Item } from "../../types";
 import { getItems } from "../../utils/items";
 import { PendingCreateTier3Item } from "../types";
 import styles from "./shared.module.css";
@@ -29,7 +29,7 @@ export function FormStep3CreateTier3({
     if (item1 && item2) {
       goToNextStep({
         ...pendingAction,
-        itemStats: [],
+        itemStats: [DEFAULT_ITEM_STATS, DEFAULT_ITEM_STATS],
         secondaryItems: [item1, item2],
       });
     }

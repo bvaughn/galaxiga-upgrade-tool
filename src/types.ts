@@ -79,6 +79,6 @@ export const MAX_STATS: ItemStats = {
 };
 
 export const DEFAULT_ITEM_STATS: ItemStats = {
-  level: 0,
+  level: 1,
   subLevel: 0,
 };

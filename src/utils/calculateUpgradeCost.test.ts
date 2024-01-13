@@ -18,7 +18,7 @@ describe("calculateUpgradeCost", () => {
         expect(
           calculateUpgradeCost(
             {
-              level: 0,
+              level: 1,
               subLevel: 0,
             },
             MAX_STATS,
@@ -30,8 +30,8 @@ Object {
   "boxes": Object {
     "with": Object {
       "cardsNeededForLevels": 0,
-      "coinsNeededForLevels": 1,251,800,
-      "gemsNeededForLevels": 8,560,
+      "coinsNeededForLevels": 1,249,300,
+      "gemsNeededForLevels": 8,840,
     },
     "without": Object {
       "cardsNeededForLevels": 1,900,
@@ -39,7 +39,7 @@ Object {
       "gemsNeededForLevels": 720,
     },
   },
-  "isEstimateComplete": false,
+  "isEstimateComplete": true,
   "totalCardsRequired": 1,900,
 }
 `);
@@ -61,8 +61,8 @@ Object {
   "boxes": Object {
     "with": Object {
       "cardsNeededForLevels": 0,
-      "coinsNeededForLevels": 1,251,800,
-      "gemsNeededForLevels": 8,560,
+      "coinsNeededForLevels": 1,249,300,
+      "gemsNeededForLevels": 8,840,
     },
     "without": Object {
       "cardsNeededForLevels": 1,900,
@@ -92,8 +92,8 @@ Object {
   "boxes": Object {
     "with": Object {
       "cardsNeededForLevels": 0,
-      "coinsNeededForLevels": 887,775,
-      "gemsNeededForLevels": 4,500,
+      "coinsNeededForLevels": 885,275,
+      "gemsNeededForLevels": 4,780,
     },
     "without": Object {
       "cardsNeededForLevels": 1,000,
@@ -206,7 +206,7 @@ Object {
         expect(
           calculateUpgradeCost(
             {
-              level: 0,
+              level: 1,
               subLevel: 0,
             },
             MAX_STATS,
@@ -218,8 +218,8 @@ Object {
   "boxes": Object {
     "with": Object {
       "cardsNeededForLevels": 0,
-      "coinsNeededForLevels": 12,068,515,
-      "gemsNeededForLevels": 47,240,
+      "coinsNeededForLevels": 12,056,015,
+      "gemsNeededForLevels": 48,640,
     },
     "without": Object {
       "cardsNeededForLevels": 10,400,
@@ -227,7 +227,7 @@ Object {
       "gemsNeededForLevels": 4,400,
     },
   },
-  "isEstimateComplete": false,
+  "isEstimateComplete": true,
   "totalCardsRequired": 10,400,
 }
 `);
@@ -275,7 +275,7 @@ Object {
         expect(
           calculateUpgradeCost(
             {
-              level: 0,
+              level: 1,
               subLevel: 0,
             },
             MAX_STATS,
@@ -287,8 +287,8 @@ Object {
   "boxes": Object {
     "with": Object {
       "cardsNeededForLevels": 0,
-      "coinsNeededForLevels": 39,765,975,
-      "gemsNeededForLevels": 145,200,
+      "coinsNeededForLevels": 39,728,475,
+      "gemsNeededForLevels": 149,400,
     },
     "without": Object {
       "cardsNeededForLevels": 30,000,
@@ -296,7 +296,7 @@ Object {
       "gemsNeededForLevels": 22,000,
     },
   },
-  "isEstimateComplete": false,
+  "isEstimateComplete": true,
   "totalCardsRequired": 30,000,
 }
 `);

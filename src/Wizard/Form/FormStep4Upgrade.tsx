@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { IconButton } from "../../components/IconButton";
-import { DEFAULT_ITEM_STATS, ItemStats } from "../../types";
+import { ItemStats } from "../../types";
 import { assert } from "../../utils/assert";
 import { Action, PendingUpgradeItem, UpgradeItem } from "../types";
 import { ItemStatsSelector } from "./ItemStatsSelector";
@@ -17,16 +17,21 @@ export function FormStep4Upgrade({
   onSave: (wizardData: Action) => void;
   pendingAction: PendingUpgradeItem;
 }) {
-  const { category, primaryItem: item } = pendingAction;
+  const {
+    category,
+    itemStatsFrom: defaultItemStatsFrom,
+    itemStatsTo: defaultItemStatsTo,
+    primaryItem: item,
+  } = pendingAction;
+
   assert(category);
+  assert(defaultItemStatsFrom);
+  assert(defaultItemStatsTo);
   assert(item);
 
-  const [itemStatsFrom, setItemStatsFrom] = useState<ItemStats>(
-    pendingAction.itemStatsFrom ?? DEFAULT_ITEM_STATS
-  );
-  const [itemStatsTo, setItemStatsTo] = useState<ItemStats>(
-    pendingAction.itemStatsTo ?? DEFAULT_ITEM_STATS
-  );
+  const [itemStatsFrom, setItemStatsFrom] =
+    useState<ItemStats>(defaultItemStatsFrom);
+  const [itemStatsTo, setItemStatsTo] = useState<ItemStats>(defaultItemStatsTo);
 
   return (
     <div className={styles.Form}>
